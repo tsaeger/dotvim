@@ -101,7 +101,7 @@ set ruler
 "set nu
 
 "Do not redraw, when running macros.. lazyredraw
-set lz
+"set lz
 
 "Change buffer - without saving
 set hid
@@ -186,3 +186,4 @@ map <leader>e :e! ~/.vimrc<cr>
 autocmd! bufwritepost .vimrc source ~/.vimrc
 " }}}
 " vim:ft=vim:ts=4:sw=4:noet:fdm=marker:commentstring=\"\ %s:nowrap
+
