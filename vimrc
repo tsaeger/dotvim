@@ -58,27 +58,45 @@ autocmd User fugitive if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' | nnor
 " }}}
 " Keymaps {{{1
 " Keymaps
-" Fast saving
+" Fast saving {{{2
 nmap <leader>w :w!<cr>
 nmap <leader>f :e ~/buffer<cr>
-" Taglist
+" }}}
+" Taglist {{{2
 nnoremap <silent> <F8> :Tlist<CR>
 nnoremap <silent> <F7> :TlistUpdate<CR>
 nnoremap <silent> <Leader>ts :Tlist<CR>
 nnoremap <silent> <Leader>tu :TlistUpdate<CR>
-" Invisibles
+" }}}
+" Gundo {{{2
+nnoremap <silent> <F5> :GundoToggle<CR>
+" }}}
+" Invisibles {{{2
 nnoremap <silent> <Leader>rw :call Cream_list_toggle("n")<CR>
-" Doxygen
+" }}}
+" Doxygen {{{2
 nnoremap <silent> <Leader>dc :Dox<CR>
-" remove trailing whitespace
+" }}}
+" remove trailing whitespace {{{2
 nnoremap <leader>S :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
-
-" egrep
+" }}}
+" egrep {{{2
 nnoremap <leader>g :!egrep -Rin --exclude="~/vimout.txt" "<cword>" . \|tee ~/vimout.txt<cr>:cfile ~/vimout.txt<cr>:cope<cr>
-
-" open out.txt as the error file
+" }}}
+" open out.txt as the error file {{{2
 nnoremap <leader>r :cfile out.txt<cr>:cope<cr>
-
+" }}}
+" Line Bubbling (with unimpaired) {{{2
+" Bubble single lines
+nmap <C-Up> [e
+nmap <C-Down> ]e
+" Bubble multiple lines
+vmap <C-Up> [egv
+vmap <C-Down> ]egv
+" }}}
+" Visually select the text that was last edited/pasted {{{2
+nmap gV `[v`]
+" }}}
 " }}}
 " Tabs {{{1
 set ts=4 sw=4 sts=4 et
@@ -145,34 +163,34 @@ vnoremap <silent> # :call VisualSearch('b')<CR>
     autocmd BufNewFile,BufRead *.sh map <buffer> <leader><space> :w!<cr>:!./%<cr>
 " }}}
 " Lua {{{2
-	set foldmethod=syntax
+    set foldmethod=syntax
     autocmd BufNewFile,BufRead *.lua map <buffer> <leader><space> :w!<cr>:!lua %<cr>
     autocmd BufNewFile,BufRead *.lua map <buffer> <leader>i :w!<cr>:!lua -i %<cr>
     autocmd BufNewFile,BufRead *.lua set makeprg=luac\ -o\ /dev/null\ -l\ %
     autocmd BufNewFile,BufRead *.lua nmap <buffer> <leader>cc :w!<cr>:make<cr>
     autocmd BufNewFile,BufRead *.lua nmap <buffer> <leader>cg :w!<cr>:!luac -o /dev/null -l % \|egrep "GETGLOBAL" \|perl -pe 's/.*; (.*)/local $1 = _G.$1/;' \|sort \|uniq<cr>
-	autocmd BufNewFile,BufRead *.lua map <buffer> <leader>head :r!cat ~/.vim/plugin/headers/lua.txt<cr>
+    autocmd BufNewFile,BufRead *.lua map <buffer> <leader>head :r!cat ~/.vim/plugin/headers/lua.txt<cr>
 " }}}
 " php {{{2
-	autocmd BufNewFile,BufRead *.php,*.inc setf php
+    autocmd BufNewFile,BufRead *.php,*.inc setf php
     autocmd FileType php set omnifunc=phpcomplete#CompletePHP
 " }}}
 " html {{{2
-	autocmd BufNewFile,BufRead *.html,*.xhtml setf html
+    autocmd BufNewFile,BufRead *.html,*.xhtml setf html
     autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 " }}}
 " css {{{2
-	autocmd BufNewFile,BufRead *.css setf css
+    autocmd BufNewFile,BufRead *.css setf css
     autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 " }}}
 " Javascript {{{2
-	set foldmethod=syntax
+    set foldmethod=syntax
     autocmd BufNewFile,BufRead *.js map <buffer> <leader><space> :w<cr>:make<cr>
     autocmd BufNewFile,BufRead *.js nmap <buffer> <leader>cg :w!<cr>:JSLint<cr>
     autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 " }}}
 " PKGBUILD {{{2
-	autocmd BufNewFile,BufRead PKGBUILD setf PKGBUILD
+    autocmd BufNewFile,BufRead *PKGBUILD* setf PKGBUILD
 " }}}
 " }}}
 " vimrc mgmt {{{1
@@ -185,5 +203,4 @@ map <leader>e :e! ~/.vimrc<cr>
 "When .vimrc is edited, reload it
 autocmd! bufwritepost .vimrc source ~/.vimrc
 " }}}
-" vim:ft=vim:ts=4:sw=4:noet:fdm=marker:commentstring=\"\ %s:nowrap
-
+" vim:ft=vim:ts=4:sw=4:et:fdm=marker:commentstring=\"\ %s:nowrap
