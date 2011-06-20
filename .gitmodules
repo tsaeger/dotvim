@@ -25,3 +25,6 @@
 [submodule "bundle/supertab"]
 	path = bundle/supertab
 	url = https://github.com/ervandew/supertab.git
+[submodule "bundle/mac-classic-theme"]
+	path = bundle/mac-classic-theme
+	url = https://github.com/nelstrom/vim-mac-classic-theme.git

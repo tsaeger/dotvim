@@ -15,6 +15,7 @@ set background=dark
 "colorscheme ron
 "colorscheme solarized
 colorscheme vividchalk
+"colorscheme mac_classic
 "colorscheme ronned
 " }}}
 "Case-sensitive searches - s/lower/ will ignore case
