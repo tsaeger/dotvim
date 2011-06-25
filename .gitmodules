@@ -28,3 +28,6 @@
 [submodule "bundle/mac-classic-theme"]
 	path = bundle/mac-classic-theme
 	url = https://github.com/nelstrom/vim-mac-classic-theme.git
+[submodule "bundle/omnicppcomplete"]
+	path = bundle/omnicppcomplete
+	url = https://github.com/vim-scripts/OmniCppComplete.git
