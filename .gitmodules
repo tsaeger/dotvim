@@ -34,3 +34,6 @@
 [submodule "bundle/drawit"]
 	path = bundle/drawit
 	url = https://github.com/vim-scripts/DrawIt.git
+[submodule "bundle/nerdtree"]
+	path = bundle/nerdtree
+	url = https://github.com/scrooloose/nerdtree.git
