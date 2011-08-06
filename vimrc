@@ -3,7 +3,7 @@
 " Pathogen setup {{{1
 "Get out of VI's compatible mode..
 set nocompatible
-call pathogen#runtime_append_all_bundles()
+call pathogen#infect()
 call pathogen#helptags()
 " }}}
 " General {{{1
