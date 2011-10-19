@@ -14,9 +14,9 @@ set background=dark
 "colorscheme morning
 "colorscheme ron
 "colorscheme solarized
-colorscheme vividchalk
+"colorscheme vividchalk
 "colorscheme mac_classic
-"colorscheme ronned
+colorscheme ronned
 " }}}
 "Case-sensitive searches - s/lower/ will ignore case
 set ignorecase smartcase incsearch
@@ -83,7 +83,7 @@ nnoremap <silent> <Leader>dc :Dox<CR>
 nnoremap <leader>S :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
 " }}}
 " egrep {{{2
-nnoremap <leader>g :!egrep -Rin --exclude="~/vimout.txt" "<cword>" . \|tee ~/vimout.txt<cr>:cfile ~/vimout.txt<cr>:cope<cr>
+nnoremap <leader>g :!egrep -Rin --exclude="~/vimout.txt" --exclude="out.txt" --exclude="tags" --exclude-dir=".git" "<cword>" . \|tee ~/vimout.txt<cr>:cfile ~/vimout.txt<cr>:cope<cr>
 " }}}
 " open out.txt as the error file {{{2
 nnoremap <leader>r :cfile out.txt<cr>:cope<cr>
@@ -101,8 +101,8 @@ nmap gV `[v`]
 " }}}
 " }}}
 " Tabs {{{1
-set ts=4 sw=4 sts=4 et
-"set ts=8 sw=8 sts=8 noet
+"set ts=4 sw=4 sts=4 et
+set ts=8 sw=8 sts=8 noet
 map <leader>ne :set ts=4 sw=4 sts=4 et<cr>
 map <leader>ke :set ts=8 sw=8 sts=8 noet<cr>
 
