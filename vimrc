@@ -15,8 +15,8 @@ set background=dark
 "colorscheme ron
 "colorscheme solarized
 "colorscheme vividchalk
-"colorscheme mac_classic
-colorscheme ronned
+colorscheme mac_classic
+"colorscheme ronned
 " }}}
 "Case-sensitive searches - s/lower/ will ignore case
 set ignorecase smartcase incsearch
@@ -101,8 +101,8 @@ nmap gV `[v`]
 " }}}
 " }}}
 " Tabs {{{1
-"set ts=4 sw=4 sts=4 et
-set ts=8 sw=8 sts=8 noet
+set ts=4 sw=4 sts=4 et
+"set ts=8 sw=8 sts=8 noet
 map <leader>ne :set ts=4 sw=4 sts=4 et<cr>
 map <leader>ke :set ts=8 sw=8 sts=8 noet<cr>
 
@@ -190,6 +190,11 @@ vnoremap <silent> # :call VisualSearch('b')<CR>
     autocmd BufNewFile,BufRead *.js map <buffer> <leader><space> :w<cr>:make<cr>
     autocmd BufNewFile,BufRead *.js nmap <buffer> <leader>cg :w!<cr>:JSLint<cr>
     autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+" }}}
+" coffeescript {{{2
+    set foldmethod=syntax
+    autocmd BufNewFile,BufRead *.coffee map <buffer> <leader><space> :w<cr>:!coffee -bc %<cr>
+    autocmd FileType coffeescript set omnifunc=javascriptcomplete#CompleteJS
 " }}}
 " PKGBUILD {{{2
     autocmd BufNewFile,BufRead *PKGBUILD* setf PKGBUILD
