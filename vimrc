@@ -99,6 +99,9 @@ vmap <C-Down> ]egv
 " Visually select the text that was last edited/pasted {{{2
 nmap gV `[v`]
 " }}}
+" Insert date timestamp
+nnoremap <leader>dts "=strftime("%c")<CR>P
+" }}}
 " }}}
 " Tabs {{{1
 set ts=4 sw=4 sts=4 et
