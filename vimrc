@@ -166,6 +166,9 @@ vnoremap <silent> # :call VisualSearch('b')<CR>
     autocmd BufNewFile,BufRead *.py set makeprg=python\ -c\ \"import\ py_compile,sys;\ sys.stderr=sys.stdout;\ py_compile.compile(r'%')\"
     autocmd BufNewFile,BufRead *.py nmap <buffer> <leader>cc :w!<cr>:make<cr>
 " }}}
+" Ruby {{{2
+    autocmd BufNewFile,BufRead *.rb map <buffer> <leader><space> :w!<cr>:!ruby %<cr>
+" }}}
 " C/C++ {{{2
     autocmd BufNewFile,BufRead *.cpp map <buffer> <leader><space> :w<cr>:make<cr>
     autocmd BufNewFile,BufRead *.c map <buffer> <leader><space> :w<cr>:make<cr>
