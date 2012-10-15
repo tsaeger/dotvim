@@ -79,6 +79,12 @@ nnoremap <silent> <Leader>rw :call Cream_list_toggle("n")<CR>
 " Doxygen {{{2
 nnoremap <silent> <Leader>dc :Dox<CR>
 " }}}
+" Pandoc {{{2
+nnoremap <silent> <Leader>panh :!pandoc "%" -o "%.html"<CR>
+nnoremap <silent> <Leader>panp :!pandoc "%" --toc --chapters -N -o "%.pdf"<CR>
+nnoremap <silent> <Leader>pans :!pandoc "%" --toc --chapters -N --to=dzslides -o "%.html"<CR>
+nnoremap <leader>act :.!cat "%" \| egrep "\\$"<CR>
+" }}}
 " remove trailing whitespace {{{2
 nnoremap <leader>S :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
 " }}}
