@@ -15,8 +15,8 @@ set background=dark
 "colorscheme ron
 "colorscheme solarized
 "colorscheme vividchalk
-colorscheme mac_classic
-"colorscheme ronned
+"colorscheme mac_classic
+colorscheme ronned
 " }}}
 "Case-sensitive searches - s/lower/ will ignore case
 set ignorecase smartcase incsearch
@@ -110,8 +110,8 @@ nnoremap <leader>dts "=strftime("%c")<CR>P
 " }}}
 " }}}
 " Tabs {{{1
-set ts=4 sw=4 sts=4 et
-"set ts=8 sw=8 sts=8 noet
+"set ts=4 sw=4 sts=4 et
+set ts=8 sw=8 sts=8 noet
 map <leader>ne :set ts=4 sw=4 sts=4 et<cr>
 map <leader>ke :set ts=8 sw=8 sts=8 noet<cr>
 
@@ -210,6 +210,13 @@ vnoremap <silent> # :call VisualSearch('b')<CR>
 " }}}
 " PKGBUILD {{{2
     autocmd BufNewFile,BufRead *PKGBUILD* setf PKGBUILD
+" }}}
+" bitbake {{{2
+    autocmd BufNewFile,BufRead *.bb,*.bbappend setf bitbake
+" }}}
+" GEL {{{2
+    set foldmethod=syntax
+    autocmd BufNewFile,BufRead *.gel setf c
 " }}}
 " }}}
 " vimrc mgmt {{{1
