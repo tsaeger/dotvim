@@ -57,7 +57,7 @@
 	url = https://github.com/SirVer/ultisnips.git
 [submodule "bundle/vim-snippets"]
 	path = bundle/vim-snippets
-	url = https://github.com/honza/vim-snippets.git
+	url = git@github.com:tsaeger/vim-snippets.git
 [submodule "bundle/YouCompleteMe"]
 	path = bundle/YouCompleteMe
 	url = https://github.com/Valloric/YouCompleteMe.git
