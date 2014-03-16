@@ -110,8 +110,8 @@ nnoremap <leader>dts "=strftime("%c")<CR>P
 " }}}
 " }}}
 " Tabs {{{1
-"set ts=4 sw=4 sts=4 et
-set ts=8 sw=8 sts=8 noet
+set ts=4 sw=4 sts=4 et
+"set ts=8 sw=8 sts=8 noet
 map <leader>ne :set ts=4 sw=4 sts=4 et<cr>
 map <leader>ke :set ts=8 sw=8 sts=8 noet<cr>
 
@@ -141,6 +141,9 @@ set backspace=eol,start,indent
 "Pastetoggle
 set pastetoggle=<F12>
 
+"Clipboard unnamed
+set clipboard=unnamed
+
 " }}}
 " Visual Search {{{1
 function! VisualSearch(direction) range
@@ -168,6 +171,7 @@ vnoremap <silent> # :call VisualSearch('b')<CR>
 " }}}
 " Ruby {{{2
     autocmd BufNewFile,BufRead *.rb map <buffer> <leader><space> :w!<cr>:!ruby %<cr>
+    autocmd BufNewFile,BufRead *.ru setf ruby
 " }}}
 " C/C++ {{{2
     autocmd BufNewFile,BufRead *.cpp map <buffer> <leader><space> :w<cr>:make<cr>
