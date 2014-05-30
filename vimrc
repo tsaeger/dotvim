@@ -71,7 +71,7 @@ autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 " Keymaps
 " Fast saving {{{2
 nmap <leader>w :w!<cr>
-nmap <leader>f :e ~/buffer<cr>
+"nmap <leader>f :e ~/buffer<cr>
 " }}}
 " Taglist {{{2
 nnoremap <silent> <F8> :Tlist<CR>
@@ -99,6 +99,7 @@ nnoremap <leader>S :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
 " }}}
 " egrep {{{2
 nnoremap <leader>g :!egrep -Rin --exclude="~/vimout.txt" --exclude="out.txt" --exclude="tags" --exclude-dir=".git" "<cword>" . \|tee ~/vimout.txt<cr>:cfile ~/vimout.txt<cr>:cope<cr>
+nnoremap <leader>fig :!git grep -n "<cword>" . \|tee ~/vimout.txt<cr>:cfile ~/vimout.txt<cr>:cope<cr>
 " }}}
 " open out.txt as the error file {{{2
 nnoremap <leader>r :cfile out.txt<cr>:cope<cr>
