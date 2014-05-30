@@ -67,3 +67,18 @@
 [submodule "bundle/DrawIt"]
 	path = bundle/DrawIt
 	url = https://github.com/vim-scripts/DrawIt.git
+[submodule "bundle/bufexplorer"]
+	path = bundle/bufexplorer
+	url = https://github.com/jlanzarotta/bufexplorer.git
+[submodule "bundle/DirDiff"]
+	path = bundle/DirDiff
+	url = https://github.com/vim-scripts/DirDiff.vim.git
+[submodule "bundle/cream-showinvisibles"]
+	path = bundle/cream-showinvisibles
+	url = https://github.com/vim-scripts/cream-showinvisibles.git
+[submodule "bundle/bitbake"]
+	path = bundle/bitbake
+	url = https://github.com/kergoth/vim-bitbake.git
+[submodule "bundle/pkgbuild"]
+	path = bundle/pkgbuild
+	url = https://github.com/vim-scripts/PKGBUILD.git
