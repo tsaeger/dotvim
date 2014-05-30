@@ -82,3 +82,12 @@
 [submodule "bundle/pkgbuild"]
 	path = bundle/pkgbuild
 	url = https://github.com/vim-scripts/PKGBUILD.git
+[submodule "bundle/vim-obsession"]
+	path = bundle/vim-obsession
+	url = https://github.com/tpope/vim-obsession.git
+[submodule "bundle/vim-repeat"]
+	path = bundle/vim-repeat
+	url = https://github.com/tpope/vim-repeat.git
+[submodule "bundle/vim-commentary"]
+	path = bundle/vim-commentary
+	url = https://github.com/tpope/vim-commentary
