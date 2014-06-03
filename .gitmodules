@@ -100,3 +100,9 @@
 [submodule "bundle/vim-qargs"]
 	path = bundle/vim-qargs
 	url = https://github.com/henrik/vim-qargs.git
+[submodule "bundle/YankRing"]
+	path = bundle/YankRing
+	url = https://github.com/vim-scripts/YankRing.vim.git
+[submodule "bundle/syntastic"]
+	path = bundle/syntastic
+	url = https://github.com/scrooloose/syntastic.git
