@@ -66,6 +66,10 @@ set completeopt-=preview
 autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 " }}}
+" YankRing {{{2
+" default disable yankring, use :YRToggle
+let g:yankring_enabled = 0
+" }}}
 " }}}
 " Keymaps {{{1
 " Keymaps
