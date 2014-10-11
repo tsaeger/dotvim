@@ -1,10 +1,81 @@
-" set default 'runtimepath' (without ~/.vim folders)
+" set initial runtimepath, excluding ~/.vim
 let &runtimepath = printf('%s/vimfiles,%s,%s/vimfiles/after', $VIM, $VIMRUNTIME, $VIM)
 
-" what is the name of the directory containing this file?
-let s:portable = expand('<sfile>:p:h')
+" get directory of this file
+let s:vimpath = expand('<sfile>:p:h')
 
-" add the directory to 'runtimepath'
-let &runtimepath = printf('%s,%s,%s/after', s:portable, &runtimepath, s:portable)
+let s:pluginpath = join([s:vimpath,'/bundle'],'')
 
+" add to 'runtimepath'
+let &runtimepath = printf('%s,%s,%s/after,%s/Vundle.vim', s:vimpath, &runtimepath, s:vimpath, s:pluginpath)
+
+set nocompatible
+filetype off
+
+"
+" Plugins
+"
+call vundle#begin(s:pluginpath)
+
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
+
+Plugin 'airblade/vim-gitgutter'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'bronson/vim-trailing-whitespace'
+Plugin 'godlygeek/tabular'
+Plugin 'gregsexton/gitv'
+Plugin 'henrik/vim-qargs'
+Plugin 'jlanzarotta/bufexplorer'
+Plugin 'joeytwiddle/vim-multiple-cursors'
+Plugin 'justinmk/vim-sneak'
+Plugin 'marijnh/tern_for_vim'
+Plugin 'mileszs/ack.vim'
+Plugin 'nelstrom/vim-mac-classic-theme'
+Plugin 'rking/ag.vim'
+Plugin 'scrooloose/syntastic'
+Plugin 'sheerun/vim-polyglot'
+Plugin 'Shougo/neomru.vim'
+Plugin 'Shougo/unite-outline'
+Plugin 'Shougo/unite.vim'
+Plugin 'Shougo/vimfiler.vim'
+Plugin 'Shougo/vimproc.vim'
+Plugin 'SirVer/ultisnips'
+Plugin 'sjl/gundo.vim'
+Plugin 'tacroe/unite-mark'
+Plugin 'tpope/vim-commentary'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-obsession'
+Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-unimpaired'
+Plugin 'tpope/vim-vividchalk'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'vim-scripts/DirDiff.vim'
+Plugin 'vim-scripts/DrawIt'
+Plugin 'vim-scripts/editorconfig-vim'
+
+" Personal/Private
+Plugin 'git@github.com:tsaeger/vim-snippets'
+
+" Not currently used
+" Plugin 'ervandew/supertab'
+" Plugin 'kchmck/vim-coffee-script'
+" Plugin 'kergoth/vim-bitbake'
+" Plugin 'kien/ctrlp.vim'
+" Plugin 'Lokaltog/vim-easymotion'
+" Plugin 'scrooloose/nerdtree'
+" Plugin 'tpope/vim-pathogen'
+" Plugin 'vim-scripts/cream-showinvisibles'
+" Plugin 'vim-scripts/localvimrc'
+" Plugin 'vim-scripts/PKGBUILD'
+" Plugin 'vim-scripts/taglist-plus'
+" Plugin 'vim-scripts/YankRing.vim'
+
+
+" Plugins must be added before here
+call vundle#end()
+filetype plugin indent on
+"filetype plugin on
+
+" non-plugin settings here
 
