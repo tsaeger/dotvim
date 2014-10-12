@@ -4,14 +4,22 @@
 " set initial runtimepath, excluding ~/.vim
 let &runtimepath = printf('%s/vimfiles,%s,%s/vimfiles/after', $VIM, $VIMRUNTIME, $VIM)
 
-let s:vimpath    = expand('<sfile>:p:h')                                " directory of this file
-let s:vimrc      = expand('<sfile>')                                    " vimrc
+" use resolve to expand symlinks to make the following work:
+" > ln -s ~/dotvim .vim
+" > ln -s .vim/vimrc .vimrc
+let s:vimpath    = fnamemodify(resolve(expand('<sfile>')), ':p:h')      " directory of this file
+let s:vimrc      = resolve(expand('<sfile>'))                           " vimrc
 let s:backupdir  = fnameescape(join([s:vimpath,'/backups'], ''))        " backups
 let s:pluginpath = fnameescape(join([s:vimpath,'/bundle'],''))          " plugins
 let s:vundlepath = fnameescape(join([s:pluginpath,'/Vundle.vim'],''))   " Vundle path
 let s:settings   = fnameescape(join([s:vimpath,'/settings.vim'],''))    " settings file
 
 " echo s:vimrc
+" echo s:vimpath
+" echo s:backupdir
+" echo s:pluginpath
+" echo s:vundlepath
+" echo s:settings
 
 " add dirs to runtimepath
 let &runtimepath = printf('%s,%s,%s/after,%s', s:vimpath, &runtimepath, s:vimpath, s:vundlepath)

@@ -25,7 +25,8 @@ nnoremap <leader>dts "=strftime("%c")<CR>P
 " Visually select the text that was last edited/pasted
 nnoremap gV `[v`]
 
-let s:settingspath = fnameescape(join([expand('<sfile>:p:h'),'/settings'], ''))  " settings
+let s:mypath = fnamemodify(resolve(expand('<sfile>')), ':p:h')      " directory of this file
+let s:settingspath = fnameescape(join([s:mypath,'/settings'], ''))  " settings
 " echo "settingspath:" . s:settingspath
 for fpath in split(globpath(s:settingspath, '*.vim'), '\n')
   " echo "sourcing:" . fpath
