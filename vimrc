@@ -91,9 +91,11 @@ Plugin 'Valloric/YouCompleteMe'
 Plugin 'vim-scripts/DirDiff.vim'
 Plugin 'vim-scripts/DrawIt'
 Plugin 'vim-scripts/editorconfig-vim'
+Plugin 'vim-scripts/taglist.vim'
 
 " Personal/Private plugins
 Plugin 'git@github.com:tsaeger/vim-snippets'
+" Plugin 'tsaeger/vim-snippets'
 
 " Not currently used
 " Plugin 'ervandew/supertab'
@@ -117,10 +119,11 @@ call vundle#end()
 "==================================================
 set wildmode=list:longest
 set wildmenu
-set wildignore=*.o,*.obj,*.a
-set wildignore=*.pyc
-set wildignore=*~,*.bak
-set wildignore=tmp/**
+set wildignore+=*.o,*.obj,*.a
+set wildignore+=*.pyc
+set wildignore+=*~,*.bak
+set wildignore+=*/.git/*,*/.hg/*,*/.svn/*
+set wildignore+=tmp/**
 "===============================================}}}
 " Editing {{{1
 "==================================================
@@ -130,7 +133,7 @@ set smarttab
 set nowrap
 set linebreak
 set ts=4 sw=4 sts=4 et
-"set ts=8 sw=8 sts=8 noet
+" set ts=8 sw=8 sts=8 noet
 noremap <leader>ne :set ts=4 sw=4 sts=4 et<cr>
 noremap <leader>ke :set ts=8 sw=8 sts=8 noet<cr>
 
