@@ -58,6 +58,8 @@ Plugin 'gmarik/Vundle.vim'
 
 Plugin 'airblade/vim-gitgutter'
 Plugin 'altercation/vim-colors-solarized'
+Plugin 'bling/vim-airline'
+Plugin 'bronson/vim-visual-star-search'
 Plugin 'csexton/trailertrash.vim'
 Plugin 'godlygeek/tabular'
 Plugin 'gregsexton/gitv'
