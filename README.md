@@ -18,37 +18,27 @@ create a sandboxed vim to test out new plugins.
 
 ## Quick Start
 
-1. Clone this repo:
-
+Clone this repo:
 ```
 $ git clone https://github.com/tsaeger/dotvim.git ~/dotvim
 ```
-
-2. Clone Vundle:
-
+Clone Vundle:
 ```
 $ git clone https://github.com/gmarik/Vundle.vim.git ~/dotvim/bundle/Vundle.vim
 ```
-
-3. Install Plugins:
-
+Install Plugins:
 ```
 $ vim -u ~/dotvim/vimrc -c "PluginInstall"
 ```
-
-4. Try it out
-
+Try it out
 ```
 $ vim -u ~/dotvim/vimrc
 ```
-
-5. Make it your default
-
+Make it your default
 ```
 $ ln -s ~/dotvim .vim
 $ ln -s .vim/vimrc .vimrc
 ```
-
 
 ## Credits
 
