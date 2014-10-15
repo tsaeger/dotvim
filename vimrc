@@ -44,6 +44,7 @@ set shell=zsh
 set showcmd
 set showmode
 set visualbell
+set t_Co=256
 syntax on
 
 " leader key
@@ -61,6 +62,7 @@ Plugin 'altercation/vim-colors-solarized'
 Plugin 'bling/vim-airline'
 Plugin 'bronson/vim-visual-star-search'
 Plugin 'csexton/trailertrash.vim'
+Plugin 'edkolev/tmuxline.vim'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'godlygeek/tabular'
 Plugin 'gregsexton/gitv'
@@ -83,7 +85,6 @@ Plugin 'Shougo/vimproc.vim'
 Plugin 'SirVer/ultisnips'
 Plugin 'sjl/gundo.vim'
 Plugin 'tacroe/unite-mark'
-Plugin 'tomasr/molokai'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-git'
