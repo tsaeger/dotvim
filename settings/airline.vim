@@ -14,7 +14,15 @@ if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
 let g:airline_symbols.paste         = 'ρ'
+
+" tmuxline - keep with airline
 let g:tmuxline_powerline_separators = 0
+" let g:tmuxline_separators = {
+"   \ 'left' : '',
+"   \ 'left_alt': '>',
+"   \ 'right' : '',
+"   \ 'right_alt' : '<',
+"   \ 'space' : ' '}
 
 
 set laststatus=2
