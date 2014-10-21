@@ -1,19 +1,21 @@
 ## About
 
 This vimrc has grown through the years, lifted much of it from others.
-Works for me, it may inspire a setup that works for you.
+Works for me, and it may inspire a setup that works for you.
 
-This setup can be used as a portable setup or as your main ~/.vim ~/.vimrc setup.
-All paths within vimrc resolve to absolute directory of vimrc.
+All scripts/plugins resolve to absolute directory of vimrc.
+Meaning this can be used as a portable setup or as your main setup.
+One could create many variants and alias to them, or
+create a sandboxed vim to test out new plugins.
 
 Notice where the files are sourced in this example:
 
 ```
-$ mvim -u ~/dotvim/vimrc -c scriptnames -c quit
+$ vim -u ~/dotvim/vimrc -c scriptnames -c quit
 ```
 
-With this setup, one could create many variants and alias to them, or
-create a sandboxed vim to test out new plugins.
+The goal is to source all scripts/plugins (except system-wide scripts) from
+the same directory as vimrc.
 
 
 ## Quick Start
