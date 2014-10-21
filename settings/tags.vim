@@ -1,3 +1,6 @@
+" ctags
+set tags=./tags,tags,$HOME/tags
+
 " Taglist
 "let Tlist_Ctags_Cmd='~/local/bin/ctags -R --fields=afmikKlnsStz'
 "let Tlist_Ctags_Cmd='/usr/bin/ctags -R --fields=afiKmsSzn'

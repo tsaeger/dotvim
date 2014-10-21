@@ -4,7 +4,7 @@
 " set initial runtimepath, excluding ~/.vim
 let &runtimepath = printf('%s/vimfiles,%s,%s/vimfiles/after', $VIM, $VIMRUNTIME, $VIM)
 
-" use resolve to expand symlinks to make the following work:
+" use resolve() to expand symlinks to make the following work:
 " > ln -s ~/dotvim .vim
 " > ln -s .vim/vimrc .vimrc
 let s:vimpath    = fnamemodify(resolve(expand('<sfile>')), ':p:h')      " directory of this file
@@ -44,7 +44,7 @@ set shell=zsh
 set showcmd
 set showmode
 set visualbell
-set t_Co=256
+set t_Co=256  " for airline/tmuxline
 syntax on
 
 " leader key
@@ -61,6 +61,7 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'bling/vim-airline'
 Plugin 'bronson/vim-visual-star-search'
+Plugin 'chriskempson/base16-vim'
 Plugin 'csexton/trailertrash.vim'
 Plugin 'edkolev/tmuxline.vim'
 Plugin 'flazz/vim-colorschemes'
@@ -103,18 +104,12 @@ Plugin 'git@github.com:tsaeger/vim-snippets'
 " Plugin 'tsaeger/vim-snippets'
 
 " Not currently used
-" Plugin 'ervandew/supertab'
 " Plugin 'kchmck/vim-coffee-script'
 " Plugin 'kergoth/vim-bitbake'
-" Plugin 'kien/ctrlp.vim'
 " Plugin 'Lokaltog/vim-easymotion'
-" Plugin 'scrooloose/nerdtree'
-" Plugin 'tpope/vim-pathogen'
-" Plugin 'vim-scripts/cream-showinvisibles'
 " Plugin 'vim-scripts/localvimrc'
 " Plugin 'vim-scripts/PKGBUILD'
 " Plugin 'vim-scripts/taglist-plus'
-" Plugin 'vim-scripts/YankRing.vim'
 
 
 " Plugins must be added before here

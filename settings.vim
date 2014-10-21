@@ -1,5 +1,3 @@
-" ctags
-set tags=./tags,tags,/home/tsaeger/tags
 
 " source all /settings/*.vim files
 let s:mypath = fnamemodify(resolve(expand('<sfile>')), ':p:h')      " directory of this file
