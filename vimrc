@@ -9,20 +9,18 @@ let &runtimepath = printf('%s/vimfiles,%s,%s/vimfiles/after', $VIM, $VIMRUNTIME,
 " > ln -s .vim/vimrc .vimrc
 let s:vimpath    = fnamemodify(resolve(expand('<sfile>')), ':p:h')      " directory of this file
 let s:vimrc      = resolve(expand('<sfile>'))                           " vimrc
-let s:backupdir  = fnameescape(join([s:vimpath,'/backups'], ''))        " backups
-let s:pluginpath = fnameescape(join([s:vimpath,'/bundle'],''))          " plugins
-let s:vundlepath = fnameescape(join([s:pluginpath,'/Vundle.vim'],''))   " Vundle path
+let s:backupdir  = fnameescape(join([s:vimpath,'/backups'],''))         " backups
+let s:pluginpath = fnameescape(join([s:vimpath,'/plugged'],''))         " plugins
 let s:settings   = fnameescape(join([s:vimpath,'/settings.vim'],''))    " settings file
 
 " echo s:vimrc
 " echo s:vimpath
 " echo s:backupdir
 " echo s:pluginpath
-" echo s:vundlepath
 " echo s:settings
 
 " add dirs to runtimepath
-let &runtimepath = printf('%s,%s,%s/after,%s', s:vimpath, &runtimepath, s:vimpath, s:vundlepath)
+let &runtimepath = printf('%s,%s,%s/after', s:vimpath, &runtimepath, s:vimpath)
 
 set nocompatible
 filetype off
@@ -52,68 +50,65 @@ syntax on
 "===============================================}}}
 " Plugins {{{1
 "==================================================
-call vundle#begin(s:pluginpath)
+call plug#begin(s:pluginpath)
 
-" let Vundle manage Vundle, required
-Plugin 'gmarik/Vundle.vim'
-
-Plugin 'airblade/vim-gitgutter'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'bling/vim-airline'
-Plugin 'bronson/vim-visual-star-search'
-Plugin 'chriskempson/base16-vim'
-Plugin 'csexton/trailertrash.vim'
-Plugin 'edkolev/tmuxline.vim'
-Plugin 'flazz/vim-colorschemes'
-Plugin 'godlygeek/tabular'
-Plugin 'gregsexton/gitv'
-Plugin 'henrik/vim-qargs'
-Plugin 'jlanzarotta/bufexplorer'
-Plugin 'joeytwiddle/vim-multiple-cursors'
-Plugin 'justinmk/vim-sneak'
-Plugin 'marijnh/tern_for_vim'
-Plugin 'mileszs/ack.vim'
-Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'nelstrom/vim-mac-classic-theme'
-Plugin 'rking/ag.vim'
-Plugin 'scrooloose/syntastic'
-Plugin 'sheerun/vim-polyglot'
-Plugin 'Shougo/neomru.vim'
-Plugin 'Shougo/unite-outline'
-Plugin 'Shougo/unite.vim'
-Plugin 'Shougo/vimfiler.vim'
-Plugin 'Shougo/vimproc.vim'
-Plugin 'SirVer/ultisnips'
-Plugin 'sjl/gundo.vim'
-Plugin 'tacroe/unite-mark'
-Plugin 'tpope/vim-commentary'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-git'
-Plugin 'tpope/vim-obsession'
-Plugin 'tpope/vim-repeat'
-Plugin 'tpope/vim-unimpaired'
-Plugin 'tpope/vim-vividchalk'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'vim-scripts/DirDiff.vim'
-Plugin 'vim-scripts/DrawIt'
-Plugin 'vim-scripts/editorconfig-vim'
-Plugin 'vim-scripts/taglist.vim'
+Plug 'airblade/vim-gitgutter'
+Plug 'altercation/vim-colors-solarized'
+Plug 'bling/vim-airline'
+Plug 'bronson/vim-visual-star-search'
+Plug 'chriskempson/base16-vim'
+Plug 'csexton/trailertrash.vim'
+Plug 'edkolev/tmuxline.vim'
+Plug 'flazz/vim-colorschemes'
+Plug 'godlygeek/tabular'
+Plug 'gregsexton/gitv'
+Plug 'henrik/vim-qargs'
+Plug 'jlanzarotta/bufexplorer'
+Plug 'joeytwiddle/vim-multiple-cursors'
+Plug 'justinmk/vim-sneak'
+Plug 'marijnh/tern_for_vim'
+Plug 'mileszs/ack.vim'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'nelstrom/vim-mac-classic-theme'
+Plug 'rking/ag.vim'
+Plug 'scrooloose/syntastic'
+Plug 'sheerun/vim-polyglot'
+Plug 'Shougo/neomru.vim'
+Plug 'Shougo/unite-outline'
+Plug 'Shougo/unite.vim'
+Plug 'Shougo/vimfiler.vim'
+Plug 'Shougo/vimproc.vim'
+Plug 'SirVer/ultisnips'
+Plug 'sjl/gundo.vim'
+Plug 'tacroe/unite-mark'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-git'
+Plug 'tpope/vim-obsession'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-vividchalk'
+Plug 'Valloric/YouCompleteMe' , { 'do': './install.sh --clang-completer' }
+Plug 'vim-scripts/DirDiff.vim'
+Plug 'vim-scripts/DrawIt'
+Plug 'vim-scripts/editorconfig-vim'
+Plug 'vim-scripts/taglist.vim'
 
 " Personal/Private plugins
-Plugin 'git@github.com:tsaeger/vim-snippets'
-" Plugin 'tsaeger/vim-snippets'
+Plug 'git@github.com:tsaeger/vim-snippets'
+" Plug 'tsaeger/vim-snippets'
 
 " Not currently used
-" Plugin 'kchmck/vim-coffee-script'
-" Plugin 'kergoth/vim-bitbake'
-" Plugin 'Lokaltog/vim-easymotion'
-" Plugin 'vim-scripts/localvimrc'
-" Plugin 'vim-scripts/PKGBUILD'
-" Plugin 'vim-scripts/taglist-plus'
+" Plug 'kchmck/vim-coffee-script'
+" Plug 'kergoth/vim-bitbake'
+" Plug 'Lokaltog/vim-easymotion'
+" Plug 'vim-scripts/localvimrc'
+" Plug 'vim-scripts/PKGBUILD'
+" Plug 'vim-scripts/taglist-plus'
 
 
 " Plugins must be added before here
-call vundle#end()
+call plug#end()
 "===============================================}}}
 " Completion {{{1
 "==================================================
