@@ -3,19 +3,19 @@
 This vimrc has grown through the years, lifted much of it from others.
 Works for me, and it may inspire a setup that works for you.
 
-All scripts/plugins resolve to absolute directory of vimrc.
-Meaning this can be used as a portable setup or as your main setup.
-One could create many variants and alias to them, or
-create a sandboxed vim to test out new plugins.
+## Relocatable/Portable vim
+
+The goal is to resolve all scripts/plugins (except system-wide scripts) from
+absolute directory of vimrc.
+
+You can use this as a sandboxed vim to test out new plugins.
+
 
 Notice where the files are sourced in this example:
 
 ```
-$ vim -u ~/dotvim/vimrc -c scriptnames -c quit
+$ vim -u vimrc -c scriptnames -c quit
 ```
-
-The goal is to source all scripts/plugins (except system-wide scripts) from
-the same directory as vimrc.
 
 
 ## Quick Start
@@ -23,14 +23,20 @@ the same directory as vimrc.
 Clone this repo:
 ```
 $ git clone https://github.com/tsaeger/dotvim.git ~/dotvim
+$ cd ~/dotvim
 ```
-Install Plugins (with vim-plug):
+Install vim-plug:
 ```
-$ vim -u ~/dotvim/vimrc -c "PlugInstall"
+$ [[ ! -e autoload/plug.vim ]] && curl -fLo autoload/plug.vim \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+```
+Install Plugins:
+```
+$ vim -u vimrc -c "PlugInstall"
 ```
 Try it out
 ```
-$ vim -u ~/dotvim/vimrc
+$ vim -u vimrc
 ```
 Make it your default
 ```
@@ -51,4 +57,3 @@ vim --startuptime vim.out
 - [thechangelog episode 0.5.6](http://thechangelog.com/post/4557774334/episode-0-5-6-vim-with-drew-neil-tim-pope-and-yehuda-kat)
 - Yan Pritzker's dotfiles [https://github.com/skwp/dotfiles](https://github.com/skwp/dotfiles)
 - VimAwesome [http://vimawesome.com/](http://vimawesome.com/)
-
