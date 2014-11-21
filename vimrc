@@ -164,7 +164,13 @@ endif
 "===============================================}}}
 " Settings files {{{1
 "==================================================
-execute "source " . s:settings
+" source all /settings/*.vim files
+let s:settingspath = fnameescape(join([s:vimpath,'/settings'], ''))  " settings
+" echo "settingspath:" . s:settingspath
+for fpath in split(globpath(s:settingspath, '*.vim'), '\n')
+  " echo "sourcing:" . fpath
+  execute "source" fpath
+endfor
 "===============================================}}}
 " vimrc management {{{1
 "==================================================
