@@ -77,7 +77,7 @@ Plug 'Shougo/neomru.vim'
 Plug 'Shougo/unite-outline'
 Plug 'Shougo/unite.vim'
 Plug 'Shougo/vimfiler.vim'
-Plug 'Shougo/vimproc.vim'
+Plug 'Shougo/vimproc.vim' , { 'do': 'make -f make_mac.mak' }
 Plug 'SirVer/ultisnips'
 Plug 'sjl/gundo.vim'
 Plug 'tacroe/unite-mark'
