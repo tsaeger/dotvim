@@ -1,8 +1,6 @@
 " airline
 
 let g:airline_theme                        = 'badwolf'
-let g:airline_enable_branch                = 1
-let g:airline_enable_syntastic             = 1
 let g:airline_detect_modified              = 1
 let g:airline_detect_paste                 = 1
 let g:airline#extensions#branch#enabled    = 1

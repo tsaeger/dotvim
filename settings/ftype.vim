@@ -44,3 +44,9 @@
 " GEL
     set foldmethod=syntax
     autocmd BufNewFile,BufRead *.gel setf c
+
+" Go Golang golang
+    au FileType go nmap <leader><space> :w!<cr><Plug>(go-run)
+    au FileType go nmap <leader>cc <Plug>(go-build)
+    "au FileType go nmap <leader>cc <Plug>(go-coverage)
+    au FileType go nmap <leader>cg <Plug>(go-test)

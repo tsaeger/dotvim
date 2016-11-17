@@ -54,11 +54,11 @@ call plug#begin(s:pluginpath)
 
 Plug 'airblade/vim-gitgutter'
 Plug 'altercation/vim-colors-solarized'
-Plug 'bling/vim-airline'
 Plug 'bronson/vim-visual-star-search'
 Plug 'chriskempson/base16-vim'
 Plug 'csexton/trailertrash.vim'
 Plug 'edkolev/tmuxline.vim'
+Plug 'fatih/vim-go'
 Plug 'flazz/vim-colorschemes'
 Plug 'godlygeek/tabular'
 Plug 'gregsexton/gitv'
@@ -88,11 +88,14 @@ Plug 'tpope/vim-obsession'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-vividchalk'
-Plug 'Valloric/YouCompleteMe' , { 'do': './install.sh --clang-completer' }
+Plug 'Valloric/YouCompleteMe' , { 'do': './install.py --clang-completer' }
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-scripts/DirDiff.vim'
 Plug 'vim-scripts/DrawIt'
 Plug 'vim-scripts/editorconfig-vim'
 Plug 'vim-scripts/taglist.vim'
+Plug 'zefei/vim-colortuner'
 
 " Personal/Private plugins
 Plug 'git@github.com:tsaeger/vim-snippets'
