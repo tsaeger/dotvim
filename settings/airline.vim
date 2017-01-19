@@ -1,8 +1,6 @@
 " airline
 
 let g:airline_theme                        = 'badwolf'
-let g:airline_enable_branch                = 1
-let g:airline_enable_syntastic             = 1
 let g:airline_detect_modified              = 1
 let g:airline_detect_paste                 = 1
 let g:airline#extensions#branch#enabled    = 1
@@ -17,12 +15,12 @@ let g:airline_symbols.paste         = 'ρ'
 
 " tmuxline - keep with airline
 let g:tmuxline_powerline_separators = 0
-" let g:tmuxline_separators = {
-"   \ 'left' : '',
-"   \ 'left_alt': '>',
-"   \ 'right' : '',
-"   \ 'right_alt' : '<',
-"   \ 'space' : ' '}
+let g:tmuxline_separators = {
+  \ 'left' : '',
+  \ 'left_alt': '>',
+  \ 'right' : '',
+  \ 'right_alt' : '<',
+  \ 'space' : ' '}
 
 
 set laststatus=2

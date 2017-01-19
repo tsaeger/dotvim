@@ -1,12 +1,12 @@
 " colorscheme
 
 " set background=dark
-" colorscheme industry
+"" colorscheme industry
 " colorscheme mac_classic
-colorscheme molokai
+" colorscheme molokai
 " colorscheme morning
 " colorscheme ron
-" colorscheme ronned
+colorscheme ronned
 " colorscheme solarized
 " colorscheme vividchalk
 

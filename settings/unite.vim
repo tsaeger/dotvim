@@ -36,3 +36,8 @@ nnoremap <leader>o :<C-u>Unite -no-split -buffer-name=outline -start-insert outl
 nnoremap <leader>y :<C-u>Unite -no-split -buffer-name=yank    history/yank<cr>
 nnoremap <leader>bb :<C-u>Unite -no-split -buffer-name=buffer  buffer<cr>
 
+nnoremap ]v :UniteNext<cr>
+nnoremap [v :UnitePrevious<cr>
+
+" neomru
+let g:neomru#do_validate = 0

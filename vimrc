@@ -22,6 +22,8 @@ let s:settings   = fnameescape(join([s:vimpath,'/settings.vim'],''))    " settin
 " add dirs to runtimepath
 let &runtimepath = printf('%s,%s,%s/after', s:vimpath, &runtimepath, s:vimpath)
 
+" echo &runtimepath
+
 set nocompatible
 filetype off
 "===============================================}}}
@@ -54,10 +56,12 @@ call plug#begin(s:pluginpath)
 
 Plug 'airblade/vim-gitgutter'
 Plug 'altercation/vim-colors-solarized'
-Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'bronson/vim-visual-star-search'
 Plug 'chriskempson/base16-vim'
 Plug 'csexton/trailertrash.vim'
+Plug 'editorconfig/editorconfig-vim'
 Plug 'edkolev/tmuxline.vim'
 Plug 'flazz/vim-colorschemes'
 Plug 'godlygeek/tabular'
@@ -77,8 +81,8 @@ Plug 'Shougo/neomru.vim'
 Plug 'Shougo/unite-outline'
 Plug 'Shougo/unite.vim'
 Plug 'Shougo/vimfiler.vim'
-Plug 'Shougo/vimproc.vim' , { 'do': 'make -f make_mac.mak' }
-Plug 'SirVer/ultisnips'
+Plug 'Shougo/vimproc.vim' , { 'do': 'make -f make_unix.mak' }
+" Plug 'SirVer/ultisnips'
 Plug 'sjl/gundo.vim'
 Plug 'tacroe/unite-mark'
 Plug 'tpope/vim-commentary'
@@ -88,15 +92,17 @@ Plug 'tpope/vim-obsession'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-vividchalk'
-Plug 'Valloric/YouCompleteMe' , { 'do': './install.sh --clang-completer' }
+Plug 'tmatilai/gitolite.vim'
+" Plug 'Valloric/YouCompleteMe' , { 'do': './install.py' }
+" Plug 'Valloric/YouCompleteMe' , { 'do': './install.py --clang-completer' }
 Plug 'vim-scripts/DirDiff.vim'
 Plug 'vim-scripts/DrawIt'
-Plug 'vim-scripts/editorconfig-vim'
 Plug 'vim-scripts/taglist.vim'
+Plug 'vivien/vim-linux-coding-style'
 
 " Personal/Private plugins
-Plug 'git@github.com:tsaeger/vim-snippets'
-" Plug 'tsaeger/vim-snippets'
+" Plug 'git@github.com:tsaeger/vim-snippets'
+Plug 'tsaeger/vim-snippets'
 
 " Not currently used
 " Plug 'kchmck/vim-coffee-script'
@@ -127,15 +133,21 @@ set smartindent
 set smarttab
 set nowrap
 set linebreak
-set ts=4 sw=4 sts=4 et
-" set ts=8 sw=8 sts=8 noet
+" set ts=4 sw=4 sts=4 et
+set ts=8 sw=8 sts=8 noet
 noremap <leader>ne :set ts=4 sw=4 sts=4 et<cr>
 noremap <leader>ke :set ts=8 sw=8 sts=8 noet<cr>
 
 filetype plugin on
 filetype indent on
 
+set listchars=tab:<>,eol:$
+if has('multi_byte')
 set listchars=tab:▸\ ,eol:¬
+endif
+"Example listchars
+"			Tabbed example
+
 "===============================================}}}
 " Folding {{{1
 "==================================================
