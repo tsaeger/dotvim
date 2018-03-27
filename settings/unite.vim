@@ -32,6 +32,7 @@ nnoremap <leader>t :<C-u>Unite -no-split -buffer-name=files   -start-insert file
 "nnoremap <leader>f :<C-u>Unite -no-split -buffer-name=files   -start-insert file<cr>
 "nnoremap <leader>r :<C-u>Unite -no-split -buffer-name=mru     -start-insert file_mru<cr>
 nnoremap <leader>ug :<C-u>Unite -no-split -buffer-name=grep -start-insert grep<cr>
+nnoremap <leader>uu :<C-u>UniteResume<cr>
 nnoremap <leader>o :<C-u>Unite -no-split -buffer-name=outline -start-insert outline<cr>
 nnoremap <leader>y :<C-u>Unite -no-split -buffer-name=yank    history/yank<cr>
 nnoremap <leader>bb :<C-u>Unite -no-split -buffer-name=buffer  buffer<cr>

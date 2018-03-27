@@ -52,32 +52,45 @@ syntax on
 "===============================================}}}
 " Plugins {{{1
 "==================================================
+
+" nixpkgs vim-plugins
+for p in ["youcompleteme"] | exec 'set rtp+=~/.nix-profile/share/vim-plugins/'.p | endfor
+
 call plug#begin(s:pluginpath)
 
 Plug 'airblade/vim-gitgutter'
 Plug 'altercation/vim-colors-solarized'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
 Plug 'bronson/vim-visual-star-search'
+Plug 'chrisbra/nrrwrgn'
+Plug 'chrisbra/vim-diff-enhanced'
 Plug 'chriskempson/base16-vim'
 Plug 'csexton/trailertrash.vim'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'edkolev/tmuxline.vim'
+Plug 'fatih/vim-go'
 Plug 'flazz/vim-colorschemes'
+Plug 'francoiscabrol/ranger.vim'
 Plug 'godlygeek/tabular'
 Plug 'gregsexton/gitv'
 Plug 'henrik/vim-qargs'
+Plug 'igemnace/vim-makery'
 Plug 'jlanzarotta/bufexplorer'
 Plug 'joeytwiddle/vim-multiple-cursors'
+Plug 'junegunn/goyo.vim'
+Plug 'junegunn/gv.vim'
 Plug 'justinmk/vim-sneak'
+Plug 'kablamo/vim-git-log'
 Plug 'marijnh/tern_for_vim'
 Plug 'mileszs/ack.vim'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'nelstrom/vim-mac-classic-theme'
+Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
+Plug 'osyo-manga/unite-quickfix'
 Plug 'rking/ag.vim'
 Plug 'scrooloose/syntastic'
 Plug 'sheerun/vim-polyglot'
 Plug 'Shougo/neomru.vim'
+Plug 'Shougo/neoyank.vim'
 Plug 'Shougo/unite-outline'
 Plug 'Shougo/unite.vim'
 Plug 'Shougo/vimfiler.vim'
@@ -91,13 +104,18 @@ Plug 'tpope/vim-git'
 Plug 'tpope/vim-obsession'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-vinegar'
 Plug 'tpope/vim-vividchalk'
 Plug 'tmatilai/gitolite.vim'
 " Plug 'Valloric/YouCompleteMe' , { 'do': './install.py' }
 " Plug 'Valloric/YouCompleteMe' , { 'do': './install.py --clang-completer' }
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-scripts/DirDiff.vim'
 Plug 'vim-scripts/DrawIt'
+Plug 'vim-scripts/git_patch_tags.vim'
 Plug 'vim-scripts/taglist.vim'
+Plug 'vim-scripts/vim-unite-cscope'
 Plug 'vivien/vim-linux-coding-style'
 
 " Personal/Private plugins

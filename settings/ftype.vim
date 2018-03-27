@@ -11,6 +11,7 @@
 " C/C++
     autocmd BufNewFile,BufRead *.cpp noremap <buffer> <leader><space> :w<cr>:make<cr>
     autocmd BufNewFile,BufRead *.c noremap <buffer> <leader><space> :w<cr>:make<cr>
+    autocmd BufNewFile,BufRead *.c noremap <buffer> <leader>cc :w!<cr>:!gcc -g % ; ./a.out<cr>
 
 " bash
     autocmd BufNewFile,BufRead *.sh noremap <buffer> <leader><space> :w!<cr>:!./%<cr>
