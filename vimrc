@@ -54,21 +54,16 @@ syntax on
 "==================================================
 
 " nixpkgs vim-plugins
-for p in ["youcompleteme"] | exec 'set rtp+=~/.nix-profile/share/vim-plugins/'.p | endfor
+" for p in ["youcompleteme"] | exec 'set rtp+=~/.nix-profile/share/vim-plugins/'.p | endfor
 
 call plug#begin(s:pluginpath)
 
+" Vim workflows
 Plug 'airblade/vim-gitgutter'
-Plug 'altercation/vim-colors-solarized'
 Plug 'bronson/vim-visual-star-search'
 Plug 'chrisbra/nrrwrgn'
 Plug 'chrisbra/vim-diff-enhanced'
-Plug 'chriskempson/base16-vim'
 Plug 'csexton/trailertrash.vim'
-Plug 'editorconfig/editorconfig-vim'
-Plug 'edkolev/tmuxline.vim'
-Plug 'fatih/vim-go'
-Plug 'flazz/vim-colorschemes'
 Plug 'francoiscabrol/ranger.vim'
 Plug 'godlygeek/tabular'
 Plug 'gregsexton/gitv'
@@ -80,24 +75,12 @@ Plug 'junegunn/goyo.vim'
 Plug 'junegunn/gv.vim'
 Plug 'justinmk/vim-sneak'
 Plug 'kablamo/vim-git-log'
-Plug 'marijnh/tern_for_vim'
+" Plug 'junegunn/fzf.vim'
+Plug 'lotabout/skim.vim'
 Plug 'mileszs/ack.vim'
-Plug 'nathanaelkane/vim-indent-guides'
-Plug 'nelstrom/vim-mac-classic-theme'
-Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
-Plug 'osyo-manga/unite-quickfix'
 Plug 'rking/ag.vim'
-Plug 'scrooloose/syntastic'
-Plug 'sheerun/vim-polyglot'
-Plug 'Shougo/neomru.vim'
-Plug 'Shougo/neoyank.vim'
-Plug 'Shougo/unite-outline'
-Plug 'Shougo/unite.vim'
-Plug 'Shougo/vimfiler.vim'
-Plug 'Shougo/vimproc.vim' , { 'do': 'make -f make_unix.mak' }
-" Plug 'SirVer/ultisnips'
+Plug 'nathanaelkane/vim-indent-guides'
 Plug 'sjl/gundo.vim'
-Plug 'tacroe/unite-mark'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-git'
@@ -106,17 +89,42 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-vinegar'
 Plug 'tpope/vim-vividchalk'
-Plug 'tmatilai/gitolite.vim'
-" Plug 'Valloric/YouCompleteMe' , { 'do': './install.py' }
-" Plug 'Valloric/YouCompleteMe' , { 'do': './install.py --clang-completer' }
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-scripts/DirDiff.vim'
 Plug 'vim-scripts/DrawIt'
 Plug 'vim-scripts/git_patch_tags.vim'
 Plug 'vim-scripts/taglist.vim'
-Plug 'vim-scripts/vim-unite-cscope'
 Plug 'vivien/vim-linux-coding-style'
+
+" Colors
+Plug 'altercation/vim-colors-solarized'
+Plug 'chriskempson/base16-vim'
+Plug 'flazz/vim-colorschemes'
+Plug 'edkolev/tmuxline.vim'
+Plug 'nelstrom/vim-mac-classic-theme'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
+" Language/formatting/syntax
+Plug 'fatih/vim-go'
+Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
+Plug 'editorconfig/editorconfig-vim'
+Plug 'sheerun/vim-polyglot'
+Plug 'SirVer/ultisnips'
+Plug 'vim-syntastic/syntastic'
+
+" Completion system
+Plug 'osyo-manga/unite-quickfix'
+Plug 'Shougo/neomru.vim'
+Plug 'Shougo/neoyank.vim'
+Plug 'Shougo/unite-outline'
+Plug 'Shougo/unite.vim'
+Plug 'tacroe/unite-mark'
+Plug 'Shougo/vimfiler.vim'
+Plug 'vim-scripts/vim-unite-cscope'
+Plug 'Shougo/vimproc.vim' , { 'do': 'make -f make_unix.mak' }
+" Plug 'Valloric/YouCompleteMe' , { 'do': './install.py' }
+" Plug 'Valloric/YouCompleteMe' , { 'do': './install.py --clang-completer' }
+
 
 " Personal/Private plugins
 " Plug 'git@github.com:tsaeger/vim-snippets'
@@ -129,6 +137,8 @@ Plug 'tsaeger/vim-snippets'
 " Plug 'vim-scripts/localvimrc'
 " Plug 'vim-scripts/PKGBUILD'
 " Plug 'vim-scripts/taglist-plus'
+" Plug 'marijnh/tern_for_vim'
+" Plug 'tmatilai/gitolite.vim'
 
 
 " Plugins must be added before here
