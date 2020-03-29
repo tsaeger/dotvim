@@ -1,4 +1,5 @@
 " Unite
+if has_key(plugs, 'unite.vim')
 
 " from TrailerTrash
 function! s:unite_settings()
@@ -42,3 +43,5 @@ nnoremap [v :UnitePrevious<cr>
 
 " neomru
 let g:neomru#do_validate = 0
+
+endif

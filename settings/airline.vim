@@ -1,4 +1,5 @@
 " airline
+if has_key(plugs, 'vim-airline')
 
 let g:airline_theme                        = 'badwolf'
 let g:airline_detect_modified              = 1
@@ -25,3 +26,4 @@ let g:tmuxline_separators = {
 
 set laststatus=2
 
+endif

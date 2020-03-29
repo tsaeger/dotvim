@@ -11,7 +11,7 @@ let s:vimpath    = fnamemodify(resolve(expand('<sfile>')), ':p:h')      " direct
 let s:vimrc      = resolve(expand('<sfile>'))                           " vimrc
 let s:backupdir  = fnameescape(join([s:vimpath,'/backups'],''))         " backups
 let s:pluginpath = fnameescape(join([s:vimpath,'/plugged'],''))         " plugins
-let s:settings   = fnameescape(join([s:vimpath,'/settings.vim'],''))    " settings file
+let s:settingspath = fnameescape(join([s:vimpath,'/settings'], ''))     " settings
 
 " echo s:vimrc
 " echo s:vimpath
@@ -55,6 +55,7 @@ syntax on
 
 " nixpkgs vim-plugins
 " for p in ["youcompleteme"] | exec 'set rtp+=~/.nix-profile/share/vim-plugins/'.p | endfor
+for p in ["fzf"] | exec 'set rtp+=~/.nix-profile/share/vim-plugins/'.p | endfor
 
 call plug#begin(s:pluginpath)
 
@@ -75,10 +76,6 @@ Plug 'junegunn/goyo.vim'
 Plug 'junegunn/gv.vim'
 Plug 'justinmk/vim-sneak'
 Plug 'kablamo/vim-git-log'
-" Plug 'junegunn/fzf.vim'
-Plug 'lotabout/skim.vim'
-Plug 'mileszs/ack.vim'
-Plug 'rking/ag.vim'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'sjl/gundo.vim'
 Plug 'tpope/vim-commentary'
@@ -94,6 +91,15 @@ Plug 'vim-scripts/DrawIt'
 Plug 'vim-scripts/git_patch_tags.vim'
 Plug 'vim-scripts/taglist.vim'
 Plug 'vivien/vim-linux-coding-style'
+
+" Finders
+" Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+" Plug 'lotabout/skim.vim'
+" Plug 'mileszs/ack.vim'
+" Plug 'rking/ag.vim'
+" Plug 'jremmen/vim-ripgrep'
+
 
 " Colors
 Plug 'altercation/vim-colors-solarized'
@@ -113,17 +119,19 @@ Plug 'SirVer/ultisnips'
 Plug 'vim-syntastic/syntastic'
 
 " Completion system
-Plug 'osyo-manga/unite-quickfix'
-Plug 'Shougo/neomru.vim'
-Plug 'Shougo/neoyank.vim'
-Plug 'Shougo/unite-outline'
-Plug 'Shougo/unite.vim'
-Plug 'tacroe/unite-mark'
-Plug 'Shougo/vimfiler.vim'
-Plug 'vim-scripts/vim-unite-cscope'
-Plug 'Shougo/vimproc.vim' , { 'do': 'make -f make_unix.mak' }
-" Plug 'Valloric/YouCompleteMe' , { 'do': './install.py' }
-" Plug 'Valloric/YouCompleteMe' , { 'do': './install.py --clang-completer' }
+"" Plug 'osyo-manga/unite-quickfix'
+"" Plug 'Shougo/neomru.vim'
+"" Plug 'Shougo/neoyank.vim'
+"" Plug 'Shougo/unite-outline'
+"" Plug 'Shougo/unite.vim'
+"" Plug 'tacroe/unite-mark'
+"" Plug 'Shougo/vimfiler.vim'
+"" Plug 'vim-scripts/vim-unite-cscope'
+"" Plug 'Shougo/vimproc.vim' , { 'do': 'make -f make_unix.mak' }
+"" " Plug 'Valloric/YouCompleteMe' , { 'do': './install.py' }
+"" " Plug 'Valloric/YouCompleteMe' , { 'do': './install.py --clang-completer' }
+
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 
 " Personal/Private plugins
@@ -205,7 +213,6 @@ endif
 " Settings files {{{1
 "==================================================
 " source all /settings/*.vim files
-let s:settingspath = fnameescape(join([s:vimpath,'/settings'], ''))  " settings
 " echo "settingspath:" . s:settingspath
 for fpath in split(globpath(s:settingspath, '*.vim'), '\n')
   " echo "sourcing:" . fpath
@@ -218,7 +225,6 @@ endfor
 execute "noremap <leader>s :source " . s:vimrc . "<cr>"
 " Fast editing of .vimrc
 execute "noremap <leader>e :e! " . s:vimrc . "<cr>"
-execute "noremap <leader><leader>e :e! " . s:settings . "<cr>"
 " Reload .vimrc when written
 execute "autocmd! bufwritepost " . s:vimrc . " source " . s:vimrc
 "===============================================}}}
