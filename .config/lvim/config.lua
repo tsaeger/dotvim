@@ -4,9 +4,8 @@ lvim.format_on_save = true
 lvim.colorscheme = "onedarker"
 vim.opt["guifont"] = "MesloLGS Nerd Font Mono:h20"
 vim.opt["relativenumber"] = true
--- lvim.use_icons = false
--- 	 <-- example listchars
-vim.opt["listchars"] = "tab:▸·,eol:↲,nbsp:␣,extends:…,space:.,precedes:<,extends:>,trail:·"
+lvim.use_icons = true
+vim.opt["listchars"] = "tab:▸·,eol:↲,nbsp:␣,extends:…,precedes:<,extends:>,trail:␣"
 -- vim.opt["listchars"] = "tab:▸·,nbsp:␣,extends:…,precedes:<,extends:>,trail:·"
 -- vim.opt["listchars"] = "tab:»·,eol:↲,nbsp:␣,extends:…,space:␣,precedes:<,extends:>,trail:·"
 
@@ -24,6 +23,7 @@ lvim.builtin.alpha.mode = "dashboard"
 lvim.builtin.dap.active = true
 lvim.builtin.notify.active = true
 lvim.builtin.terminal.active = true
+-- lvim.builtin.nvimtree.active = false
 lvim.builtin.nvimtree.setup.view.side = "left"
 lvim.builtin.nvimtree.setup.renderer.icons.show.git = false
 lvim.builtin.treesitter.ensure_installed = {
@@ -38,7 +38,7 @@ lvim.builtin.treesitter.ensure_installed = {
   "yaml",
 }
 lvim.builtin.treesitter.ignore_install = { "haskell" }
-lvim.builtin.treesitter.highlight.enabled = true
+lvim.builtin.treesitter.highlight.enable = true
 
 -- LSP settings
 lvim.lsp.diagnostics.virtual_text = false
@@ -66,6 +66,8 @@ lvim.plugins = {
   { "simrat39/symbols-outline.nvim" },
   { "Pocco81/true-zen.nvim" },
   { "gpanders/editorconfig.nvim" },
+  { "sindrets/diffview.nvim" },
+  { "cossonleo/dirdiff.nvim" },
 }
 -- TODO: is there a better way to do this?
 pcall(function() require("symbols-outline").setup() end)
@@ -92,7 +94,7 @@ lvim.builtin.which_key.mappings["z"] = {
   n = { "<cmd>TZNarrow<cr>", "Narrow" },
 }
 
--- Options toggles
+-- Option toggles
 lvim.builtin.which_key.mappings["o"] = {
   name = "+Options",
   c = { "<cmd>OptionToggleCursorline<cr>", "Toggle cursorline" },
