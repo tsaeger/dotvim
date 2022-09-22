@@ -54,6 +54,7 @@ local linters = require "lvim.lsp.null-ls.linters"
 linters.setup {
   -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#Configuration
   { command = "flake8", filetypes = { "python" } },
+  { command = "mypy", filetypes = { "python" } },
   { command = "shellcheck", extra_args = { "--severity", "warning" }, filetypes = { "bash" } },
   { command = "codespell" },
 }
