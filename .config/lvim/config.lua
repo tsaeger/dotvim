@@ -16,10 +16,9 @@ lvim.leader = "space"
 -- vim.keymap.del("n", "<C-Up>")
 -- vim.keymap.set("n", "<C-q>", ":q<cr>" )
 
--- TODO: User Config for predefined plugins
--- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
-lvim.builtin.alpha.active = true
-lvim.builtin.alpha.mode = "dashboard"
+-- config for predefined plugins
+-- NOTE: After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
+lvim.builtin.breadcrumbs.active = true
 lvim.builtin.dap.active = true
 lvim.builtin.notify.active = true
 lvim.builtin.terminal.active = true
@@ -47,7 +46,7 @@ lvim.lsp.diagnostics.virtual_text = false
 local formatters = require "lvim.lsp.null-ls.formatters"
 formatters.setup {
   { command = "black", filetypes = { "python" } },
-  -- { command = "isort", filetypes = { "python" } },
+  { command = "isort", filetypes = { "python" } },
 }
 
 -- linters
@@ -61,20 +60,29 @@ linters.setup {
 
 -- Additional Plugins
 lvim.plugins = {
-  { "folke/trouble.nvim", cmd = "TroubleToggle" },
   { "ggandor/lightspeed.nvim" },
-  { "simrat39/symbols-outline.nvim" },
-  { "Pocco81/true-zen.nvim" },
+  { "j-hui/fidget.nvim" },
   { "gpanders/editorconfig.nvim" },
   { "sindrets/diffview.nvim" },
   { "cossonleo/dirdiff.nvim" },
+  -- { "folke/trouble.nvim", cmd = "TroubleToggle" },
+  -- { "simrat39/symbols-outline.nvim" },
+  -- { "Pocco81/true-zen.nvim" },
 }
--- TODO: is there a better way to do this?
-pcall(function() require("symbols-outline").setup() end)
+pcall(function() require("fidget").setup() end)
 pcall(function() require("optiontoggle").setup() end)
+-- pcall(function() require("symbols-outline").setup() end)
 
 -- which-key bindings
-lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
+if lvim.builtin.which_key.mappings["s"]["s"] == nil then
+  lvim.builtin.which_key.mappings["s"]["s"] = { "<cmd>Telescope resume<CR>", "Resume" }
+end
+if lvim.builtin.which_key.mappings["s"]["P"] == nil then
+  lvim.builtin.which_key.mappings["s"]["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
+end
+if lvim.builtin.which_key.mappings["g"]["t"] == nil then
+  lvim.builtin.which_key.mappings["g"]["t"] = { "<cmd>TermExec cmd=\"tig\"<CR>", "tig" }
+end
 lvim.builtin.which_key.mappings["t"] = {
   name = "+Trouble",
   r = { "<cmd>Trouble lsp_references<cr>", "References" },
@@ -84,7 +92,6 @@ lvim.builtin.which_key.mappings["t"] = {
   l = { "<cmd>Trouble loclist<cr>", "LocationList" },
   w = { "<cmd>Trouble workspace_diagnostics<cr>", "Wordspace Diagnostics" },
 }
-
 -- true-zen
 lvim.builtin.which_key.mappings["z"] = {
   name = "+Zen",
@@ -93,7 +100,6 @@ lvim.builtin.which_key.mappings["z"] = {
   m = { "<cmd>TZMinimalist<cr>", "Minimalist" },
   n = { "<cmd>TZNarrow<cr>", "Narrow" },
 }
-
 -- Option toggles
 lvim.builtin.which_key.mappings["o"] = {
   name = "+Options",
