@@ -74,12 +74,17 @@ pcall(function() require("optiontoggle").setup() end)
 -- pcall(function() require("symbols-outline").setup() end)
 
 -- which-key bindings
+-- Option toggles
+lvim.builtin.which_key.mappings["o"] = require("optiontoggle").get_which_key_mappings()
+
+-- Telescope additions
 if lvim.builtin.which_key.mappings["s"]["s"] == nil then
   lvim.builtin.which_key.mappings["s"]["s"] = { "<cmd>Telescope resume<CR>", "Resume" }
 end
 if lvim.builtin.which_key.mappings["s"]["P"] == nil then
   lvim.builtin.which_key.mappings["s"]["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
 end
+-- Term tig
 if lvim.builtin.which_key.mappings["g"]["t"] == nil then
   lvim.builtin.which_key.mappings["g"]["t"] = { "<cmd>TermExec cmd=\"tig\"<CR>", "tig" }
 end
@@ -99,20 +104,6 @@ lvim.builtin.which_key.mappings["z"] = {
   f = { "<cmd>TZFocus<cr>", "Focus" },
   m = { "<cmd>TZMinimalist<cr>", "Minimalist" },
   n = { "<cmd>TZNarrow<cr>", "Narrow" },
-}
--- Option toggles
-lvim.builtin.which_key.mappings["o"] = {
-  name = "+Options",
-  c = { "<cmd>OptionToggleCursorline<cr>", "Toggle cursorline" },
-  C = { "<cmd>OptionToggleCursorcolumn<cr>", "Toggle cursorcolumn" },
-  g = { "<cmd>OptionToggleGitsigns<cr>", "Toggle git signs" },
-  h = { "<cmd>OptionToggleHlsearch<cr>", "Toggle hlsearch" },
-  l = { "<cmd>OptionToggleList<cr>", "Toggle list" },
-  n = { "<cmd>OptionToggleNumber<cr>", "Toggle number" },
-  p = { "<cmd>OptionTogglePaste<cr>", "Toggle paste" },
-  o = { "<cmd>OptionToggleColorcolumn<cr>", "Toggle colorcolumn" },
-  s = { "<cmd>OptionToggleSpell<cr>", "Toggle spell" },
-  w = { "<cmd>OptionToggleWrap<cr>", "Toggle wrap" },
 }
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)

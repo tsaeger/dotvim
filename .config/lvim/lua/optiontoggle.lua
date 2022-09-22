@@ -60,6 +60,48 @@ _M.OptionToggleWrap = function()
   vim.o.wrap = not vim.o.wrap
 end
 
+_M.OptionToggleIndentlines = function()
+  pcall(function() vim.cmd [[ IndentBlanklineToggle ]] end)
+end
+
+_M.OptionToggleEdit2 = function()
+  vim.opt.shiftwidth = 2
+  vim.opt.tabstop = 2
+  vim.opt.expandtab = true
+end
+
+_M.OptionToggleEdit4 = function()
+  vim.opt.shiftwidth = 4
+  vim.opt.tabstop = 4
+  vim.opt.expandtab = true
+end
+
+_M.OptionToggleEdit8 = function()
+  vim.opt.shiftwidth = 8
+  vim.opt.tabstop = 8
+  vim.opt.expandtab = false
+end
+
+_M.get_which_key_mappings = function()
+  return {
+    name = "+Options",
+    c = { "<cmd>OptionToggleCursorline<cr>", "Toggle cursorline" },
+    C = { "<cmd>OptionToggleCursorcolumn<cr>", "Toggle cursorcolumn" },
+    g = { "<cmd>OptionToggleGitsigns<cr>", "Toggle git signs" },
+    h = { "<cmd>OptionToggleHlsearch<cr>", "Toggle hlsearch" },
+    i = { "<cmd>OptionToggleIndentlines<cr>", "Toggle indent" },
+    l = { "<cmd>OptionToggleList<cr>", "Toggle list" },
+    n = { "<cmd>OptionToggleNumber<cr>", "Toggle number" },
+    p = { "<cmd>OptionTogglePaste<cr>", "Toggle paste" },
+    o = { "<cmd>OptionToggleColorcolumn<cr>", "Toggle colorcolumn" },
+    s = { "<cmd>OptionToggleSpell<cr>", "Toggle spell" },
+    w = { "<cmd>OptionToggleWrap<cr>", "Toggle wrap" },
+    z = { "<cmd>OptionToggleEdit2<cr>", "sw=2 ts=2 et" },
+    x = { "<cmd>OptionToggleEdit4<cr>", "sw=4 ts=4 et" },
+    k = { "<cmd>OptionToggleEdit8<cr>", "sw=8 ts=8 noet" },
+  }
+end
+
 _M.setup = function(options)
   _M.options = with_defaults(options)
   for k, v in pairs(_M) do
