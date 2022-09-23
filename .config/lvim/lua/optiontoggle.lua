@@ -67,18 +67,21 @@ end
 _M.OptionToggleEdit2 = function()
   vim.opt.shiftwidth = 2
   vim.opt.tabstop = 2
+  vim.opt.softtabstop = 2
   vim.opt.expandtab = true
 end
 
 _M.OptionToggleEdit4 = function()
   vim.opt.shiftwidth = 4
   vim.opt.tabstop = 4
+  vim.opt.softtabstop = 4
   vim.opt.expandtab = true
 end
 
 _M.OptionToggleEdit8 = function()
   vim.opt.shiftwidth = 8
   vim.opt.tabstop = 8
+  vim.opt.softtabstop = 8
   vim.opt.expandtab = false
 end
 
@@ -96,9 +99,9 @@ _M.get_which_key_mappings = function()
     o = { "<cmd>OptionToggleColorcolumn<cr>", "Toggle colorcolumn" },
     s = { "<cmd>OptionToggleSpell<cr>", "Toggle spell" },
     w = { "<cmd>OptionToggleWrap<cr>", "Toggle wrap" },
-    z = { "<cmd>OptionToggleEdit2<cr>", "sw=2 ts=2 et" },
-    x = { "<cmd>OptionToggleEdit4<cr>", "sw=4 ts=4 et" },
-    k = { "<cmd>OptionToggleEdit8<cr>", "sw=8 ts=8 noet" },
+    ["2"] = { "<cmd>OptionToggleEdit2<cr>", "sw=2 ts=2 sts=2 et" },
+    ["4"] = { "<cmd>OptionToggleEdit4<cr>", "sw=4 ts=4 sts=4 et" },
+    ["8"] = { "<cmd>OptionToggleEdit8<cr>", "sw=8 ts=8 sts=8 noet" },
   }
 end
 

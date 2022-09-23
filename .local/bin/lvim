@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# force /usr/bin first so TSInstall finds /usr/bin/cc
+export PATH="/usr/bin:$PATH"
 export LUNARVIM_RUNTIME_DIR="${LUNARVIM_RUNTIME_DIR:-"/Users/tsaeger/.local/share/lunarvim"}"
 export LUNARVIM_CONFIG_DIR="${LUNARVIM_CONFIG_DIR:-"/Users/tsaeger/.config/lvim"}"
 export LUNARVIM_CACHE_DIR="${LUNARVIM_CACHE_DIR:-"/Users/tsaeger/.cache/lvim"}"

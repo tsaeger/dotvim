@@ -22,17 +22,18 @@ lvim.builtin.breadcrumbs.active = true
 lvim.builtin.dap.active = true
 lvim.builtin.notify.active = true
 lvim.builtin.terminal.active = true
+-- lvim.builtin.indentlines.active = false
 -- lvim.builtin.nvimtree.active = false
 lvim.builtin.nvimtree.setup.view.side = "left"
 lvim.builtin.nvimtree.setup.renderer.icons.show.git = false
 lvim.builtin.treesitter.ensure_installed = {
   "bash",
   "c",
+  "css",
   "javascript",
   "json",
   "lua",
   "python",
-  "css",
   "rust",
   "yaml",
 }
@@ -89,23 +90,23 @@ end
 if lvim.builtin.which_key.mappings["g"]["t"] == nil then
   lvim.builtin.which_key.mappings["g"]["t"] = { "<cmd>TermExec cmd=\"tig\"<CR>", "tig" }
 end
-lvim.builtin.which_key.mappings["t"] = {
-  name = "+Trouble",
-  r = { "<cmd>Trouble lsp_references<cr>", "References" },
-  f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
-  d = { "<cmd>Trouble document_diagnostics<cr>", "Diagnostics" },
-  q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
-  l = { "<cmd>Trouble loclist<cr>", "LocationList" },
-  w = { "<cmd>Trouble workspace_diagnostics<cr>", "Wordspace Diagnostics" },
-}
+-- lvim.builtin.which_key.mappings["t"] = {
+--   name = "+Trouble",
+--   r = { "<cmd>Trouble lsp_references<cr>", "References" },
+--   f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
+--   d = { "<cmd>Trouble document_diagnostics<cr>", "Diagnostics" },
+--   q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
+--   l = { "<cmd>Trouble loclist<cr>", "LocationList" },
+--   w = { "<cmd>Trouble workspace_diagnostics<cr>", "Wordspace Diagnostics" },
+-- }
 -- true-zen
-lvim.builtin.which_key.mappings["z"] = {
-  name = "+Zen",
-  a = { "<cmd>TZAtaraxis<cr>", "Ataraxis" },
-  f = { "<cmd>TZFocus<cr>", "Focus" },
-  m = { "<cmd>TZMinimalist<cr>", "Minimalist" },
-  n = { "<cmd>TZNarrow<cr>", "Narrow" },
-}
+-- lvim.builtin.which_key.mappings["z"] = {
+--   name = "+Zen",
+--   a = { "<cmd>TZAtaraxis<cr>", "Ataraxis" },
+--   f = { "<cmd>TZFocus<cr>", "Focus" },
+--   m = { "<cmd>TZMinimalist<cr>", "Minimalist" },
+--   n = { "<cmd>TZNarrow<cr>", "Narrow" },
+-- }
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
 vim.api.nvim_create_autocmd("FileType", {
