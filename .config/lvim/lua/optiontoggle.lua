@@ -11,12 +11,18 @@ local function with_defaults(options)
   }
 end
 
+local _toggleopt = function(opt)
+  local val = not vim.o[opt]
+  vim.o[opt] = val
+  vim.notify(opt .. " set to " .. tostring(val))
+end
+
 _M.OptionToggleCursorline = function()
-  vim.o.cursorline = not vim.o.cursorline
+  _toggleopt("cursorline")
 end
 
 _M.OptionToggleCursorcolumn = function()
-  vim.o.cursorcolumn = not vim.o.cursorcolumn
+  _toggleopt("cursorcolumn")
 end
 
 _M.OptionToggleGitsigns = function()
@@ -24,20 +30,20 @@ _M.OptionToggleGitsigns = function()
 end
 
 _M.OptionToggleHlsearch = function()
-  vim.o.hlsearch = not vim.o.hlsearch
+  _toggleopt("hlsearch")
 end
 
 _M.OptionToggleList = function()
-  vim.o.list = not vim.o.list
+  _toggleopt("list")
 end
 
 _M.OptionToggleNumber = function()
-  vim.o.number = not vim.o.number
-  vim.o.relativenumber = not vim.o.relativenumber
+  _toggleopt("number")
+  _toggleopt("relativenumber")
 end
 
 _M.OptionTogglePaste = function()
-  vim.o.paste = not vim.o.paste
+  _toggleopt("paste")
 end
 
 _M.OptionToggleColorcolumn = function()
@@ -53,11 +59,11 @@ _M.OptionToggleColorcolumn = function()
 end
 
 _M.OptionToggleSpell = function()
-  vim.o.spell = not vim.o.spell
+  _toggleopt("spell")
 end
 
 _M.OptionToggleWrap = function()
-  vim.o.wrap = not vim.o.wrap
+  _toggleopt("wrap")
 end
 
 _M.OptionToggleIndentlines = function()
