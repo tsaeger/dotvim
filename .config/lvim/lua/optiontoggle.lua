@@ -85,11 +85,18 @@ _M.OptionToggleEdit8 = function()
   vim.opt.expandtab = false
 end
 
+_M.OptionToggleFolds = function()
+  vim.opt.foldmethod = "indent"
+  vim.opt.foldlevel = 0
+  vim.opt.foldmethod = "manual"
+end
+
 _M.get_which_key_mappings = function()
   return {
     name = "+Options",
     c = { "<cmd>OptionToggleCursorline<cr>", "Toggle cursorline" },
     C = { "<cmd>OptionToggleCursorcolumn<cr>", "Toggle cursorcolumn" },
+    f = { "<cmd>OptionToggleFold<cr>", "Toggle indent folds" },
     g = { "<cmd>OptionToggleGitsigns<cr>", "Toggle git signs" },
     h = { "<cmd>OptionToggleHlsearch<cr>", "Toggle hlsearch" },
     i = { "<cmd>OptionToggleIndentlines<cr>", "Toggle indent" },
