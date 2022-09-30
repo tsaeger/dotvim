@@ -67,12 +67,12 @@ lvim.plugins = {
   -- { "Pocco81/true-zen.nvim" },
 }
 pcall(function() require("fidget").setup() end)
-pcall(function() require("optiontoggle").setup() end)
+pcall(function() require("user.optiontoggle").setup() end)
 -- pcall(function() require("symbols-outline").setup() end)
 
 -- which-key bindings
 -- Option toggles
-lvim.builtin.which_key.mappings["o"] = require("optiontoggle").get_which_key_mappings()
+lvim.builtin.which_key.mappings["o"] = require("user.optiontoggle").get_which_key_mappings()
 
 -- Telescope additions
 if lvim.builtin.which_key.mappings["s"]["s"] == nil then
