@@ -1,29 +1,24 @@
 -- general
-lvim.log.level = "warn"
-lvim.format_on_save = true
-lvim.colorscheme = "onedarker"
 vim.opt["guifont"] = "MesloLGS Nerd Font Mono:h20"
 vim.opt["relativenumber"] = true
-lvim.use_icons = true
 vim.opt["listchars"] = "tab:▸·,eol:↲,nbsp:␣,extends:…,precedes:<,extends:>,trail:␣"
 -- vim.opt["listchars"] = "tab:▸·,nbsp:␣,extends:…,precedes:<,extends:>,trail:·"
 -- vim.opt["listchars"] = "tab:»·,eol:↲,nbsp:␣,extends:…,space:␣,precedes:<,extends:>,trail:·"
+lvim.log.level = "warn"
+lvim.format_on_save = true
+lvim.colorscheme = "onedarker"
+lvim.use_icons = true
 
 -- keymappings [view all the defaults by pressing <leader>Lk]
 lvim.leader = "space"
--- lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
--- lvim.keys.normal_mode["<C-q>"] = ":q<cr>"
--- vim.keymap.del("n", "<C-Up>")
--- vim.keymap.set("n", "<C-q>", ":q<cr>" )
 
 -- config for predefined plugins
 -- NOTE: After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
 lvim.builtin.breadcrumbs.active = true
+lvim.builtin.bufferline.active = false
 lvim.builtin.dap.active = true
 lvim.builtin.notify.active = true
 lvim.builtin.terminal.active = true
--- lvim.builtin.indentlines.active = false
--- lvim.builtin.nvimtree.active = false
 lvim.builtin.nvimtree.setup.view.side = "left"
 lvim.builtin.nvimtree.setup.renderer.icons.show.git = false
 lvim.builtin.treesitter.ensure_installed = {
