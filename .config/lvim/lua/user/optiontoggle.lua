@@ -92,8 +92,14 @@ _M.OptionToggleEdit8 = function()
 end
 
 _M.OptionToggleFolds = function()
-  vim.opt.foldmethod = "indent"
+  -- TODO: cycle through fold methods {"treesitter", "indent", "off"}
+  -- vim.opt.foldmethod = "indent"
+  -- vim.opt.foldlevel = 0
+  -- vim.opt.foldmethod = "manual"
+  vim.opt.foldmethod = "expr"
+  vim.cmd [[ set foldexpr=nvim_treesitter#foldexpr() ]]
   vim.opt.foldlevel = 0
+  -- set back to manual to allow zE to delete all folds
   vim.opt.foldmethod = "manual"
 end
 
