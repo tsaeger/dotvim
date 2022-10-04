@@ -35,7 +35,7 @@ _M.OptionToggleCursorcolumn = function()
 end
 
 _M.OptionToggleGitsigns = function()
-  vim.cmd [[ Gitsigns toggle_signs ]]
+  vim.cmd([[ Gitsigns toggle_signs ]])
 end
 
 _M.OptionToggleHlsearch = function()
@@ -85,7 +85,9 @@ _M.OptionToggleWrap = function()
 end
 
 _M.OptionToggleIndentlines = function()
-  pcall(function() vim.cmd [[ IndentBlanklineToggle ]] end)
+  pcall(function()
+    vim.cmd([[ IndentBlanklineToggle ]])
+  end)
 end
 
 _M.OptionToggleEdit2 = function()
@@ -120,14 +122,14 @@ _M.OptionToggleFolds = function()
   local method = _M._state and _M._state.foldmode or "treesitter"
   if method == "treesitter" then
     vim.opt.foldmethod = "expr"
-    vim.cmd [[ set foldexpr=nvim_treesitter#foldexpr() ]]
+    vim.cmd([[ set foldexpr=nvim_treesitter#foldexpr() ]])
     _M._state.foldmode = "indent"
   elseif method == "indent" then
     vim.opt.foldmethod = "indent"
     _M._state.foldmode = "off"
   else
     vim.opt.foldmethod = "manual"
-    vim.cmd('normal zE')
+    vim.cmd("normal zE")
     _M._state.foldmode = "treesitter"
   end
   vim.notify("indent method set to " .. method)
