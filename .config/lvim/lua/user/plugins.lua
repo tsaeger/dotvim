@@ -1,19 +1,16 @@
 -- Additional Plugins
 lvim.plugins = {
-  { "rcarriga/nvim-dap-ui" },
-  { "ggandor/lightspeed.nvim" },
-  { "j-hui/fidget.nvim" },
-  { "gpanders/editorconfig.nvim" },
-  { "sindrets/diffview.nvim" },
   { "cossonleo/dirdiff.nvim" },
+  { "ggandor/lightspeed.nvim" },
+  { "gpanders/editorconfig.nvim" },
+  { "j-hui/fidget.nvim" },
+  { "karb94/neoscroll.nvim" },
   { "simrat39/rust-tools.nvim" },
+  { "sindrets/diffview.nvim" },
   { "zegervdv/settle.nvim" },
-  -- { "folke/trouble.nvim", cmd = "TroubleToggle" },
-  -- { "simrat39/symbols-outline.nvim" },
-  -- { "Pocco81/true-zen.nvim" },
 }
-pcall(function() require("fidget").setup() end)
 pcall(function() require("user.optiontoggle").setup() end)
+pcall(function() require("fidget").setup() end)
 pcall(function() require("rust-tools").setup(
     {
       tools = {
@@ -30,7 +27,7 @@ pcall(function() require("rust-tools").setup(
               enable = true,
             },
             checkOnSave = {
-              command = "clippy",
+              command = "cargo clippy",
             },
           },
         },
@@ -52,4 +49,3 @@ pcall(function() require("settle").setup(
     }
   )
 end)
--- pcall(function() require("symbols-outline").setup() end)
