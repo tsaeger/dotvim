@@ -1,11 +1,5 @@
 vim.opt["guifont"] = "MesloLGS Nerd Font Mono:h20"
 vim.opt["relativenumber"] = true
-local listchars_sets = {
-  [1] = "tab:▸·,eol:↲,nbsp:␣,extends:…,precedes:<,extends:>,trail:␣",
-  [2] = "tab:▸·,nbsp:␣,extends:…,precedes:<,extends:>,trail:·",
-  [3] = "tab:»·,eol:↲,nbsp:␣,extends:…,space:␣,precedes:<,extends:>,trail:·",
-}
-vim.opt["listchars"] = listchars_sets[1]
 
 lvim.log.level = "warn"
 lvim.format_on_save = true
