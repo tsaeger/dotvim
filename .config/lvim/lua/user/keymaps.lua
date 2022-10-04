@@ -1,6 +1,18 @@
 -- keymappings [view all the defaults by pressing <leader>Lk]
 lvim.leader = "space"
 
+-- take-back vim built-ins
+lvim.keys.visual_block_mode["J"] = false
+lvim.keys.visual_block_mode["K"] = false
+
+-- MacOS "Option-key" equivalent of Alt mappings
+if vim.fn.has "mac" == 1 then
+  -- Option-j ∆
+  lvim.keys.visual_block_mode["∆"] = ":m '>+1<CR>gv-gv"
+  -- Option-k ˚
+  lvim.keys.visual_block_mode["˚"] = ":m '<-2<CR>gv-gv"
+end
+
 -- which-key bindings
 -- Option toggles
 lvim.builtin.which_key.mappings["o"] = require("user.optiontoggle").get_which_key_mappings()
@@ -19,24 +31,7 @@ end
 lvim.builtin.which_key.mappings["b"] = {
   name = "Buffers",
   b = { "<cmd>Telescope buffers<cr>", "List" },
-  c = { "<cmd>bdelete<cr>", "Close" },
+  d = { "<cmd>bdelete<cr>", "Delete" },
   n = { "<cmd>bnext<cr>", "Next" },
   p = { "<cmd>bprev<cr>", "Prev" },
 }
--- lvim.builtin.which_key.mappings["t"] = {
---   name = "+Trouble",
---   r = { "<cmd>Trouble lsp_references<cr>", "References" },
---   f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
---   d = { "<cmd>Trouble document_diagnostics<cr>", "Diagnostics" },
---   q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
---   l = { "<cmd>Trouble loclist<cr>", "LocationList" },
---   w = { "<cmd>Trouble workspace_diagnostics<cr>", "Wordspace Diagnostics" },
--- }
--- true-zen
--- lvim.builtin.which_key.mappings["z"] = {
---   name = "+Zen",
---   a = { "<cmd>TZAtaraxis<cr>", "Ataraxis" },
---   f = { "<cmd>TZFocus<cr>", "Focus" },
---   m = { "<cmd>TZMinimalist<cr>", "Minimalist" },
---   n = { "<cmd>TZNarrow<cr>", "Narrow" },
--- }
