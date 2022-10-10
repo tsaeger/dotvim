@@ -12,11 +12,12 @@ _M._state = {
 local function with_defaults(options)
   return {
     colorcolumn = options and options.colorcolumn or "79",
-    listchars_sets = {
-      [1] = "tab:▸·,eol:↲,nbsp:␣,extends:…,precedes:<,extends:>,trail:␣",
-      [2] = "tab:»·,eol:↲,nbsp:␣,extends:…,space:␣,precedes:<,extends:>,trail:·",
-      -- [3] = "tab:▸·,nbsp:␣,extends:…,precedes:<,extends:>,trail:·",
-    },
+    listchars_sets = options and options.listchars_sets
+      or {
+        [1] = "tab:→ ,eol:↲,nbsp:␣,extends:…,precedes:<,extends:>,trail:␣",
+        [2] = "tab:»·,eol:↲,nbsp:␣,extends:…,space:␣,precedes:<,extends:>,trail:·",
+        -- [3] = "tab:▸·,nbsp:␣,extends:…,precedes:<,extends:>,trail:·",
+      },
   }
 end
 
@@ -44,6 +45,11 @@ end
 
 _M.OptionToggleList = function()
   _toggleopt("list")
+  if vim.o.list then
+    pcall(function()
+      vim.cmd([[ IndentBlanklineDisable ]])
+    end)
+  end
 end
 
 _M.OptionToggleListchars = function()
