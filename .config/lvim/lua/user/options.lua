@@ -4,14 +4,14 @@ vim.opt["relativenumber"] = true
 lvim.log.level = "warn"
 lvim.format_on_save = true
 lvim.colorscheme = "onedarker"
-lvim.use_icons = true
 lvim.builtin.breadcrumbs.active = true
 lvim.builtin.bufferline.active = false
-lvim.builtin.dap.active = true
-lvim.builtin.notify.active = true
-lvim.builtin.terminal.active = true
-lvim.builtin.nvimtree.setup.view.side = "left"
-lvim.builtin.nvimtree.setup.renderer.icons.show.git = false
+-- lvim.use_icons = true
+-- lvim.builtin.dap.active = true
+-- lvim.builtin.notify.active = true
+-- lvim.builtin.terminal.active = true
+-- lvim.builtin.nvimtree.setup.view.side = "left"
+-- lvim.builtin.nvimtree.setup.renderer.icons.show.git = false
 lvim.builtin.treesitter.ensure_installed = {
   "bash",
   "c",
@@ -21,7 +21,8 @@ lvim.builtin.treesitter.ensure_installed = {
   "lua",
   "python",
   "rust",
+  "toml",
   "yaml",
 }
 lvim.builtin.treesitter.ignore_install = { "haskell" }
-lvim.builtin.treesitter.highlight.enable = true
+-- lvim.builtin.treesitter.highlight.enable = true
