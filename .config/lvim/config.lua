@@ -1,6 +1,8 @@
 require("user.options")
 require("user.lsp")
+require("user.dap")
 require("user.plugins")
+require("user.rust-tools")
 require("user.neoscroll")
 require("user.keymaps")
 require("user.autocommands")

@@ -1,4 +1,6 @@
 -- LSP settings
+vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "rust_analyzer" })
+
 lvim.lsp.diagnostics.virtual_text = false
 
 -- formatters
