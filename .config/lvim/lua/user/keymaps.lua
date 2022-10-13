@@ -4,8 +4,8 @@
 lvim.leader = "space"
 
 -- take-back vim built-ins
-lvim.keys.visual_block_mode["J"] = false
-lvim.keys.visual_block_mode["K"] = false
+-- lvim.keys.visual_block_mode["J"] = false
+-- lvim.keys.visual_block_mode["K"] = false
 
 -- MacOS "Option-key" equivalent of Alt mappings
 if vim.fn.has("mac") == 1 then
