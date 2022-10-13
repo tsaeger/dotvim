@@ -1,5 +1,6 @@
 vim.opt["guifont"] = "MesloLGS Nerd Font Mono:h20"
 vim.opt["relativenumber"] = true
+vim.opt["wrap"] = false
 
 lvim.log.level = "warn"
 lvim.format_on_save = true
