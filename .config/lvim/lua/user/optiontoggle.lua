@@ -1,21 +1,23 @@
 -- Description: neovim plugin to toggle various options
 --      Author: Tom Saeger <tom.saeger@gmail.com>
 --        Date: September 2022
+-- Assumptions: Treesitter, Gitsigns, IndentBlankline
 
 local _M = {}
 _M.options = nil
 _M._state = {
   foldmode = "treesitter",
   listchar_index = 1,
+  listchar_indent_state = nil,
 }
 
-local function with_defaults(options)
+local with_defaults = function(options)
   return {
     colorcolumn = options and options.colorcolumn or "79",
     listchars_sets = options and options.listchars_sets
       or {
-        [1] = "tab:→ ,eol:↲,nbsp:␣,extends:…,precedes:<,extends:>,trail:␣",
-        [2] = "tab:»·,eol:↲,nbsp:␣,extends:…,space:␣,precedes:<,extends:>,trail:·",
+        [1] = "tab:→ ,eol:↲,nbsp:␣,extends:…,precedes:<,extends:>,trail:·",
+        [2] = "tab:→ ,eol:↲,nbsp:␣,extends:…,precedes:<,extends:>,trail:·,space:␣",
         -- [3] = "tab:▸·,nbsp:␣,extends:…,precedes:<,extends:>,trail:·",
       },
   }
@@ -43,12 +45,19 @@ _M.OptionToggleHlsearch = function()
   _toggleopt("hlsearch")
 end
 
+--- Toggle list and IndentBlankline if active
 _M.OptionToggleList = function()
   _toggleopt("list")
-  if vim.o.list then
+  if vim.o.list and vim.b.__indent_blankline_active then
     pcall(function()
       vim.cmd([[ IndentBlanklineDisable ]])
     end)
+    _M._state.listchar_indent_state = true
+  elseif _M._state.listchar_indent_state then
+    pcall(function()
+      vim.cmd([[ IndentBlanklineEnable ]])
+    end)
+    _M._state.listchar_indent_state = nil
   end
 end
 
