@@ -1,7 +1,7 @@
 -- Description: neovim plugin to toggle various options
 --      Author: Tom Saeger <tom.saeger@gmail.com>
 --        Date: September 2022
--- Assumptions: Treesitter, Gitsigns, IndentBlankline
+-- Assumptions: Treesitter, Gitsigns, IndentBlankline, Lvim
 
 local _M = {}
 _M.options = nil
@@ -153,12 +153,17 @@ _M.OptionToggleFolds = function()
   vim.opt.foldmethod = "manual"
 end
 
+_M.OptionToggleFormatOnSave = function()
+  vim.cmd("LvimToggleFormatOnSave")
+end
+
 _M.get_which_key_mappings = function()
   return {
     name = "+Options",
     c = { "<cmd>OptionToggleCursorline<cr>", "Toggle cursorline" },
     C = { "<cmd>OptionToggleCursorcolumn<cr>", "Toggle cursorcolumn" },
     f = { "<cmd>OptionToggleFolds<cr>", "Cycle folds" },
+    F = { "<cmd>OptionToggleFormatOnSave<cr>", "Toggle Format on save" },
     g = { "<cmd>OptionToggleGitsigns<cr>", "Toggle git signs" },
     h = { "<cmd>OptionToggleHlsearch<cr>", "Toggle hlsearch" },
     i = { "<cmd>OptionToggleIndentlines<cr>", "Toggle indent" },
