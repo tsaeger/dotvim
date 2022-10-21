@@ -5,8 +5,9 @@ lvim.plugins = {
   { "gpanders/editorconfig.nvim" },
   { "jghauser/mkdir.nvim" },
   { "karb94/neoscroll.nvim" },
-  { "sindrets/diffview.nvim" },
+  { "sainnhe/sonokai" },
   { "simrat39/rust-tools.nvim" },
+  { "sindrets/diffview.nvim" },
   {
     "j-hui/fidget.nvim",
     config = function()
@@ -40,6 +41,18 @@ lvim.plugins = {
           close = "-q",
         },
       })
+    end,
+  },
+  {
+    "catppuccin/nvim",
+    as = "catppuccin",
+    config = function()
+      -- vim.g.catppuccin_flavour = "macchiato"
+      -- vim.g.catppuccin_flavour = "latte"
+      -- vim.g.catppuccin_flavour = "frappe"
+      vim.g.catppuccin_flavour = "mocha"
+      -- require("catppuccin").setup()
+      -- vim.api.nvim_command("colorscheme catppuccin")
     end,
   },
 }
