@@ -1,12 +1,13 @@
+vim.opt["backup"] = false
 vim.opt["guifont"] = "MesloLGS Nerd Font Mono:h20"
 vim.opt["relativenumber"] = true
 vim.opt["wrap"] = false
 
-lvim.log.level = "warn"
-lvim.format_on_save = true
-lvim.colorscheme = "onedarker"
 lvim.builtin.breadcrumbs.active = true
 lvim.builtin.bufferline.active = false
+lvim.colorscheme = "onedarker"
+lvim.format_on_save = false
+lvim.log.level = "warn"
 -- lvim.use_icons = true
 -- lvim.builtin.dap.active = true
 -- lvim.builtin.notify.active = true
