@@ -5,9 +5,10 @@ vim.opt["wrap"] = false
 
 lvim.builtin.breadcrumbs.active = true
 lvim.builtin.bufferline.active = false
-lvim.colorscheme = "onedarker"
 lvim.builtin.dap.active = true
 lvim.builtin.terminal.active = true
+lvim.colorscheme = "lunar"
+-- lvim.colorscheme = "onedarker"
 lvim.format_on_save = false
 lvim.log.level = "warn"
 -- lvim.use_icons = true
