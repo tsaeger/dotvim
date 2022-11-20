@@ -43,6 +43,29 @@ lvim.plugins = {
       })
     end,
   },
+  -- python
+  { "AckslD/swenv.nvim" },
+  { "mfussenegger/nvim-dap-python" },
+  {
+    -- generate docstrings
+    "danymat/neogen",
+    config = function()
+      require("neogen").setup {
+        enabled = true,
+        languages = {
+          python = {
+            template = {
+              annotation_convention = "numpydoc",
+            },
+          },
+        },
+      }
+    end,
+  },
+  {
+    "dccsillag/magma-nvim",
+    run = ":UpdateRemotePlugins"
+  },
   -- rust
   { "simrat39/rust-tools.nvim" },
   {
