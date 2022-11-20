@@ -1,14 +1,13 @@
 -- Additional Plugins
 lvim.plugins = {
-  { "cossonleo/dirdiff.nvim" },
+  -- general editor
   { "ggandor/lightspeed.nvim" },
-  { "gpanders/editorconfig.nvim" },
   { "jghauser/mkdir.nvim" },
   { "karb94/neoscroll.nvim" },
-  { "nvim-treesitter/nvim-treesitter-textobjects" },
-  { "sainnhe/sonokai" },
-  { "simrat39/rust-tools.nvim" },
+  { "cossonleo/dirdiff.nvim" },
   { "sindrets/diffview.nvim" },
+  { "gpanders/editorconfig.nvim" },
+  { "nvim-treesitter/nvim-treesitter-textobjects" },
   {
     "kylechui/nvim-surround",
     config = function()
@@ -29,6 +28,24 @@ lvim.plugins = {
     end,
   },
   {
+    "zegervdv/settle.nvim",
+    config = function()
+      require("settle").setup({
+        wrap = true,
+        symbol = "!",
+        keymaps = {
+          next_conflict = "-n",
+          prev_conflict = "-N",
+          use_ours = "-u1",
+          use_theirs = "-u2",
+          close = "-q",
+        },
+      })
+    end,
+  },
+  -- rust
+  { "simrat39/rust-tools.nvim" },
+  {
     "j-hui/fidget.nvim",
     config = function()
       require("fidget").setup()
@@ -47,22 +64,8 @@ lvim.plugins = {
       })
     end,
   },
-  {
-    "zegervdv/settle.nvim",
-    config = function()
-      require("settle").setup({
-        wrap = true,
-        symbol = "!",
-        keymaps = {
-          next_conflict = "-n",
-          prev_conflict = "-N",
-          use_ours = "-u1",
-          use_theirs = "-u2",
-          close = "-q",
-        },
-      })
-    end,
-  },
+  -- colorschemes
+  { "sainnhe/sonokai" },
   {
     "catppuccin/nvim",
     as = "catppuccin",
