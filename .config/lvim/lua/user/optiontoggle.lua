@@ -4,24 +4,11 @@
 -- Assumptions: Treesitter, Gitsigns, IndentBlankline, Lvim
 
 local _M = {}
-_M.options = nil
 _M._state = {
   foldmode = "treesitter",
   listchar_index = 1,
   listchar_indent_state = nil,
 }
-
-local with_defaults = function(options)
-  return {
-    colorcolumn = options and options.colorcolumn or "79",
-    listchars_sets = options and options.listchars_sets
-      or {
-        [1] = "tab:→ ,eol:↲,nbsp:␣,extends:…,precedes:<,extends:>,trail:·",
-        [2] = "tab:→ ,eol:↲,nbsp:␣,extends:…,precedes:<,extends:>,trail:·,space:␣",
-        -- [3] = "tab:▸·,nbsp:␣,extends:…,precedes:<,extends:>,trail:·",
-      },
-  }
-end
 
 local _toggleopt = function(opt)
   local val = not vim.o[opt]
@@ -185,7 +172,16 @@ _M.get_which_key_mappings = function()
 end
 
 _M.setup = function(options)
-  _M.options = with_defaults(options)
+  -- defaults
+  _M.options = vim.tbl_extend("force", options or {}, {
+    colorcolumn = "79",
+    listchars_sets = {
+      [1] = "tab:→ ,eol:↲,nbsp:␣,extends:…,precedes:<,extends:>,trail:·",
+      [2] = "tab:→ ,eol:↲,nbsp:␣,extends:…,precedes:<,extends:>,trail:·,space:␣",
+      -- [3] = "tab:▸·,nbsp:␣,extends:…,precedes:<,extends:>,trail:·",
+    },
+  })
+
   vim.opt["listchars"] = _M.options.listchars_sets[_M._state.listchar_index]
   for k, v in pairs(_M) do
     if not string.match(k, "OptionToggle") then
