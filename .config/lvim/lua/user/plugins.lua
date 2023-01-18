@@ -43,6 +43,8 @@ lvim.plugins = {
       })
     end,
   },
+  -- lua
+  { "rafcamlet/nvim-luapad" },
   -- python
   { "AckslD/swenv.nvim" },
   { "mfussenegger/nvim-dap-python" },
@@ -50,7 +52,7 @@ lvim.plugins = {
     -- generate docstrings
     "danymat/neogen",
     config = function()
-      require("neogen").setup {
+      require("neogen").setup({
         enabled = true,
         languages = {
           python = {
@@ -59,13 +61,16 @@ lvim.plugins = {
             },
           },
         },
-      }
+      })
     end,
   },
-  {
-    "dccsillag/magma-nvim",
-    run = ":UpdateRemotePlugins"
-  },
+  -- TBD: jupyter
+  -- {
+  --   "dccsillag/magma-nvim",
+  --   build = function()
+  --     vim.cmd("UpdateRemotePlugins")
+  --   end,
+  -- },
   -- rust
   { "simrat39/rust-tools.nvim" },
   {
@@ -76,8 +81,8 @@ lvim.plugins = {
   },
   {
     "saecki/crates.nvim",
-    tag = "v0.3.0",
-    requires = { "nvim-lua/plenary.nvim" },
+    version = "v0.3.0",
+    dependencies = { "nvim-lua/plenary.nvim" },
     config = function()
       require("crates").setup({
         null_ls = {
@@ -91,7 +96,7 @@ lvim.plugins = {
   { "sainnhe/sonokai" },
   {
     "catppuccin/nvim",
-    as = "catppuccin",
+    name = "catppuccin",
     config = function()
       -- vim.g.catppuccin_flavour = "macchiato"
       -- vim.g.catppuccin_flavour = "latte"

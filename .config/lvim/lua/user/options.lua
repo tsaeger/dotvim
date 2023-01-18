@@ -1,5 +1,5 @@
 vim.opt["backup"] = false
-vim.opt["guifont"] = "MesloLGS Nerd Font Mono:h20"
+vim.opt["guifont"] = "MesloLGS Nerd Font:h22"
 vim.opt["relativenumber"] = true
 vim.opt["wrap"] = false
 
@@ -11,6 +11,10 @@ lvim.use_icons = true
 lvim.builtin.breadcrumbs.active = true
 lvim.builtin.bufferline.active = false
 lvim.builtin.dap.active = true
+
+lvim.builtin.telescope.pickers.buffers.theme = "ivy"
+lvim.builtin.telescope.pickers.live_grep.theme = "ivy"
+
 lvim.builtin.terminal.active = true
 lvim.builtin.treesitter.ensure_installed = {
   "bash",
