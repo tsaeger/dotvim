@@ -1,4 +1,5 @@
 -- host specific options
+vim.g.node_host_prog = "/Users/tsaeger/workspace/nix/node_modules/bin/neovim-node-host"
 vim.g.loaded_perl_provider = 0
 
 vim.opt["backup"] = false
