@@ -23,8 +23,10 @@ if lvim.builtin.which_key.mappings["s"] then
   if not lvim.builtin.which_key.mappings["s"]["s"] then
     lvim.builtin.which_key.mappings["s"]["s"] = { "<cmd>Telescope resume<CR>", "Resume" }
   end
-  if not lvim.builtin.which_key.mappings["s"]["P"] then
-    lvim.builtin.which_key.mappings["s"]["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
+  if lvim.builtin.project.active then
+    if not lvim.builtin.which_key.mappings["s"]["P"] then
+      lvim.builtin.which_key.mappings["s"]["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
+    end
   end
 end
 -- Term tig
@@ -35,6 +37,7 @@ end
 lvim.builtin.which_key.mappings["b"] = {
   name = "Buffers",
   b = { "<cmd>Telescope buffers<cr>", "List" },
+  c = { "<cmd>cd %:p:h<cr>", "Cwd to current buffer" },
   d = { "<cmd>bdelete<cr>", "Delete" },
   n = { "<cmd>bnext<cr>", "Next" },
   p = { "<cmd>bprev<cr>", "Prev" },
