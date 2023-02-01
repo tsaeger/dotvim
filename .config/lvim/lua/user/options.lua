@@ -1,3 +1,6 @@
+-- host specific options
+vim.g.loaded_perl_provider = 0
+
 vim.opt["backup"] = false
 vim.opt["guifont"] = "MesloLGS Nerd Font:h22"
 vim.opt["relativenumber"] = true
