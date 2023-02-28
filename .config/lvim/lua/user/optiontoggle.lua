@@ -149,6 +149,7 @@ _M.get_which_key_mappings = function()
     name = "+Options",
     c = { "<cmd>OptionToggleCursorline<cr>", "Toggle cursorline" },
     C = { "<cmd>OptionToggleCursorcolumn<cr>", "Toggle cursorcolumn" },
+    e = { "<cmd>lua require('luasnip.loaders').edit_snippet_files()<cr>", "Edit snippets"},
     f = { "<cmd>OptionToggleFolds<cr>", "Cycle folds" },
     F = { "<cmd>OptionToggleFormatOnSave<cr>", "Toggle Format on save" },
     g = { "<cmd>OptionToggleGitsigns<cr>", "Toggle git signs" },
