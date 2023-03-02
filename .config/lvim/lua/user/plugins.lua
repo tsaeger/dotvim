@@ -92,7 +92,8 @@ lvim.plugins = {
       })
     end,
   },
-  -- colorschemes
+  -- colorscheme
+  { "folke/tokyonight.nvim" },
   { "sainnhe/sonokai" },
   {
     "catppuccin/nvim",
