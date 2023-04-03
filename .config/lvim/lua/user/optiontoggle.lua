@@ -8,12 +8,13 @@ _M._state = {
   foldmode = "treesitter",
   listchar_index = 1,
   listchar_indent_state = nil,
+  number_cycle_index = nil,
 }
 
 local _toggleopt = function(opt)
   local val = not vim.o[opt]
   vim.o[opt] = val
-  vim.notify(opt .. " set to " .. tostring(val))
+  -- vim.notify(opt .. " set to " .. tostring(val))
 end
 
 _M.OptionToggleCursorline = function()
@@ -48,18 +49,35 @@ _M.OptionToggleList = function()
   end
 end
 
-_M.OptionToggleListchars = function()
-  _M._state.listchar_index = _M._state.listchar_index + 1
-  if _M._state.listchar_index > #_M.options.listchars_sets then
-    _M._state.listchar_index = 1
+local int_inc_range = function(current, min, max)
+  -- force wrap to min if current is nil
+  local result = (current or max) + 1
+  if result > max then
+    result = min
   end
+  return result
+end
+
+_M.OptionToggleListchars = function()
+  _M._state.listchar_index = int_inc_range(
+    _M._state.listchar_index, 1, #_M.options.listchars_sets)
   vim.opt["listchars"] = _M.options.listchars_sets[_M._state.listchar_index]
   vim.notify("listchars set to index " .. tostring(_M._state.listchar_index))
 end
 
 _M.OptionToggleNumber = function()
-  _toggleopt("number")
-  _toggleopt("relativenumber")
+  _M._state.number_cycle_index = int_inc_range(
+    _M._state.number_cycle_index, 1, 3)
+  if _M._state.number_cycle_index == 1 then
+    vim.o["number"] = true
+    vim.o["relativenumber"] = true
+  elseif _M._state.number_cycle_index == 2 then
+    vim.o["number"] = true
+    vim.o["relativenumber"] = false
+  elseif _M._state.number_cycle_index == 3 then
+    vim.o["number"] = false
+    vim.o["relativenumber"] = false
+  end
 end
 
 _M.OptionTogglePaste = function()
@@ -157,7 +175,7 @@ _M.get_which_key_mappings = function()
     i = { "<cmd>OptionToggleIndentlines<cr>", "Toggle indent" },
     l = { "<cmd>OptionToggleList<cr>", "Toggle list" },
     L = { "<cmd>OptionToggleListchars<cr>", "Cycle listchar set" },
-    n = { "<cmd>OptionToggleNumber<cr>", "Toggle number" },
+    n = { "<cmd>OptionToggleNumber<cr>", "Cycle number" },
     p = { "<cmd>OptionTogglePaste<cr>", "Toggle paste" },
     o = { "<cmd>OptionToggleColorcolumn<cr>", "Toggle colorcolumn" },
     s = { "<cmd>OptionToggleSpell<cr>", "Toggle spell" },
@@ -182,8 +200,12 @@ _M.setup = function(options)
       -- [3] = "tab:▸·,nbsp:␣,extends:…,precedes:<,extends:>,trail:·",
     },
   })
-
   vim.opt["listchars"] = _M.options.listchars_sets[_M._state.listchar_index]
+
+  -- force initial number state
+  _M.OptionToggleNumber()
+
+  -- create OptionToggle commands
   for k, v in pairs(_M) do
     if not string.match(k, "OptionToggle") then
       goto next
