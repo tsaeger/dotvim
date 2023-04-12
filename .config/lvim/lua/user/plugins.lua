@@ -43,6 +43,7 @@ lvim.plugins = {
       })
     end,
   },
+  { "tpope/vim-fugitive" },
   -- lua
   { "rafcamlet/nvim-luapad" },
   -- python
