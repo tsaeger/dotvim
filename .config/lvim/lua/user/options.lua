@@ -4,6 +4,7 @@ vim.g.loaded_perl_provider = 0
 
 vim.opt["backup"] = false
 vim.opt["guifont"] = "MesloLGS Nerd Font:h22"
+-- vim.opt["guifont"] = "IntelOneMono Nerd Font:h22"
 vim.opt["wrap"] = false
 
 lvim.colorscheme = ({ "lunar", "onedarker" })[1]

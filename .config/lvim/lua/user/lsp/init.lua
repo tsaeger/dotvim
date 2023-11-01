@@ -1,7 +1,7 @@
 require("user.lsp.languages.rust")
 require("user.lsp.languages.python")
 
-lvim.lsp.diagnostics.virtual_text = false
+vim.diagnostic.config({ virtual_text = false })
 
 -- formatters
 local formatters = require("lvim.lsp.null-ls.formatters")

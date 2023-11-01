@@ -203,7 +203,9 @@ _M.setup = function(options)
   vim.opt["listchars"] = _M.options.listchars_sets[_M._state.listchar_index]
 
   -- force initial number state
-  _M.OptionToggleNumber()
+  if not _M._state.number_cycle_index then
+    _M.OptionToggleNumber()
+  end
 
   -- create OptionToggle commands
   for k, v in pairs(_M) do
