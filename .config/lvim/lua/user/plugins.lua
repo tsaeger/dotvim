@@ -72,14 +72,17 @@ lvim.plugins = {
   --     vim.cmd("UpdateRemotePlugins")
   --   end,
   -- },
-  -- rust
-  { "simrat39/rust-tools.nvim" },
+  -- notifications
   {
     "j-hui/fidget.nvim",
-    config = function()
-      require("fidget").setup()
-    end,
+    -- opts = {},
+    -- old...
+    -- config = function()
+    --   require("fidget").setup()
+    -- end,
   },
+  -- rust
+  { "simrat39/rust-tools.nvim" },
   {
     "saecki/crates.nvim",
     version = "v0.3.0",
