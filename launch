@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+# shellcheck disable=SC2068
+NVIM_APPNAME="nvim2025" nvim --clean -u ~/.config/nvim2025/init.lua $@
