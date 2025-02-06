@@ -31,7 +31,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 -- Set up plugins
-require('lazy').setup {
+require('lazy').setup({
   require 'plugins.neotree',
   require 'plugins.colortheme',
   require 'plugins.bufferline',
@@ -46,7 +46,11 @@ require('lazy').setup {
   require 'plugins.indent-blankline',
   require 'plugins.misc',
   require 'plugins.comment',
-}
+}, {
+  rocks = {
+    enabled = false,
+    hererocs = false,
+  },
+})
 
--- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
