@@ -41,9 +41,34 @@ return {
       require('colorizer').setup()
     end,
   },
+  -- general editor
+  {
+    'ggandor/leap.nvim',
+    config = function()
+      vim.keymap.set({ 'n', 'x', 'o' }, 's', '<Plug>(leap-forward)')
+      vim.keymap.set({ 'n', 'x', 'o' }, 'S', '<Plug>(leap-backward)')
+      -- vim.keymap.set({ 'n', 'x', 'o' }, 'gs', '<Plug>(leap-from-window)')
+    end,
+  },
+  { 'jghauser/mkdir.nvim' },
+  { 'karb94/neoscroll.nvim', opts = {} },
+  { 'gpanders/editorconfig.nvim' },
+  { 'David-Kunz/gen.nvim' },
   -- lua
   { 'rohanorton/lua-gf.nvim', opts = {} },
-  -- colors
+  -- rust
+  {
+    'mrcjkb/rustaceanvim',
+    version = '^5',
+    lazy = false,
+  },
+  {
+    'saecki/crates.nvim',
+    tag = 'stable',
+    config = function()
+      require('crates').setup()
+    end,
+  },
   -- my plugins
   { dir = '~/workspace/neovim/plugins/optiontoggle.nvim', opts = {} },
 }
