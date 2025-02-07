@@ -58,7 +58,7 @@ return {
   ---@type snacks.Config
   opts = {
     -- picker = picker_opts,
-    -- indent = {},
+    indent = {},
     -- notifier = {},
     bigfile = {},
     scroll = {},
