@@ -96,17 +96,17 @@ if vim.g.neovide then
   vim.keymap.set('i', '<D-v>', '<ESC>l"+Pli') -- Paste insert mode
 
   -- Allow clipboard copy paste in neovim
-  vim.api.nvim_set_keymap('', '<D-v>', '+p<CR>', { noremap = true, silent = true })
-  vim.api.nvim_set_keymap('!', '<D-v>', '<C-R>+', { noremap = true, silent = true })
-  vim.api.nvim_set_keymap('t', '<D-v>', '<C-R>+', { noremap = true, silent = true })
-  vim.api.nvim_set_keymap('v', '<D-v>', '<C-R>+', { noremap = true, silent = true })
+  vim.api.nvim_set_keymap('', '<D-v>', '+p<CR>', opts)
+  vim.api.nvim_set_keymap('!', '<D-v>', '<C-R>+', opts)
+  vim.api.nvim_set_keymap('t', '<D-v>', '<C-R>+', opts)
+  vim.api.nvim_set_keymap('v', '<D-v>', '<C-R>+', opts)
 end
 
 -- Move selected visual block up/down one line at-a-time
 if vim.fn.has 'mac' == 1 then
   -- MacOS "Option-key" equivalent of Alt mappings
   -- Option-j ∆
-  vim.keymap.set('v', '∆', ":m '>+1<CR>gv-gv", { noremap = true, silent = true })
+  vim.keymap.set('v', '∆', ":m '>+1<CR>gv-gv", opts)
   -- Option-k ˚
-  vim.keymap.set('v', '˚', ":m '<-2<CR>gv-gv", { noremap = true, silent = true })
+  vim.keymap.set('v', '˚', ":m '<-2<CR>gv-gv", opts)
 end
