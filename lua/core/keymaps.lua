@@ -41,7 +41,8 @@ vim.keymap.set('n', '<S-Tab>', ':bprevious<CR>', opts)
 -- vim.keymap.set('n', '<leader>b', '<cmd> enew <CR>', opts) -- new buffer
 vim.keymap.set('n', '<leader>bb', '<cmd>Telescope buffers<cr>', { desc = 'Buffer list' })
 vim.keymap.set('n', '<leader>bc', '<cmd>cd %:p:h<cr>', { desc = 'Cwd to current buffer' })
-vim.keymap.set('n', '<leader>bd', '<cmd>bdelete<cr>', { desc = 'Delete' })
+-- vim.keymap.set('n', '<leader>bd', '<cmd>bdelete<cr>', { desc = 'Delete' })
+vim.keymap.set('n', '<leader>bd', '<cmd>Bwipeout<cr>', { desc = 'Delete' })
 vim.keymap.set('n', '<leader>bn', '<cmd>bnext<cr>', { desc = 'Next' })
 vim.keymap.set('n', '<leader>bp', '<cmd>bprev<cr>', { desc = 'Prev' })
 
