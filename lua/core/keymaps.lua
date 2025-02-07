@@ -110,3 +110,8 @@ if vim.fn.has 'mac' == 1 then
   -- Option-k ˚
   vim.keymap.set('v', '˚', ":m '<-2<CR>gv-gv", opts)
 end
+
+-- Dashboard
+vim.keymap.set('n', '<leader>;', function()
+  Snacks.dashboard.open()
+end, { desc = 'Open Dashboard' })
