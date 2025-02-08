@@ -55,18 +55,24 @@ return {
             ['<C-l>'] = require('telescope.actions').select_default, -- open file
           },
         },
+        wrap_results = true,
       },
       pickers = {
+        buffers = {
+          theme = 'ivy',
+        },
         find_files = {
           file_ignore_patterns = { 'node_modules', '.git', '.venv' },
           hidden = true,
+          theme = 'ivy',
         },
-      },
-      live_grep = {
-        file_ignore_patterns = { 'node_modules', '.git', '.venv' },
-        additional_args = function(_)
-          return { '--hidden' }
-        end,
+        live_grep = {
+          file_ignore_patterns = { 'node_modules', '.git', '.venv' },
+          additional_args = function(_)
+            return { '--hidden' }
+          end,
+          theme = 'ivy',
+        },
       },
       extensions = {
         ['ui-select'] = {
