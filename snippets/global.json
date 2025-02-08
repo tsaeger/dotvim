@@ -1,0 +1,63 @@
+{
+  "Signed-off-by": {
+    "prefix": [
+      "sob",
+      "sby"
+    ],
+    "body": [
+      "Signed-off-by: ${1:Tom Saeger} <${2:tom.saeger@gmail.com}>",
+      "$0"
+    ],
+    "description": "Signed-off-by"
+  },
+  "Reviewed-by": {
+    "prefix": [
+      "rev",
+      "rby"
+    ],
+    "body": [
+      "Reviewed-by: ${1:Tom Saeger} <${2:tom.saeger@gmail.com}>",
+      "$0"
+    ],
+    "description": "Reviewed-by"
+  },
+  "Acked-by": {
+    "prefix": [
+      "ack",
+      "aby"
+    ],
+    "body": [
+      "Acked-by: ${1:Tom Saeger} <${2:tom.saeger@gmail.com}>",
+      "$0"
+    ],
+    "description": "Acked-by"
+  },
+  "Tested-by": {
+    "prefix": [
+      "tby"
+    ],
+    "body": [
+      "Tested-by: ${1:Tom Saeger} <${2:tom.saeger@gmail.com}>",
+      "$0"
+    ],
+    "description": "Tested-by"
+  },
+  "Suggested-by": {
+    "prefix": [
+      "sug",
+      "suby"
+    ],
+    "body": [
+      "Suggested-by: ${1:Tom Saeger} <${2:tom.saeger@gmail.com}>",
+      "$0"
+    ],
+    "description": "Suggested-by"
+  },
+  "me": {
+    "prefix": "me",
+    "body": [
+      "Tom Saeger"
+    ],
+    "description": "Me!"
+  }
+}

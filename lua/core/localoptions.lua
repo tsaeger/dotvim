@@ -6,5 +6,5 @@ vim.g.loaded_perl_provider = 0
 
 -- shadafile
 if vim.o.shadafile ~= nil then
-  vim.o.shadafile = vim.fn.stdpath 'cache' .. '/nvim2025_shada.dat'
+  vim.o.shadafile = _G.util.path_join(vim.fn.stdpath 'cache', 'nvim2025_shada.dat')
 end

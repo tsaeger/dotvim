@@ -1,9 +1,19 @@
+-- [[
+-- Hints:
+-- # look at all scriptnames
+-- :enew|put=execute('scriptnames')
+-- :enew|put=execute(':lua=_G')
+-- :enew|put=execute(':lua=package.loaded')
+-- ]]
+
+_G.util = require 'core.util'
+
 local thisdir = vim.env.MYNVIM_BASE_DIR or (function()
   local fpath = debug.getinfo(1, 'S').source
   return fpath:sub(2):match('(.*[/\\])'):sub(1, -2)
 end)()
 
-local luapath = thisdir .. '/lua'
+local luapath = _G.util.path_join(thisdir, 'lua')
 ---@diagnostic disable-next-line: param-type-mismatch
 if not vim.tbl_contains(vim.opt.rtp:get(), luapath) then
   vim.opt.rtp:prepend(luapath)
@@ -20,7 +30,7 @@ require 'core.keymaps' -- Load general keymaps
 require 'core.snippets' -- Custom code snippets
 
 -- Set up the Lazy plugin manager
-local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
+local lazypath = _G.util.path_join(vim.fn.stdpath 'data', 'lazy', 'lazy.nvim')
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
   local out = vim.fn.system { 'git', 'clone', '--filter=blob:none', '--branch=stable', lazyrepo, lazypath }
