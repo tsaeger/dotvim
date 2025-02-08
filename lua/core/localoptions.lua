@@ -6,5 +6,6 @@ vim.g.loaded_perl_provider = 0
 
 -- shadafile
 if vim.o.shadafile ~= nil then
-  vim.o.shadafile = _G.util.path_join(vim.fn.stdpath 'cache', 'nvim2025_shada.dat')
+  ---@diagnostic disable-next-line: undefined-field
+  vim.o.shadafile = _G.util.path_join(vim.fn.stdpath 'cache', 'shada.dat')
 end

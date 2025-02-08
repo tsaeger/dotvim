@@ -16,7 +16,7 @@ return { -- Autocompletion
       config = function()
         local paths = {}
         paths[#paths + 1] = _G.util.path_join(vim.fn.stdpath 'data', 'lazy', 'friendly-snippets')
-        local local_snippets = _G.util.path_join(vim.fn.stdpath 'config', 'snippets')
+        local local_snippets = _G.util.path_join(_G.util.configdir, 'snippets')
         if _G.util.is_directory(local_snippets) then
           paths[#paths + 1] = local_snippets
         end

@@ -1,9 +1,36 @@
 #!/usr/bin/env bash
+# Launch neovim config from
+# isolated area specified by NVIM_APPNAME
+# :help NVIM_APPNAME
+
+THISDIR="$(dirname "$(readlink -e -- "${BASH_SOURCE[0]}") ")"
 
 # shellcheck disable=SC2068
-NVIM_APPNAME="nvim2025" nvim \
-    -u ~/.config/nvim2025/init.lua \
+NVIM_APPNAME="${THISDIR##*/}_test" nvim \
+    -u "${THISDIR}"/init.lua \
     $@
 
-#-i ~/.config/nvim2025/shada.dat \
-#     --clean \
+# NVIM_APPNAME="${THISDIR##*/}" nvim \
+#     $@
+
+# Other options
+# :help -u
+#    -u "${THISDIR}"/init.lua \
+# :help -i
+# :help shadafile
+# :help shada
+#    -i "${THISDIR}"/shada.dat \
+# :help --clean
+#    --clean \
+#
+# test isolated:
+#   change NVIM_APPNAME to "${THISDIR##*/}_test"
+#   add -u
+#
+#   bash -x ./launch # watch the magic!
+#   bash -x ./launch -c ":enew|put=execute('scriptnames')"
+#   bash -x ./launch -c ":e s.out" --startuptime s.out
+#
+#   dua i ~/{.config,.local/share,.local/state,.cache}/nvim2025_test
+#   # cleanup
+#   rm -rf ~/{.config,.local/share,.local/state,.cache}/nvim2025_test

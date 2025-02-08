@@ -8,7 +8,7 @@ local dashboard_opts = {
       -- { icon = ' ', key = 'h', desc = 'Recent Files', action = ":lua Snacks.dashboard.pick('oldfiles')" },
       { icon = '󰒲 ', key = 'L', desc = 'Lazy', action = ':Lazy', enabled = package.loaded.lazy ~= nil },
       { icon = ' ', key = 'M', desc = 'Mason', action = ':Mason' },
-      { icon = ' ', key = 'c', desc = 'Configuration', action = ":lua vim.cmd (':e ' .. _G.util.path_join(vim.fn.stdpath('config'), 'init.lua') )" },
+      { icon = ' ', key = 'c', desc = 'Configuration', action = ":lua vim.cmd (':e ' .. _G.util.configfile)" },
       { icon = ' ', key = 'q', desc = 'Quit', action = ':qa' },
       -- { icon = ' ', key = 's', desc = 'Restore Session', section = 'session' },
     },

@@ -1,19 +1,30 @@
 -- [[
+-- Tom Saeger <tom.saeger@gmail.com>
+--
 -- Hints:
 -- # look at all scriptnames
 -- :enew|put=execute('scriptnames')
 -- :enew|put=execute(':lua=_G')
 -- :enew|put=execute(':lua=package.loaded')
 -- ]]
+--
 
-_G.util = require 'core.util'
+--- path_join is needed in isolated-mode to find core.util
+--- copy here
+---Join input path segments
+---@return string
+local path_join = function(...)
+  local path_sep = (vim.uv or vim.loop).os_uname().version:match 'Windows' and '\\' or '/'
+  local result = table.concat({ ... }, path_sep)
+  return result
+end
 
-local thisdir = vim.env.MYNVIM_BASE_DIR or (function()
+local thisconfig, thisdir = (function()
   local fpath = debug.getinfo(1, 'S').source
-  return fpath:sub(2):match('(.*[/\\])'):sub(1, -2)
+  return fpath:sub(2), fpath:sub(2):match('(.*[/\\])'):sub(1, -2)
 end)()
 
-local luapath = _G.util.path_join(thisdir, 'lua')
+local luapath = path_join(thisdir, 'lua')
 ---@diagnostic disable-next-line: param-type-mismatch
 if not vim.tbl_contains(vim.opt.rtp:get(), luapath) then
   vim.opt.rtp:prepend(luapath)
@@ -24,12 +35,20 @@ if not vim.tbl_contains(vim.opt.rtp:get(), thisdir) then
   vim.opt.rtp:prepend(thisdir)
 end
 
+-- make util available and store config info
+_G.util = require 'core.util'
+---@diagnostic disable-next-line: inject-field
+_G.util.configfile = thisconfig
+---@diagnostic disable-next-line: inject-field
+_G.util.configdir = thisdir
+
 require 'core.options' -- Load general options
 require 'core.localoptions' -- Load local options
 require 'core.keymaps' -- Load general keymaps
 require 'core.snippets' -- Custom code snippets
 
 -- Set up the Lazy plugin manager
+---@diagnostic disable-next-line: undefined-field
 local lazypath = _G.util.path_join(vim.fn.stdpath 'data', 'lazy', 'lazy.nvim')
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
@@ -54,7 +73,6 @@ require('lazy').setup({
   require 'plugins.gitsigns',
   require 'plugins.misc',
   require 'plugins.comment',
-  -- require 'plugins.indent-blankline',
   require 'plugins.snacks',
 }, {
   rocks = {
