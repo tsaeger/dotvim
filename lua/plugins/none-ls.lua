@@ -1,3 +1,5 @@
+-- see: https://github.com/nvimtools/none-ls.nvim/issues/58
+
 return {
   'nvimtools/none-ls.nvim',
   dependencies = {
@@ -15,6 +17,7 @@ return {
         'prettier', -- ts/js formatter
         'stylua', -- lua formatter
         -- 'eslint_d', -- ts/js linter
+        -- 'shellcheck', -- Shell linter
         'shfmt', -- Shell formatter
         'checkmake', -- linter for Makefiles
         'ruff', -- Python linter and formatter
