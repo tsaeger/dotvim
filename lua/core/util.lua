@@ -1,5 +1,15 @@
 local _M = {}
 
+--- Protected require
+---@param m (string) library to require
+_M.prequire = function(m)
+  local ok, err = pcall(require, m)
+  if not ok then
+    return nil, err
+  end
+  return err
+end
+
 local uv = (vim.uv or vim.loop)
 
 _M.path_sep = uv.os_uname().version:match 'Windows' and '\\' or '/'
