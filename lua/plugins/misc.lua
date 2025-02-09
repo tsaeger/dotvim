@@ -56,6 +56,7 @@ return {
   { 'David-Kunz/gen.nvim' },
   -- lua
   { 'rohanorton/lua-gf.nvim', opts = {} },
+  { 'rafcamlet/nvim-luapad' },
   -- rust
   {
     'mrcjkb/rustaceanvim',

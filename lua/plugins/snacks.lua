@@ -61,11 +61,12 @@ return {
   opts = {
     bigfile = {},
     dashboard = dashboard_opts,
+    dim = {},
     indent = {},
     notifier = {},
     scroll = {},
-    -- dim = {},
     -- explorer = {},
+    -- git = {},
     -- gitbrowse = {},
     -- picker = picker_opts,
     -- terminal = {},
