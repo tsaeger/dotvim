@@ -40,6 +40,7 @@ local myconfig = {}
 myconfig.util = require 'core.util'
 myconfig.configfile = thisconfig
 myconfig.configdir = thisdir
+myconfig.plugindir = myconfig.util.path_join(myconfig.configdir, 'lua', 'plugins')
 vim.g.myconfig = myconfig
 
 require 'core.options' -- Load general options

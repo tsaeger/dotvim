@@ -49,7 +49,6 @@ return {
     end,
   },
   { 'jghauser/mkdir.nvim' },
-  { 'karb94/neoscroll.nvim', opts = {} },
   { 'gpanders/editorconfig.nvim' },
   { 'David-Kunz/gen.nvim' },
   -- lua
@@ -69,7 +68,7 @@ return {
   -- my plugins
   { dir = '~/workspace/neovim/plugins/optiontoggle.nvim', opts = {} },
   {
-    dir = vim.g.myconfig.util.path_join(vim.g.myconfig.configdir, 'lua', 'plugins', 'macos.nvim'),
+    dir = vim.g.myconfig.util.path_join(vim.g.myconfig.plugindir, 'macos.nvim'),
     opts = {},
     dependencies = { { 'clvnkhr/macaltkey.nvim', opts = {} } },
   },
