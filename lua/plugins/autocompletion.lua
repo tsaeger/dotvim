@@ -15,9 +15,9 @@ return { -- Autocompletion
       end)(),
       config = function()
         local paths = {}
-        paths[#paths + 1] = _G.util.path_join(vim.fn.stdpath 'data', 'lazy', 'friendly-snippets')
-        local local_snippets = _G.util.path_join(_G.util.configdir, 'snippets')
-        if _G.util.is_directory(local_snippets) then
+        paths[#paths + 1] = vim.g.myconfig.util.path_join(vim.fn.stdpath 'data', 'lazy', 'friendly-snippets')
+        local local_snippets = vim.g.myconfig.util.path_join(vim.g.myconfig.configdir, 'snippets')
+        if vim.g.myconfig.util.is_directory(local_snippets) then
           paths[#paths + 1] = local_snippets
         end
         require('luasnip.loaders.from_lua').lazy_load()

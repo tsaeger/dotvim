@@ -35,21 +35,21 @@ if not vim.tbl_contains(vim.opt.rtp:get(), thisdir) then
   vim.opt.rtp:prepend(thisdir)
 end
 
--- make util available and store config info
-_G.util = require 'core.util'
----@diagnostic disable-next-line: inject-field
-_G.util.configfile = thisconfig
----@diagnostic disable-next-line: inject-field
-_G.util.configdir = thisdir
+-- Make myconfig available globally
+local myconfig = {}
+myconfig.util = require 'core.util'
+myconfig.configfile = thisconfig
+myconfig.configdir = thisdir
+vim.g.myconfig = myconfig
 
 require 'core.options' -- Load general options
 require 'core.localoptions' -- Load local options
 require 'core.keymaps' -- Load general keymaps
 require 'core.snippets' -- Custom code snippets
 
--- Set up the Lazy plugin manager
+-- Set up Lazy plugin manager
 ---@diagnostic disable-next-line: undefined-field
-local lazypath = _G.util.path_join(vim.fn.stdpath 'data', 'lazy', 'lazy.nvim')
+local lazypath = vim.g.myconfig.util.path_join(vim.fn.stdpath 'data', 'lazy', 'lazy.nvim')
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
   local out = vim.fn.system { 'git', 'clone', '--filter=blob:none', '--branch=stable', lazyrepo, lazypath }
