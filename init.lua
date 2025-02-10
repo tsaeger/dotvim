@@ -74,6 +74,7 @@ require('lazy').setup({
   require 'plugins.misc',
   require 'plugins.comment',
   require 'plugins.snacks',
+  require 'plugins.minuet-ai',
 }, {
   rocks = {
     enabled = false,

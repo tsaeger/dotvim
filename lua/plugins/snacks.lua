@@ -64,19 +64,44 @@ return {
   lazy = false,
   ---@type snacks.Config
   opts = {
+    animate = {},
     bigfile = {},
     dashboard = dashboard_opts,
     dim = {},
     indent = {},
     notifier = {},
     scroll = {},
-    -- explorer = {},
-    -- git = {},
-    -- gitbrowse = {},
-    -- picker = picker_opts,
-    -- terminal = {},
-    -- toggle = {},
-    -- words = {},
-    -- zen = {},
+
+    -- animate snacks.animate
+    -- bigfile snacks.bigfile
+    -- bufdelete snacks.bufdelete
+    -- dashboard snacks.dashboard
+    -- debug snacks.debug
+    -- dim snacks.dim
+    -- explorer snacks.explorer
+    -- git snacks.git
+    -- gitbrowse snacks.gitbrowse
+    -- health snacks.health
+    -- indent snacks.indent
+    -- input snacks.input
+    -- layout snacks.layout
+    -- lazygit snacks.lazygit
+    -- meta snacks.meta
+    -- notifier snacks.notifier
+    -- notify snacks.notify
+    -- picker snacks.picker
+    -- profiler snacks.profiler
+    -- quickfile snacks.quickfile
+    -- rename snacks.rename
+    -- scope snacks.scope
+    -- scratch snacks.scratch
+    -- scroll snacks.scroll
+    -- statuscolumn snacks.statuscolumn
+    -- terminal snacks.terminal
+    -- toggle snacks.toggle
+    -- util snacks.util
+    -- win snacks.win
+    -- words snacks.words
+    -- zen snacks.zen
   },
 }

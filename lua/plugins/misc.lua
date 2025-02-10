@@ -37,9 +37,7 @@ return {
   {
     -- High-performance color highlighter
     'norcalli/nvim-colorizer.lua',
-    config = function()
-      require('colorizer').setup()
-    end,
+    opts = {},
   },
   -- general editor
   {
@@ -66,10 +64,13 @@ return {
   {
     'saecki/crates.nvim',
     tag = 'stable',
-    config = function()
-      require('crates').setup {}
-    end,
+    opts = {},
   },
   -- my plugins
   { dir = '~/workspace/neovim/plugins/optiontoggle.nvim', opts = {} },
+  {
+    dir = vim.g.myconfig.util.path_join(vim.g.myconfig.configdir, 'lua', 'plugins', 'macos.nvim'),
+    opts = {},
+    dependencies = { { 'clvnkhr/macaltkey.nvim', opts = {} } },
+  },
 }

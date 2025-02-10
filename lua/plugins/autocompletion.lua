@@ -40,9 +40,8 @@ return { -- Autocompletion
     },
     'saadparwaiz1/cmp_luasnip',
 
-    -- Adds other completion capabilities.
-    --  nvim-cmp does not ship with all sources by default. They are split
-    --  into multiple repos for maintenance purposes.
+    --  nvim-cmp sources
+    --  NOTE: also add to setup.sources below
     'hrsh7th/cmp-nvim-lsp',
     'hrsh7th/cmp-nvim-lua',
     'hrsh7th/cmp-buffer',
@@ -89,10 +88,7 @@ return { -- Autocompletion
       },
       completion = { completeopt = 'menu,menuone,noinsert' },
 
-      -- For an understanding of why these mappings were
-      -- chosen, you will need to read `:help ins-completion`
-      --
-      -- No, but seriously. Please read `:help ins-completion`, it is really good!
+      -- `:help ins-completion`
       mapping = cmp.mapping.preset.insert {
         -- Select the [n]ext item
         ['<C-n>'] = cmp.mapping.select_next_item(),
@@ -160,6 +156,21 @@ return { -- Autocompletion
           end
         end, { 'i', 's' }),
       },
+      -- Example:
+      -- add cmp source based on filetype
+      -- vim.api.nvim_create_autocmd("FileType", {
+      --   pattern = "lua",
+      --   callback = function()
+      --     require('cmp').setup.buffer {
+      --       sources = {
+      --         { name = 'nvim_lua' },
+      --         { name = 'luasnip' },
+      --         { name = 'buffer', keyword_length = 5 },
+      --       },
+      --     }
+      --   end,
+      -- })
+      -- nvim-cmp sources
       sources = {
         {
           name = 'lazydev',
@@ -167,16 +178,19 @@ return { -- Autocompletion
           group_index = 0,
         },
         { name = 'nvim_lsp' },
+        { name = 'nvim_lua' },
         { name = 'luasnip' },
-        { name = 'buffer' },
+        { name = 'buffer', keyword_length = 5 },
         { name = 'path' },
       },
       formatting = {
         fields = { 'kind', 'abbr', 'menu' },
         format = function(entry, vim_item)
           vim_item.kind = string.format('%s', kind_icons[vim_item.kind])
+          -- nvim-cmp sources
           vim_item.menu = ({
             nvim_lsp = '[LSP]',
+            nvim_lua = '[LUA]',
             luasnip = '[Snippet]',
             buffer = '[Buffer]',
             path = '[Path]',
