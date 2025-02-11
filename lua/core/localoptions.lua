@@ -19,3 +19,8 @@ if vim.o.shadafile ~= nil then
   ---@diagnostic disable-next-line: undefined-field
   vim.o.shadafile = vim.g.myconfig.util.path_join(vim.fn.stdpath 'cache', 'shada.dat')
 end
+
+vim.g.myconfig.ollama = {
+  url = 'http://localhost:11434/v1/completions',
+  model = 'qwen2.5-coder:7b',
+}
