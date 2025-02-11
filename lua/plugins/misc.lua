@@ -19,6 +19,21 @@ return {
   {
     -- Hints keybinds
     'folke/which-key.nvim',
+    config = function()
+      local wk = require 'which-key'
+      wk.add {
+        { '<leader>a', group = '[A]I' },
+        { '<leader>b', group = '[B]uffers' },
+        { '<leader>c', group = '[C]ode' },
+        { '<leader>cg', group = '[G]oto' },
+        { '<leader>cd', group = '[D]ocument' },
+        { '<leader>cw', group = '[W]orkspace' },
+        { '<leader>s', group = '[S]earch' },
+        { '<leader>t', group = '[T]abs' },
+        { '<leader>u', group = '[U]tils' },
+        { '<leader>ug', group = '[G]it' },
+      }
+    end,
   },
   {
     -- Autoclose parentheses, brackets, quotes, etc.

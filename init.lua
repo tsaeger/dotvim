@@ -1,13 +1,22 @@
--- [[
--- Tom Saeger <tom.saeger@gmail.com>
---
--- Hints:
--- https://tech.serhatteker.com/post/2022-07/dump-command-output-to-buffer-in-neovim/
--- :enew|put=execute('scriptnames')
--- :enew|put=execute(':lua=_G')
--- :enew|put=execute(':lua=package.loaded')
--- :enew|.!jq -r '.| keys[] |@text' ./lazy-lock.json | sort
--- ]]
+--[[
+Tom Saeger <tom.saeger@gmail.com>
+
+## Config Debugging/Profiling
+
+- https://tech.serhatteker.com/post/2022-07/dump-command-output-to-buffer-in-neovim/
+
+```
+:enew|put=execute('scriptnames')
+:enew|put=execute(':lua=_G')
+:enew|put=execute(':lua=package.loaded')
+:enew|.!jq -r '.| keys[] |@text' ./lazy-lock.json | sort
+```
+
+## Plugins
+
+- https://dotfyle.com/neovim/plugins/trending
+
+--]]
 
 --- path_join is needed in isolated-mode to find core.util
 --- copy here
