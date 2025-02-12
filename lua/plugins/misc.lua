@@ -81,7 +81,10 @@ return {
     opts = {},
   },
   -- my plugins
-  { dir = '~/workspace/neovim/plugins/optiontoggle.nvim', opts = {} },
+  {
+    dir = vim.g.myconfig.util.path_join(vim.g.myconfig.plugindir, 'optiontoggle.nvim'),
+    opts = {},
+  },
   {
     dir = vim.g.myconfig.util.path_join(vim.g.myconfig.plugindir, 'macos.nvim'),
     opts = {},
