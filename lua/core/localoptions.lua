@@ -20,7 +20,13 @@ if vim.o.shadafile ~= nil then
   vim.o.shadafile = vim.g.myconfig.util.path_join(vim.fn.stdpath 'cache', 'shada.dat')
 end
 
-vim.g.myconfig.ollama = {
+-- Augment myconfig
+-- :help vim.g
+local myconfig = vim.g.myconfig
+
+myconfig.ollama = {
   url = 'http://localhost:11434/v1/completions',
   model = 'qwen2.5-coder:7b',
 }
+
+vim.g.myconfig = myconfig
