@@ -71,6 +71,7 @@ return {
     indent = {},
     notifier = {},
     scroll = {},
+    terminal = {},
 
     -- animate snacks.animate
     -- bigfile snacks.bigfile

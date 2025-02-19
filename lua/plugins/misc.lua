@@ -28,6 +28,7 @@ return {
         { '<leader>cg', group = '[G]oto' },
         { '<leader>cd', group = '[D]ocument' },
         { '<leader>cw', group = '[W]orkspace' },
+        { '<leader>d', group = '[D]iagnostic' },
         { '<leader>s', group = '[S]earch' },
         { '<leader>t', group = '[T]abs' },
         { '<leader>u', group = '[U]tils' },

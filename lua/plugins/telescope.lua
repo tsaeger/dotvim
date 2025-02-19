@@ -51,6 +51,9 @@ return {
           hidden = true,
           theme = 'ivy',
         },
+        grep_string = {
+          theme = 'ivy',
+        },
         live_grep = {
           file_ignore_patterns = { 'node_modules', '.git', '.venv' },
           additional_args = function(_)
