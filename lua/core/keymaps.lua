@@ -73,14 +73,30 @@ vim.keymap.set('v', 'p', '"_dP', opts)
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', function()
-  vim.diagnostic.jump { count = -1, float = true }
+  if vim.diagnostic.jump then
+    vim.diagnostic.jump { count = -1, float = true }
+  else
+    vim.diagnostic.goto_prev() -- needed in 0.10.x, deprecated >=0.11
+  end
 end, { desc = 'Go to previous diagnostic message' })
 vim.keymap.set('n', ']d', function()
-  vim.diagnostic.jump { count = 1, float = true }
+  if vim.diagnostic.jump then
+    vim.diagnostic.jump { count = 1, float = true }
+  else
+    vim.diagnostic.goto_next() -- needed in 0.10.x, deprecated >=0.11
+  end
 end, { desc = 'Go to next diagnostic message' })
-vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
-vim.keymap.set('n', 'gl', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
+vim.keymap.set(
+  'n',
+  '<leader>do',
+  vim.diagnostic.open_float,
+  { desc = '[D]iagnostic [O]pen floating diagnostic message' }
+)
+vim.keymap.set('n', 'gl', vim.diagnostic.open_float, { desc = '[D]iagnostic [O]pen floating message' })
+vim.keymap.set('n', '<leader>dl', vim.diagnostic.setloclist, { desc = '[D]iagnostic [l]ocation list open' })
+vim.keymap.set('n', '<leader>dv', function()
+  vim.diagnostic.config { virtual_text = not vim.diagnostic.config().virtual_text }
+end, { desc = '[D]iagnostic [v]irtual_text toggle' })
 
 -- Dashboard
 vim.keymap.set('n', '<leader>;', function()
