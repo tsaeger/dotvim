@@ -85,6 +85,14 @@ return {
   {
     dir = vim.g.myconfig.util.path_join(vim.g.myconfig.plugindir, 'optiontoggle.nvim'),
     opts = {},
+    dependencies = {
+      { 'nvim-treesitter/nvim-treesitter' },
+      { 'lewis6991/gitsigns.nvim' },
+      { 'folke/which-key.nvim' },
+      { 'folke/snacks.nvim', opts = {
+        indent = {},
+      } },
+    },
   },
   {
     dir = vim.g.myconfig.util.path_join(vim.g.myconfig.plugindir, 'macos.nvim'),
