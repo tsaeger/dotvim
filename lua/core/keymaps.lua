@@ -7,6 +7,11 @@ vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
 -- For conciseness
 local opts = { noremap = true, silent = true }
+local desc_opts = function(desc)
+  local o = opts
+  o['desc'] = desc
+  return o
+end
 
 -- save file
 vim.keymap.set('n', '<C-s>', '<cmd> w <CR>', opts)
@@ -71,6 +76,16 @@ vim.keymap.set('v', '>', '>gv', opts)
 -- Keep last yanked when pasting
 vim.keymap.set('v', 'p', '"_dP', opts)
 
+-- Quickfix keymaps
+vim.keymap.set('n', '[q', ':cprev<CR>', desc_opts 'Quickfix previous')
+vim.keymap.set('n', '[Q', ':cfirst<CR>', desc_opts 'Quickfix first')
+vim.keymap.set('n', ']q', ':cnext<CR>', desc_opts 'Quickfix next')
+vim.keymap.set('n', ']Q', ':clast<CR>', desc_opts 'Quickfix last')
+-- Location list keymaps
+vim.keymap.set('n', '[l', ':lprev<CR>', desc_opts 'Loclist previous')
+vim.keymap.set('n', '[L', ':lfirst<CR>', desc_opts 'Loclist first')
+vim.keymap.set('n', ']l', ':lnext<CR>', desc_opts 'Loclist next')
+vim.keymap.set('n', ']L', ':llast<CR>', desc_opts 'Loclist last')
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', function()
   if vim.diagnostic.jump then
