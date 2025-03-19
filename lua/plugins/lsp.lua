@@ -245,7 +245,7 @@ return {
     -- filter-out servers from being auto-installed by mason-tool-installer
     ensure_installed = vim.tbl_filter(function(server_name)
       local server = servers[server_name] or {}
-      return not server.skip_autoinstall or true
+      return server.skip_autoinstall == nil or not server.skip_autoinstall
     end, ensure_installed)
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
