@@ -162,7 +162,10 @@ return {
       -- clangd = {},
       -- gopls = {},
       -- pyright = {},
-      rust_analyzer = {},
+      rust_analyzer = {
+        -- prevent auto-config of rust_analyzer which interferes with rustaceanvim
+        skip_autoconfigure = true,
+      },
       -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
       -- ts_ls = {},
       ruff = {},
@@ -243,8 +246,6 @@ return {
       handlers = {
         -- default handler called for each server without dedicated handler
         function(server_name)
-          -- prevent config of rust_analyzer which interferes with rustaceanvim
-          if server_name:lower() == ('rust_analyzer'):lower() then
           local server = servers[server_name] or {}
           if server.skip_autoconfigure then
             return
