@@ -159,7 +159,15 @@ return {
     --  - skip_autoconfigure: Prevent lspconfig or mason-lspconfig
     local servers = {
       bashls = {},
-      -- clangd = {},
+      clangd = {
+        -- prevent auto-install
+        skip_autoinstall = true,
+        -- cmd = {'clangd', '--background-index', '--clang-tidy', '--log=verbose'},
+        cmd = { 'clangd', '--background-index' },
+        -- init_options = {
+        --   fallbackFlags = { '-std=c++17' },
+        -- },
+      },
       -- gopls = {},
       -- pyright = {},
       rust_analyzer = {
