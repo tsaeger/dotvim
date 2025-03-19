@@ -155,6 +155,8 @@ return {
     --  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
     --  - settings (table): Override the default settings passed when initializing the server.
     --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
+    --  - skip_autoinstall: Prevent auto-installing with mason
+    --  - skip_autoconfigure: Prevent lspconfig or mason-lspconfig
     local servers = {
       bashls = {},
       -- clangd = {},
@@ -229,23 +231,43 @@ return {
     vim.list_extend(ensure_installed, {
       'stylua', -- Used to format Lua code
     })
+    -- filter-out servers from being auto-installed by mason-tool-installer
+    ensure_installed = vim.tbl_filter(function(server_name)
+      local server = servers[server_name] or {}
+      return not server.skip_autoinstall or true
+    end, ensure_installed)
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
+    -- mason-lspconfig auto configure servers installed via mason
     require('mason-lspconfig').setup {
       handlers = {
+        -- default handler called for each server without dedicated handler
         function(server_name)
           -- prevent config of rust_analyzer which interferes with rustaceanvim
           if server_name:lower() == ('rust_analyzer'):lower() then
+          local server = servers[server_name] or {}
+          if server.skip_autoconfigure then
             return
           end
-          local server = servers[server_name] or {}
-          -- This handles overriding only values explicitly passed
-          -- by the server configuration above. Useful when disabling
-          -- certain features of an LSP (for example, turning off formatting for tsserver)
+          -- request additional cmp_nvim_lsp capabilities with overrides for auto-installed servers
           server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
           require('lspconfig')[server_name].setup(server)
         end,
       },
     }
+
+    -- auto-configure manually installed servers
+    local ensure_configured = vim.tbl_keys(servers or {})
+    ensure_configured = vim.tbl_filter(function(server_name)
+      local server = servers[server_name] or {}
+      return (server.skip_autoinstall and not server.skip_autoconfigure) or false
+    end, ensure_configured)
+    for _, server_name in pairs(ensure_configured) do
+      local lspconfig = require 'lspconfig'
+      local server = servers[server_name] or {}
+      -- request additional cmp_nvim_lsp capabilities with overrides for manually installed servers
+      server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
+      lspconfig[server_name].setup(server)
+    end
   end,
 }
