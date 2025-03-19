@@ -169,7 +169,7 @@ return {
         -- },
       },
       -- gopls = {},
-      -- pyright = {},
+      basedpyright = {},
       rust_analyzer = {
         -- prevent auto-config of rust_analyzer which interferes with rustaceanvim
         skip_autoconfigure = true,
