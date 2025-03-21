@@ -1,6 +1,7 @@
 vim.opt.guifont = 'MesloLGS Nerd Font:h20'
 vim.g.have_nerd_font = true
 vim.g.loaded_perl_provider = 0
+-- vim.g.loaded_node_provider = 0
 vim.g.node_host_prog = '/Users/tsaeger/workspace/nix/node_modules/bin/neovim-node-host'
 --[[
 ## neovim python install
@@ -24,8 +25,13 @@ end
 -- :help vim.g
 local myconfig = vim.g.myconfig
 
+local host = 'localhost'
+local port = 11434
 myconfig.ollama = {
-  url = 'http://localhost:11434/v1/completions',
+  host = host,
+  port = port,
+  completion_url = string.format('http://%s:%d/v1/completions', host, port),
+  chat_url = string.format('http://%s:%d/v1/chat/completions', host, port),
   model = 'qwen2.5-coder:7b',
 }
 

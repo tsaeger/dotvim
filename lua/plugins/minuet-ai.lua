@@ -27,7 +27,7 @@ return {
         openai_fim_compatible = {
           api_key = 'TERM',
           name = 'Ollama',
-          end_point = vim.g.myconfig.ollama.url,
+          end_point = vim.g.myconfig.ollama.completion_url,
           model = vim.g.myconfig.ollama.model,
           optional = {
             max_tokens = 256,
