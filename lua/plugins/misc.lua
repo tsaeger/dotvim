@@ -80,6 +80,8 @@ return {
     tag = 'stable',
     opts = {},
   },
+  -- MacOS
+  { 'clvnkhr/macaltkey.nvim', opts = { language = 'en-US' } },
   -- my plugins
   {
     dir = vim.g.myconfig.util.path_join(vim.g.myconfig.plugindir, 'optiontoggle.nvim'),
@@ -96,6 +98,6 @@ return {
   {
     dir = vim.g.myconfig.util.path_join(vim.g.myconfig.plugindir, 'macos.nvim'),
     opts = {},
-    dependencies = { { 'clvnkhr/macaltkey.nvim', opts = {} } },
+    dependencies = { { 'clvnkhr/macaltkey.nvim' } },
   },
 }

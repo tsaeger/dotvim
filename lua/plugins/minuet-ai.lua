@@ -42,7 +42,7 @@ return {
   end,
   dependencies = {
     { 'nvim-lua/plenary.nvim' },
-    { 'clvnkhr/macaltkey.nvim', opts = {} },
+    { 'clvnkhr/macaltkey.nvim' },
     -- optional
     -- { 'hrsh7th/nvim-cmp' },
   },
