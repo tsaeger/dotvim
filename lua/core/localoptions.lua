@@ -23,11 +23,9 @@ end
 
 -- Augment myconfig
 -- :help vim.g
-local myconfig = vim.g.myconfig
-
 local host = 'localhost'
 local port = 11434
-myconfig.ollama = {
+local ollama = {
   host = host,
   port = port,
   completion_url = string.format('http://%s:%d/v1/completions', host, port),
@@ -35,4 +33,6 @@ myconfig.ollama = {
   model = 'qwen2.5-coder:7b',
 }
 
+local myconfig = vim.g.myconfig
+myconfig.ollama = ollama
 vim.g.myconfig = myconfig

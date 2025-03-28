@@ -1,6 +1,5 @@
 return {
   'milanglacier/minuet-ai.nvim',
-  enabled = vim.g.myconfig.ollama ~= nil,
   config = function()
     local mak = require 'macaltkey'
     require('minuet').setup {
