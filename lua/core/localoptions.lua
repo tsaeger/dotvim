@@ -35,4 +35,5 @@ local ollama = {
 
 local myconfig = vim.g.myconfig
 myconfig.ollama = ollama
+myconfig.format_on_write = true
 vim.g.myconfig = myconfig

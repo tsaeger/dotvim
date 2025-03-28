@@ -40,6 +40,13 @@ return {
       require 'none-ls.formatting.ruff_format',
     }
 
+    vim.keymap.set('n', '<leader>cf', function()
+      local myconfig = vim.g.myconfig
+      myconfig.format_on_write = not myconfig.format_on_write
+      vim.g.myconfig = myconfig
+      vim.notify('format_on_write set to ' .. tostring(vim.g.myconfig.format_on_write))
+    end, { noremap = true, silent = true, desc = '[C]ode Toggle [F]ormat on write' })
+
     local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
     null_ls.setup {
       -- debug = true, -- Enable debug mode. Inspect logs with :NullLsLog.
@@ -52,7 +59,9 @@ return {
             group = augroup,
             buffer = bufnr,
             callback = function()
-              vim.lsp.buf.format { async = false }
+              if vim.g.myconfig.format_on_write then
+                vim.lsp.buf.format { async = false }
+              end
             end,
           })
         end
