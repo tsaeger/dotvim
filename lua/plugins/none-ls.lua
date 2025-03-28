@@ -10,27 +10,32 @@ return {
     local null_ls = require 'null-ls'
     local formatting = null_ls.builtins.formatting -- to setup formatters
     local diagnostics = null_ls.builtins.diagnostics -- to setup linters
+    local code_actions = null_ls.builtins.code_actions
+    -- local hover = null_ls.builtins.hover
+    -- local completion = null_ls.builtins.completion
 
     -- Formatters & linters for mason to install
     require('mason-null-ls').setup {
       ensure_installed = {
-        'prettier', -- ts/js formatter
-        'stylua', -- lua formatter
-        -- 'eslint_d', -- ts/js linter
-        -- 'shellcheck', -- Shell linter
-        'shfmt', -- Shell formatter
         'checkmake', -- linter for Makefiles
+        'codespell', -- spelling
+        'prettier', -- ts/js formatter
         'ruff', -- Python linter and formatter
+        'shfmt', -- Shell formatter
+        'stylua', -- lua formatter
       },
       automatic_installation = true,
     }
 
     local sources = {
+      code_actions.gitrebase,
+      code_actions.gitsigns,
       diagnostics.checkmake,
+      diagnostics.codespell,
       formatting.prettier.with { filetypes = { 'html', 'json', 'yaml', 'markdown' } },
       formatting.stylua.with { filetypes = { 'lua' } },
       formatting.shfmt.with { args = { '-i', '4' } },
-      -- formatting.terraform_fmt,
+      -- formatting.codespell,
       require('none-ls.formatting.ruff').with { extra_args = { '--extend-select', 'I' } },
       require 'none-ls.formatting.ruff_format',
     }
