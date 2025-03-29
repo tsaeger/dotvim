@@ -17,6 +17,7 @@ return {
     -- Formatters & linters for mason to install
     require('mason-null-ls').setup {
       ensure_installed = {
+        -- NOTE: mason auto-install tools
         'checkmake', -- linter for Makefiles
         'codespell', -- spelling
         'prettier', -- ts/js formatter
@@ -27,6 +28,7 @@ return {
       automatic_installation = true,
     }
 
+    -- NOTE: none-ls sources
     local sources = {
       code_actions.gitrebase,
       code_actions.gitsigns,
