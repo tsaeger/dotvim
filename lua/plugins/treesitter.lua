@@ -5,6 +5,7 @@ return {
     main = 'nvim-treesitter.configs', -- Sets main module to use for opts
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
     opts = {
+      -- NOTE: treesitter languages
       ensure_installed = {
         'lua',
         'python',
@@ -43,11 +44,78 @@ return {
         additional_vim_regex_highlighting = { 'ruby' },
       },
       indent = { enable = true, disable = { 'ruby' } },
+      -- `:help nvim-treesitter-incremental-selection-mod`
+      incremental_selection = {
+        enable = true,
+        keymaps = {
+          init_selection = 'gnn',
+          node_incremental = 'grn',
+          scope_incremental = 'grc',
+          node_decremental = 'grm',
+        },
+      },
     },
   },
-  { 'nvim-treesitter/nvim-treesitter-context', opts = {} },
-  -- Other nvim-treesitter modules
-  --    - Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
-  --    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
-  --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
+  -- NOTE: Additional treesitter modules
+  {
+    -- https://github.com/nvim-treesitter/nvim-treesitter-context/issues/145#issuecomment-1188712754
+    -- https://github.com/syphar/dotfiles/blob/7fb87b3f9be7113bfdd01a4c781642592aac9880/.config/nvim/after/plugin/treesitter_context.lua
+    'nvim-treesitter/nvim-treesitter-context',
+    opts = {
+      enable = true,
+      throttle = true,
+      max_lines = 0,
+      patterns = {
+        default = {
+          'class',
+          'function',
+          'method',
+          'for',
+          'while',
+          'if',
+          'else',
+          'switch',
+          'case',
+        },
+        rust = {
+          'impl_item',
+          'mod_item',
+          'enum_item',
+          'match',
+          'struct',
+          'loop',
+          'closure',
+          'async_block',
+          'block',
+        },
+        python = {
+          'elif',
+          'with',
+          'try',
+          'except',
+        },
+        json = {
+          'object',
+          'pair',
+        },
+        javascript = {
+          'object',
+          'pair',
+        },
+        yaml = {
+          'block_mapping_pair',
+          'block_sequence_item',
+        },
+        toml = {
+          'table',
+          'pair',
+        },
+        markdown = {
+          'section',
+        },
+      },
+    },
+  },
+  { 'JoosepAlviste/nvim-ts-context-commentstring' },
+  -- https://github.com/nvim-treesitter/nvim-treesitter-textobjects
 }
