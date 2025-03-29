@@ -208,8 +208,11 @@ _M.OptionToggleFolds = function()
 end
 
 _M.OptionToggleFormatOnSave = function()
-  -- TODO: figure out LSP equivalent
-  -- vim.cmd("LvimToggleFormatOnSave")
+  -- toggle global, which is used by none-ls autocmd 'BufWritePre'
+  local myconfig = vim.g.myconfig
+  myconfig.format_on_write = not myconfig.format_on_write
+  vim.g.myconfig = myconfig
+  vim.notify("format_on_write set to " .. tostring(vim.g.myconfig.format_on_write))
 end
 
 _M.set_default_keymaps = function()
