@@ -27,6 +27,7 @@ return {
         { '<leader>c', group = '[C]ode' },
         { '<leader>cg', group = '[G]oto' },
         { '<leader>cd', group = '[D]ocument' },
+        { '<leader>ct', group = '[T]reesitter' },
         { '<leader>cw', group = '[W]orkspace' },
         { '<leader>d', group = '[D]iagnostic' },
         { '<leader>s', group = '[S]earch' },

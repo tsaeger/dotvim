@@ -61,6 +61,14 @@ return {
     -- https://github.com/nvim-treesitter/nvim-treesitter-context/issues/145#issuecomment-1188712754
     -- https://github.com/syphar/dotfiles/blob/7fb87b3f9be7113bfdd01a4c781642592aac9880/.config/nvim/after/plugin/treesitter_context.lua
     'nvim-treesitter/nvim-treesitter-context',
+    config = function()
+      vim.keymap.set(
+        'n',
+        '<leader>ctc',
+        ':TSContextToggle<CR>',
+        { noremap = true, silent = true, desc = '[C]ontext Toggle' }
+      )
+    end,
     opts = {
       enable = true,
       throttle = true,
