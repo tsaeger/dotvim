@@ -109,9 +109,6 @@ vim.keymap.set(
 )
 vim.keymap.set('n', 'gl', vim.diagnostic.open_float, { desc = '[D]iagnostic [O]pen floating message' })
 vim.keymap.set('n', '<leader>dl', vim.diagnostic.setloclist, { desc = '[D]iagnostic [l]ocation list open' })
-vim.keymap.set('n', '<leader>dv', function()
-  vim.diagnostic.config { virtual_text = not vim.diagnostic.config().virtual_text }
-end, { desc = '[D]iagnostic [v]irtual_text toggle' })
 
 -- Dashboard
 vim.keymap.set('n', '<leader>;', function()
