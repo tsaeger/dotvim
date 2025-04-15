@@ -1,10 +1,13 @@
 # Tom's Neovim 2025
 
+[NVIM_APPNAME](https://neovim.io/doc/user/starting.html#%24NVIM_APPNAME) is used to isolate install.
+neovim v0.10.0+ is required.
+
 ### Install
 
 ```bash
 
-tar -C ~/.config -axf nvim2025.tar
+git clone https://github.com/tsaeger/dotvim.git ~/.config/nvim2025
 
 cat <<'EOF' > ~/.local/bin/nv ; chmod +x ~/.local/bin/nv
 #!/usr/bin/env bash
@@ -17,7 +20,7 @@ NVIM_APPNAME="nvim2025" nvim \
     $@
 EOF
 
-## neovim python install
+## Install pynvim to dedicated virtualenv
 
 cargo install --git https://github.com/astral-sh/uv uv
 cd ~/.config
@@ -29,7 +32,7 @@ uv pip install pynvim
 
 ### References
 
-[kickstart.nvim](https://github.com/nvim-lua/kickstart.nvim)
-[neovim-kickstart-config](https://github.com/hendrikmi/neovim-kickstart-config)
-[Neovim kickstart from TJ DeVries](https://www.youtube.com/watch?v=m8C0Cq9Uv9o&t=103s)
-[![Full Neovim Setup from Scratch in 2025](https://img.youtube.com/vi/KYDG3AHgYEs/0.jpg)](https://youtu.be/KYDG3AHgYEs?si=I71UjuoQg2fHLGyu)
+- [kickstart.nvim](https://github.com/nvim-lua/kickstart.nvim)
+- [![Neovim kickstart from TJ DeVries](https://img.youtube.com/vi/m8C0Cq9Uv9o/0.jpg)](https://youtu.be/m8C0Cq9Uv9o)
+- [neovim-kickstart-config](https://github.com/hendrikmi/neovim-kickstart-config)
+- [![Full Neovim Setup from Scratch in 2025](https://img.youtube.com/vi/KYDG3AHgYEs/0.jpg)](https://youtu.be/KYDG3AHgYEs?si=I71UjuoQg2fHLGyu)
