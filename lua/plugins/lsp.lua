@@ -7,7 +7,7 @@ return {
     'williamboman/mason-lspconfig.nvim',
     'WhoIsSethDaniel/mason-tool-installer.nvim',
     { 'j-hui/fidget.nvim', opts = {} },
-    'hrsh7th/cmp-nvim-lsp',
+    'saghen/blink.compat',
   },
   config = function()
     -- LSP provides Neovim with features like:
@@ -137,14 +137,12 @@ return {
 
     -- LSP servers and clients are able to communicate to each other what features they support.
     --  By default, Neovim doesn't support everything that is in the LSP specification.
-    --  When you add nvim-cmp, luasnip, etc. Neovim now has *more* capabilities.
-    --  So, we create new capabilities with nvim cmp, and then broadcast that to the servers.
-    local capabilities = vim.lsp.protocol.make_client_capabilities()
-    capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
+    --  Plugins like blink-cmp, nvim-cmp, luasnip, etc. add *more* capabilities.
+    --  Broadcast the combined capabilities to servers.
+    local capabilities = require('blink.cmp').get_lsp_capabilities({}, true)
 
     -- Enable the following language servers
-    --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
-    --
+    -- :help lspconfig-all
     --  Add any additional override configuration in the following tables. Available keys are:
     --  - cmd (table): Override the default command used to start the server
     --  - filetypes (table): Override the default list of associated filetypes for the server
@@ -171,7 +169,6 @@ return {
         -- prevent auto-config of rust_analyzer which interferes with rustaceanvim
         skip_autoconfigure = true,
       },
-      -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
       -- ts_ls = {},
       ruff = {},
       pylsp = {
@@ -255,7 +252,7 @@ return {
           if server.skip_autoconfigure then
             return
           end
-          -- request additional cmp_nvim_lsp capabilities with overrides for auto-installed servers
+          -- request additional lsp capabilities with overrides for auto-installed servers
           server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
           require('lspconfig')[server_name].setup(server)
         end,
@@ -269,11 +266,10 @@ return {
       return (server.skip_autoinstall and not server.skip_autoconfigure) or false
     end, ensure_configured)
     for _, server_name in pairs(ensure_configured) do
-      local lspconfig = require 'lspconfig'
       local server = servers[server_name] or {}
-      -- request additional cmp_nvim_lsp capabilities with overrides for manually installed servers
+      -- request additional lsp capabilities with overrides for manually installed servers
       server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-      lspconfig[server_name].setup(server)
+      require('lspconfig')[server_name].setup(server)
     end
   end,
 }
