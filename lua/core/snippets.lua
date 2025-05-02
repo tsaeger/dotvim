@@ -25,6 +25,14 @@ vim.diagnostic.config {
   float = {
     source = true, -- Or "if_many"
   },
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = '✘',
+      [vim.diagnostic.severity.WARN] = '▲',
+      [vim.diagnostic.severity.HINT] = '⚑',
+      [vim.diagnostic.severity.INFO] = '»',
+    },
+  },
   -- Make diagnostic background transparent
   on_ready = function()
     vim.cmd 'highlight DiagnosticVirtualText guibg=NONE'
