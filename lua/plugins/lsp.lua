@@ -254,7 +254,7 @@ return {
           end
           -- request additional lsp capabilities with overrides for auto-installed servers
           server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-          require('lspconfig')[server_name].setup(server)
+          vim.lsp.config(server_name, server)
         end,
       },
     }
@@ -269,7 +269,7 @@ return {
       local server = servers[server_name] or {}
       -- request additional lsp capabilities with overrides for manually installed servers
       server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-      require('lspconfig')[server_name].setup(server)
+      vim.lsp.config(server_name, server)
     end
   end,
 }
