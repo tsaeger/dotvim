@@ -58,7 +58,7 @@ return {
   },
   -- general editor
   {
-    'ggandor/leap.nvim',
+    url = 'https://codeberg.org/andyg/leap.nvim.git',
     config = function()
       vim.keymap.set({ 'n', 'x', 'o' }, 's', '<Plug>(leap-forward)')
       vim.keymap.set({ 'n', 'x', 'o' }, 'S', '<Plug>(leap-backward)')
@@ -67,6 +67,12 @@ return {
   },
   { 'jghauser/mkdir.nvim' },
   { 'gpanders/editorconfig.nvim' },
+  {
+    'danymat/neogen',
+    config = true,
+    -- Uncomment next line if you want to follow only stable versions
+    -- version = "*"
+  },
   -- lua
   { 'rohanorton/lua-gf.nvim', opts = {} },
   { 'rafcamlet/nvim-luapad' },
@@ -91,9 +97,12 @@ return {
       { 'nvim-treesitter/nvim-treesitter' },
       { 'lewis6991/gitsigns.nvim' },
       { 'folke/which-key.nvim' },
-      { 'folke/snacks.nvim', opts = {
-        indent = {},
-      } },
+      {
+        'folke/snacks.nvim',
+        opts = {
+          indent = {},
+        },
+      },
     },
   },
   {
@@ -101,4 +110,6 @@ return {
     opts = {},
     dependencies = { { 'clvnkhr/macaltkey.nvim' } },
   },
+  -- for fun
+  { 'ThePrimeagen/vim-be-good' },
 }
