@@ -1,60 +1,53 @@
 return {
   {
     'nvim-treesitter/nvim-treesitter',
+    branch = 'main',
+    lazy = false,
     build = ':TSUpdate',
-    main = 'nvim-treesitter.configs', -- Sets main module to use for opts
-    -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
     opts = {
-      -- NOTE: treesitter languages
       ensure_installed = {
-        'lua',
-        'python',
-        -- 'javascript',
-        -- 'typescript',
-        'vimdoc',
-        'vim',
-        'regex',
-        -- 'terraform',
-        'sql',
-        'dockerfile',
-        'toml',
-        'json',
-        -- 'java',
-        -- 'groovy',
-        -- 'go',
-        'gitignore',
-        -- 'graphql',
-        'yaml',
-        'make',
-        'cmake',
-        'markdown',
-        'markdown_inline',
         'bash',
-        -- 'tsx',
-        -- 'css',
-        -- 'html',
-      },
-      -- Autoinstall languages that are not installed
-      auto_install = true,
-      highlight = {
-        enable = true,
-        -- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
-        --  If you are experiencing weird indenting issues, add the language to
-        --  the list of additional_vim_regex_highlighting and disabled languages for indent.
-        additional_vim_regex_highlighting = { 'ruby' },
-      },
-      indent = { enable = true, disable = { 'ruby' } },
-      -- `:help nvim-treesitter-incremental-selection-mod`
-      incremental_selection = {
-        enable = true,
-        keymaps = {
-          init_selection = 'gnn',
-          node_incremental = 'grn',
-          scope_incremental = 'grc',
-          node_decremental = 'grm',
-        },
+        'cmake',
+        'css',
+        'dockerfile',
+        'gitignore',
+        'go',
+        'html',
+        'javascript',
+        'json',
+        'lua',
+        'make',
+        'markdown_inline',
+        'markdown',
+        'python',
+        'regex',
+        'sql',
+        'toml',
+        'tsx',
+        'typescript',
+        'vim',
+        'vimdoc',
+        'yaml',
+        'zsh',
       },
     },
+    config = function(_, opts)
+      local ts = require 'nvim-treesitter'
+
+      ts.setup()
+      ts.install(opts.ensure_installed)
+
+      vim.api.nvim_create_autocmd('FileType', {
+        group = vim.api.nvim_create_augroup('myconfig-treesitter', { clear = true }),
+        callback = function(args)
+          pcall(vim.treesitter.start, args.buf)
+
+          if vim.bo[args.buf].filetype ~= 'ruby' then
+            vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+          end
+        end,
+      })
+    end,
   },
   -- NOTE: Additional treesitter modules
   {
