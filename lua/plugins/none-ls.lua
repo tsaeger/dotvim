@@ -8,7 +8,7 @@ return {
   },
   config = function()
     local null_ls = require 'null-ls'
-    local formatting = null_ls.builtins.formatting -- to setup formatters
+    local formatting = null_ls.builtins.formatting   -- to setup formatters
     local diagnostics = null_ls.builtins.diagnostics -- to setup linters
     local code_actions = null_ls.builtins.code_actions
     -- local hover = null_ls.builtins.hover
@@ -20,10 +20,11 @@ return {
         -- NOTE: mason auto-install tools
         'checkmake', -- linter for Makefiles
         'codespell', -- spelling
-        'prettier', -- ts/js formatter
-        'ruff', -- Python linter and formatter
-        'shfmt', -- Shell formatter
-        'stylua', -- lua formatter
+        'prettier',  -- ts/js formatter
+        'ruff',      -- Python linter and formatter
+        'shellcheck',
+        'shfmt',     -- Shell formatter
+        'stylua',    -- lua formatter
       },
       automatic_installation = true,
     }
