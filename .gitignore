@@ -1,2 +1,6 @@
 .mgit
 lazy-lock.json
+
+# nix build outputs
+result
+result-*
