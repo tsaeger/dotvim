@@ -8,12 +8,12 @@ vim.g.node_host_prog = '/Users/tsaeger/workspace/nix/node_modules/bin/neovim-nod
 
 ```bash
 cargo install --git https://github.com/astral-sh/uv uv
-uv venv --python 3.12 nvim2025.venv
+uv venv --python 3.13 nvim2025.venv
 source nvim2025.venv/bin/activate
-uv pip install pynvim
+uv pip install pynvim neovim
 ```
 --]]
-vim.g.python3_host_prog = vim.g.myconfig.configdir .. '.venv/bin/python3'
+vim.g.python3_host_prog = vim.g.myconfig.configdir .. '.venv/bin/python'
 
 -- shadafile
 if vim.o.shadafile ~= nil then
