@@ -112,4 +112,8 @@ return {
   },
   -- for fun
   { 'ThePrimeagen/vim-be-good' },
+  {
+    dir = vim.g.myconfig.util.path_join(vim.g.myconfig.plugindir, 'kommit.nvim'),
+    lazy = false,
+  },
 }
