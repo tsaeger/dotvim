@@ -141,6 +141,21 @@ return {
     --  Broadcast the combined capabilities to servers.
     local capabilities = require('blink.cmp').get_lsp_capabilities({}, true)
 
+    -- Keep Ruff as style linter and suppress pycodestyle-style diagnostics from pylsp.
+    do
+      local default_publish_diagnostics = vim.lsp.handlers['textDocument/publishDiagnostics']
+      vim.lsp.handlers['textDocument/publishDiagnostics'] = function(err, result, ctx, config)
+        local client = vim.lsp.get_client_by_id(ctx.client_id)
+        if client and client.name == 'pylsp' and result and result.diagnostics then
+          result.diagnostics = vim.tbl_filter(function(diagnostic)
+            local code = tostring(diagnostic.code or '')
+            return not code:match '^[EW]%d%d%d$'
+          end, result.diagnostics)
+        end
+        return default_publish_diagnostics(err, result, ctx, config)
+      end
+    end
+
     -- Enable the following language servers
     -- :help lspconfig-all
     --  Add any additional override configuration in the following tables. Available keys are:
@@ -176,13 +191,16 @@ return {
           pylsp = {
             plugins = {
               pyflakes = { enabled = false },
-              pycodestyle = { enabled = false },
               autopep8 = { enabled = false },
               yapf = { enabled = false },
               mccabe = { enabled = false },
               pylsp_mypy = { enabled = false },
               pylsp_black = { enabled = false },
               pylsp_isort = { enabled = false },
+              pycodestyle = {
+                enabled = true,
+                maxLineLength = 132,
+              },
             },
           },
         },
@@ -243,33 +261,18 @@ return {
     end, ensure_installed)
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
-    -- mason-lspconfig auto configure servers installed via mason
+    -- Disable mason-lspconfig auto-enable so we can apply custom settings first.
     require('mason-lspconfig').setup {
-      handlers = {
-        -- default handler called for each server without dedicated handler
-        function(server_name)
-          local server = servers[server_name] or {}
-          if server.skip_autoconfigure then
-            return
-          end
-          -- request additional lsp capabilities with overrides for auto-installed servers
-          server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-          vim.lsp.config(server_name, server)
-        end,
-      },
+      automatic_enable = false,
     }
 
-    -- auto-configure manually installed servers
-    local ensure_configured = vim.tbl_keys(servers or {})
-    ensure_configured = vim.tbl_filter(function(server_name)
-      local server = servers[server_name] or {}
-      return (server.skip_autoinstall and not server.skip_autoconfigure) or false
-    end, ensure_configured)
-    for _, server_name in pairs(ensure_configured) do
-      local server = servers[server_name] or {}
-      -- request additional lsp capabilities with overrides for manually installed servers
-      server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-      vim.lsp.config(server_name, server)
+    -- Configure and enable servers with local overrides.
+    for server_name, server in pairs(servers) do
+      if not server.skip_autoconfigure then
+        server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
+        vim.lsp.config(server_name, server)
+        vim.lsp.enable(server_name)
+      end
     end
   end,
 }
