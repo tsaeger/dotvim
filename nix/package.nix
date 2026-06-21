@@ -30,6 +30,11 @@ let
 
     # Runtime many mason-installed (node-based) LSP servers need on PATH:
     nodejs_22
+
+    # Python 3.13 for mason's python-based tools (basedpyright, pylsp, ruff,
+    # codespell). Pins the interpreter mason builds venvs against — otherwise it
+    # falls back to system python3 (3.9). Provides python3/python on PATH.
+    python313
   ];
 
   # Promotion candidates — currently managed by mason in lua/plugins/lsp.lua:
