@@ -87,6 +87,7 @@ require('lazy').setup({
   require 'plugins.comment',
   require 'plugins.snacks',
   require 'plugins.ai',
+  require 'plugins.trouble',
 }, {
   rocks = {
     enabled = false,
