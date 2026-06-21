@@ -114,3 +114,8 @@ vim.keymap.set('n', '<leader>dl', vim.diagnostic.setloclist, { desc = '[D]iagnos
 vim.keymap.set('n', '<leader>;', function()
   Snacks.dashboard.open()
 end, { desc = 'Open Dashboard' })
+
+-- AI/Chat keymaps
+vim.keymap.set('n', '<leader>ac', '<cmd>CodeCompanionChat Toggle<cr>', desc_opts '[A]I [C]hat Toggle')
+vim.keymap.set('n', '<leader>ai', '<cmd>CodeCompanion<cr>', desc_opts '[A]I Inline Assistant')
+vim.keymap.set('v', '<leader>ai', '<cmd>CodeCompanion<cr>', desc_opts '[A]I Inline Assistant (Visual)')

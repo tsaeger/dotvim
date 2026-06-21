@@ -23,17 +23,6 @@ end
 
 -- Augment myconfig
 -- :help vim.g
-local host = 'localhost'
-local port = 11434
-local ollama = {
-  host = host,
-  port = port,
-  completion_url = string.format('http://%s:%d/v1/completions', host, port),
-  chat_url = string.format('http://%s:%d/v1/chat/completions', host, port),
-  model = 'qwen2.5-coder:7b',
-}
-
 local myconfig = vim.g.myconfig
-myconfig.ollama = ollama
 myconfig.format_on_write = true
 vim.g.myconfig = myconfig
