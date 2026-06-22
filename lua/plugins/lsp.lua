@@ -197,10 +197,10 @@ return {
     --  You can press `g?` for help in this menu.
     require('mason').setup()
 
-    -- Single source of truth for who installs/configures what (lua/tools.lua):
+    -- Single source of truth for who installs/configures what (lua/core/tools.lua):
     -- skip_autoinstall / skip_autoconfigure are DERIVED from the registry so a
     -- tool is never half-promoted between nix and mason.
-    local tools = require 'tools'
+    local tools = require 'core.tools'
 
     -- mason-tool-installer installs only the LSP servers the registry marks as
     -- mason-sourced (nix/system ones are filtered out so mason can't shadow them).

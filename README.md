@@ -17,7 +17,7 @@ Three tiers, three independent update cadences:
 - **Tier 1 — Nix flake** (`nix/package.nix`): always-needed tools, pinned, on
   PATH inside *and* outside nvim (ripgrep, fd, tree-sitter, gcc, node, python
   3.13, a Python dev toolchain, rust-analyzer from fenix, plus core
-  formatters/linters). `lua/tools.lua` is the single source of truth for tool
+  formatters/linters). `lua/core/tools.lua` is the single source of truth for tool
   ownership.
 - **Tier 2 — mason**: experimental / language-specific / short-lived tools.
 - **Plugins — lazy.nvim**: all plugins, pinned in the committed `lazy-lock.json`.
@@ -34,7 +34,7 @@ shadowing.
 Two complementary gates keep the config from silently breaking:
 
 - `:checkhealth dotvim` / `:DotvimDoctor` — manual, inside nvim: registry
-  (`lua/tools.lua`) vs reality. Both render the same audit (`tools.audit()`);
+  (`lua/core/tools.lua`) vs reality. Both render the same audit (`tools.audit()`);
   checkhealth uses the native health UI, DotvimDoctor a scratch buffer.
 - `test/smoke.sh` — automated: boots the config headless against the committed
   `lazy-lock.json`, loads every plugin, and fails on any Lua error or
@@ -128,7 +128,7 @@ nix profile install github:tsaeger/dotvim#tools
 ## Promoting a tool from mason to Tier-1
 
 1. add the nixpkgs attr to `runtimeDeps` in `nix/package.nix`
-2. flip `source = 'mason' → 'nix'` in `lua/tools.lua`
+2. flip `source = 'mason' → 'nix'` in `lua/core/tools.lua`
 3. `rebuild`, then in nvim: `:MasonUninstall <name>` and `:DotvimDoctor`
 
 ## NixOS note

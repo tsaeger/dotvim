@@ -15,11 +15,11 @@ return {
     -- local completion = null_ls.builtins.completion
 
     -- Formatters & linters for mason to install — DERIVED from the registry
-    -- (lua/tools.lua): only none-ls tools whose source is 'mason'. nix-provided
+    -- (lua/core/tools.lua): only none-ls tools whose source is 'mason'. nix-provided
     -- ones (e.g. ruff) are excluded here so mason can't shadow them on PATH; the
     -- none-ls *sources* below still run whatever binary is on PATH (= the nix one).
     require('mason-null-ls').setup {
-      ensure_installed = require('tools').none_ls_mason_install(),
+      ensure_installed = require('core.tools').none_ls_mason_install(),
       automatic_installation = true,
     }
 

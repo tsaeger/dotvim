@@ -55,7 +55,7 @@ let
     rust-analyzer
 
     # ── LSP servers (promoted out of mason — stable + in nixpkgs) ──────────────
-    # Marked source='nix' in the registry (lua/tools.lua) so mason-tool-installer
+    # Marked source='nix' in the registry (lua/core/tools.lua) so mason-tool-installer
     # won't reinstall them; evict stale mason copies with :MasonUninstall.
     lua-language-server            # lua_ls
     yaml-language-server           # yamlls
@@ -64,7 +64,7 @@ let
 
     # ── none-ls formatters/linters (promoted out of mason) ─────────────────────
     # Used by lua/plugins/none-ls.lua sources; marked source='nix' in the
-    # registry (lua/tools.lua) so mason-null-ls won't reinstall/shadow them.
+    # registry (lua/core/tools.lua) so mason-null-ls won't reinstall/shadow them.
     codespell      # spelling
     prettier       # html/json/yaml/markdown formatter
     shellcheck     # shell linter
@@ -87,7 +87,7 @@ let
   # Still managed by mason (intentional):
   #   none-ls: checkmake   (niche; lua/plugins/none-ls.lua)
   # (clangd is system-provided via the registry's source='system'.)
-  # To promote checkmake later: add `checkmake` above + flip source in tools.lua.
+  # To promote checkmake later: add `checkmake` above + flip source in lua/core/tools.lua.
   #   (editing nix? add `nil` or `nixd` here + a server entry in lsp.lua)
 
 in

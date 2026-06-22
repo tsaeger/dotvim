@@ -49,9 +49,9 @@ function M.check()
   -- ── Tool registry vs reality ──────────────────────────────────────────────
   health.start 'dotvim — tool registry vs reality'
 
-  local ok, tools = pcall(require, 'tools')
+  local ok, tools = pcall(require, 'core.tools')
   if not ok then
-    health.error('could not load tool registry (lua/tools.lua)', { tostring(tools) })
+    health.error('could not load tool registry (lua/core/tools.lua)', { tostring(tools) })
     return
   end
 

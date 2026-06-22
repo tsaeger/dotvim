@@ -2,4 +2,4 @@
 --
 -- (The former Nvim2026RecreatePythonVenv command was removed along with the
 -- pynvim provider — this config is pure Lua and needs no Python/Node host.
--- See :DotvimDoctor in lua/tools.lua for the tool-verification command.)
+-- See :DotvimDoctor in lua/core/tools.lua for the tool-verification command.)

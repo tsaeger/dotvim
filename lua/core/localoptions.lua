@@ -1,4 +1,4 @@
-vim.opt.guifont = 'MesloLGS Nerd Font:h20'
+vim.opt.guifont = 'MesloLGM Nerd Font:h20'
 vim.g.have_nerd_font = true
 
 -- This config is pure Lua — no plugin uses a remote-plugin host — so disable all
