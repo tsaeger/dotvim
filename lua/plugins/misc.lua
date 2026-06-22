@@ -84,13 +84,14 @@ return {
   },
   {
     'danymat/neogen',
+    cmd = 'Neogen',
     config = true,
     -- Uncomment next line if you want to follow only stable versions
     -- version = "*"
   },
   -- lua
-  { 'rohanorton/lua-gf.nvim', opts = {} },
-  { 'rafcamlet/nvim-luapad' },
+  { 'rohanorton/lua-gf.nvim', ft = 'lua', opts = {} },
+  { 'rafcamlet/nvim-luapad', cmd = { 'Luapad', 'LuaRun' } },
   -- rust
   {
     'mrcjkb/rustaceanvim',
@@ -100,6 +101,8 @@ return {
   {
     'saecki/crates.nvim',
     tag = 'stable',
+    -- only relevant when editing a Cargo.toml
+    event = { 'BufRead Cargo.toml' },
     opts = {},
   },
   -- MacOS
@@ -126,7 +129,7 @@ return {
     dependencies = { { 'clvnkhr/macaltkey.nvim' } },
   },
   -- for fun
-  { 'ThePrimeagen/vim-be-good' },
+  { 'ThePrimeagen/vim-be-good', cmd = 'VimBeGood' },
   {
     dir = vim.g.myconfig.util.path_join(vim.g.myconfig.plugindir, 'kommit.nvim'),
     lazy = false,
