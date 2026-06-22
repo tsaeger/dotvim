@@ -53,6 +53,14 @@ let
     # with rustaceanvim (skip_autoconfigure) in lua/plugins/lsp.lua. Evict the
     # mason copy: `:MasonUninstall rust-analyzer` + drop from ensure_installed.
     rust-analyzer
+
+    # ── none-ls formatters/linters (promoted out of mason) ─────────────────────
+    # Used by lua/plugins/none-ls.lua sources; marked source='nix' in the
+    # registry (lua/tools.lua) so mason-null-ls won't reinstall/shadow them.
+    codespell      # spelling
+    prettier       # html/json/yaml/markdown formatter
+    shellcheck     # shell linter
+    shfmt          # shell formatter
   ];
 
   # IMPORTANT — finish promoting ruff + basedpyright out of mason:
@@ -62,11 +70,12 @@ let
   # and drop them from `ensure_installed` in lua/plugins/lsp.lua. Verify with
   # :LspInfo / :checkhealth that they resolve to /nix/store/...
   #
-  # Still managed by mason in lua/plugins/lsp.lua (promotion candidates):
-  #   bashls, pylsp, jsonls, yamlls, lua_ls, stylua
+  # Still managed by mason (promotion candidates):
+  #   lsp:     bashls, pylsp, jsonls, yamlls, lua_ls  (lua/plugins/lsp.lua)
+  #   none-ls: stylua, checkmake                      (lua/plugins/none-ls.lua)
   # (clangd is system-provided via skip_autoinstall.)
   # nixpkgs attrs when you're ready to promote any of them:
-  #   lua_ls -> lua-language-server   stylua -> stylua
+  #   lua_ls -> lua-language-server   stylua -> stylua   checkmake -> checkmake
   #   bashls -> bash-language-server  jsonls/yamlls -> vscode-langservers-extracted / yaml-language-server
   #   (editing nix? add `nil` or `nixd` here + a server entry in lsp.lua)
 

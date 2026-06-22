@@ -45,11 +45,11 @@ M.tools = {
 
   -- ── none-ls (formatters / linters / diagnostics) ──────────────────────────
   stylua        = { source = 'mason',  none_ls = true,        bin = 'stylua' },
-  prettier      = { source = 'mason',  none_ls = true,        bin = 'prettier' },
-  shfmt         = { source = 'mason',  none_ls = true,        bin = 'shfmt' },
-  shellcheck    = { source = 'mason',  none_ls = true,        bin = 'shellcheck' },
+  prettier      = { source = 'nix',    none_ls = true,        bin = 'prettier' },
+  shfmt         = { source = 'nix',    none_ls = true,        bin = 'shfmt' },
+  shellcheck    = { source = 'nix',    none_ls = true,        bin = 'shellcheck' },
   checkmake     = { source = 'mason',  none_ls = true,        bin = 'checkmake' },
-  codespell     = { source = 'mason',  none_ls = true,        bin = 'codespell' },
+  codespell     = { source = 'nix',    none_ls = true,        bin = 'codespell' },
 
   -- ── Pure CLI tools from Nix Tier-1 (no LSP/none-ls role; verified by doctor) ─
   ripgrep       = { source = 'nix', cli = true, bin = 'rg' },
