@@ -46,16 +46,14 @@ let
   #   basedpyright -> basedpyright    rust_analyzer -> rust-analyzer
   #   (editing nix? add `nil` or `nixd` here + a server entry in lsp.lua)
 
-  wrappedNeovim = pkgs.neovim.override {
-    configure = {
-      # Empty customRC — all real config comes from ~/.config/nvim2026
-      customRC = "";
-    };
-  };
 in
+# Wrap neovim-unwrapped directly (NOT pkgs.neovim). The pkgs.neovim wrapper
+# generates its own init and launches with `-u <generated>`, which suppresses
+# auto-sourcing of ~/.config/nvim2026/init.lua — you'd get a vanilla editor.
+# neovim-unwrapped has no such injection, so it loads the config normally.
 pkgs.symlinkJoin {
   name = "nvim";
-  paths = [ wrappedNeovim ];
+  paths = [ pkgs.neovim-unwrapped ];
   buildInputs = [ pkgs.makeWrapper ];
   postBuild = ''
     wrapProgram $out/bin/nvim \
