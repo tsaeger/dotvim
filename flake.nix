@@ -29,6 +29,15 @@
           rust-analyzer = fenix.packages.${system}.rust-analyzer;
         };
         default = self.packages.${system}.nvim;
+
+        # The Tier-1 tools alone (no nvim), for putting them on the shell PATH:
+        #   nix profile install github:tsaeger/dotvim#tools
+        # Same derivations the nvim wrapper injects — `tree-sitter`, `rg`, etc.
+        # resolve identically inside and outside the editor.
+        tools = pkgs.buildEnv {
+          name = "nvim-tools";
+          paths = self.packages.${system}.nvim.runtimeDeps;
+        };
       });
 
       # ── Home-manager module ────────────────────────────────────────────────

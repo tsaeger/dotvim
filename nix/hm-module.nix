@@ -24,6 +24,13 @@ self: { pkgs, lib, config, ... }:
 
 let
   cfg = config.programs.dotvim;
+  # A single directory bundling all Tier-1 tools (one bin/). Same derivations the
+  # nvim wrapper injects, so anything resolved via $DOTVIM_TOOLS_BIN matches what
+  # nvim sees internally.
+  toolsEnv = pkgs.buildEnv {
+    name = "nvim-tools";
+    paths = cfg.package.runtimeDeps;
+  };
 in {
   options.programs.dotvim = {
     enable = lib.mkEnableOption "dotvim neovim runtime (binary + Tier-1 tools)";
@@ -32,6 +39,25 @@ in {
       type = lib.types.package;
       default = self.packages.${pkgs.system}.nvim;
       description = "The wrapped neovim runtime package to install.";
+    };
+
+    toolsPath = lib.mkOption {
+      type = lib.types.enum [ "profile" "var" "none" ];
+      default = "var";
+      description = ''
+        How to expose the Tier-1 tools (ripgrep, fd, tree-sitter, node, python, …)
+        to your *interactive shell*, beyond nvim's internal PATH. They're bundled
+        into a single directory (one `bin/`) regardless — same pinned versions the
+        nvim wrapper injects.
+
+        - "var"     : set $DOTVIM_TOOLS_BIN to that bin/ dir but DON'T touch PATH.
+                      You add it yourself, choosing the order, e.g. in zshrc:
+                          export PATH="$DOTVIM_TOOLS_BIN:$PATH"   # prefix (wins)
+                          export PATH="$PATH:$DOTVIM_TOOLS_BIN"   # suffix (fallback)
+        - "profile" : prepend the tools to your home-manager profile PATH (no
+                      manual step, but you don't control ordering vs other pkgs).
+        - "none"    : keep the tools scoped to nvim only.
+      '';
     };
 
     bootstrapConfig = lib.mkOption {
@@ -59,7 +85,13 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = [ cfg.package ];
+    home.packages = [ cfg.package ]
+      ++ lib.optional (cfg.toolsPath == "profile") toolsEnv;
+
+    # "var" mode: hand you the bin/ dir, let you place it in PATH yourself.
+    home.sessionVariables = lib.mkIf (cfg.toolsPath == "var") {
+      DOTVIM_TOOLS_BIN = "${toolsEnv}/bin";
+    };
 
     home.activation = lib.mkIf cfg.bootstrapConfig {
       dotvimClone = lib.hm.dag.entryAfter [ "writeBoundary" ] ''

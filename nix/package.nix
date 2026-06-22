@@ -85,4 +85,10 @@ pkgs.symlinkJoin {
       --set-default NVIM_APPNAME nvim2026
   '';
   meta.mainProgram = "nvim";
+
+  # Exposed so consumers can put the SAME pinned Tier-1 tools on the interactive
+  # shell PATH (not just nvim's internal PATH). The hm-module and the flake's
+  # `tools` package both read this — single source of truth.
+  #   nix-repl> (callPackage ./nix/package.nix {}).runtimeDeps
+  passthru.runtimeDeps = runtimeDeps;
 }
