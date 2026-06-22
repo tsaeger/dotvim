@@ -1,4 +1,4 @@
--- Custom code snippets for different purposes
+-- Autocommands and editor behavior hooks
 
 -- Prevent LSP from overwriting treesitter color settings
 -- https://github.com/NvChad/NvChad/issues/1907

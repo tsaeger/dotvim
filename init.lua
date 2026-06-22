@@ -35,7 +35,7 @@ vim.g.myconfig = myconfig
 require 'core.options' -- Load general options
 require 'core.localoptions' -- Load local options
 require 'core.keymaps' -- Load general keymaps
-require 'core.snippets' -- Custom code snippets
+require 'core.autocmds' -- Autocommands and editor behavior hooks
 require 'core.commands' -- User commands
 
 -- Set up Lazy plugin manager
