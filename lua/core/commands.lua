@@ -1,11 +1,5 @@
-local util = vim.g.myconfig.util
-
-local recreate_python_venv = util.path_join(vim.g.myconfig.configdir, 'recreate-python-venv.sh')
-
-vim.api.nvim_create_user_command('Nvim2025RecreatePythonVenv', function()
-  vim.cmd.split()
-  vim.fn.termopen { recreate_python_venv }
-  vim.cmd.startinsert()
-end, {
-  desc = 'Recreate the nvim2025 Python provider venv with uv',
-})
+-- User commands.
+--
+-- (The former Nvim2026RecreatePythonVenv command was removed along with the
+-- pynvim provider — this config is pure Lua and needs no Python/Node host.
+-- See :DotvimDoctor in lua/tools.lua for the tool-verification command.)

@@ -1,38 +1,93 @@
-# Tom's Neovim 2025
+# Tom's Neovim 2026
 
-[NVIM_APPNAME](https://neovim.io/doc/user/starting.html#%24NVIM_APPNAME) is used to isolate install.
-neovim v0.10.0+ is required.
+A standalone Nix flake providing a Neovim **runtime** (the editor binary plus
+always-needed "Tier-1" tools) and a home-manager module. The Neovim *config* is
+a live git checkout you edit in place: **Nix owns the runtime, git owns the
+config.**
 
-### Install
+[NVIM_APPNAME](https://neovim.io/doc/user/starting.html#%24NVIM_APPNAME) =
+`nvim2026` isolates this install — config at `~/.config/nvim2026`, data/state at
+`~/.local/{share,state}/nvim2026`. neovim v0.12.0+ is required (the flake pins a
+compatible build).
+
+## Architecture
+
+Three tiers, three independent update cadences:
+
+- **Tier 1 — Nix flake** (`nix/package.nix`): always-needed tools, pinned, on
+  PATH inside *and* outside nvim (ripgrep, fd, tree-sitter, gcc, node, python
+  3.13, a Python dev toolchain, rust-analyzer from fenix, plus core
+  formatters/linters). `lua/tools.lua` is the single source of truth for tool
+  ownership.
+- **Tier 2 — mason**: experimental / language-specific / short-lived tools.
+- **Plugins — lazy.nvim**: all plugins (`lazy-lock.json` is untracked so lazy
+  pulls latest).
+
+Run `:DotvimDoctor` inside nvim to verify each tool resolves where the registry
+says (nix-store / mason / system) and flag any PATH shadowing.
+
+## Install
+
+### Try the runtime
 
 ```bash
-
-git clone https://github.com/tsaeger/dotvim.git ~/.config/nvim2025
-
-cat <<'EOF' > ~/.local/bin/nv ; chmod +x ~/.local/bin/nv
-#!/usr/bin/env bash
-# Launch neovim config from
-# isolated area specified by NVIM_APPNAME
-# :help NVIM_APPNAME
-
-# shellcheck disable=SC2068
-NVIM_APPNAME="nvim2025" nvim \
-    $@
-EOF
-
-## Install pynvim to dedicated virtualenv
-
-cargo install --git https://github.com/astral-sh/uv uv
-cd ~/.config
-uv venv --python 3.12 nvim2025.venv
-source nvim2025.venv/bin/activate
-uv pip install pynvim
-
+nix run github:tsaeger/dotvim#nvim
 ```
 
-### References
+`NVIM_APPNAME=nvim2026` is baked in, so clone the config first (below) for it to
+have something to load.
 
-- [kickstart.nvim](https://github.com/nvim-lua/kickstart.nvim)
-- [![Neovim kickstart from TJ DeVries](https://img.youtube.com/vi/m8C0Cq9Uv9o/0.jpg)](https://youtu.be/m8C0Cq9Uv9o)
+### Get the config (the live checkout you edit)
+
+```bash
+git clone -b nvim2026 https://github.com/tsaeger/dotvim.git ~/.config/nvim2026
+```
+
+Plugins install on first launch (lazy.nvim); Tier-2 tools install via mason.
+
+### Via home-manager (recommended)
+
+```nix
+{
+  inputs.dotvim.url = "github:tsaeger/dotvim/nvim2026";
+
+  # in your home-manager configuration:
+  imports = [ inputs.dotvim.homeManagerModules.default ];
+  programs.dotvim = {
+    enable = true;
+    # toolsPath = "var";       # set $DOTVIM_TOOLS_BIN; you place it in PATH (default)
+    # toolsPath = "profile";   # prepend Tier-1 tools to the home-manager profile PATH
+    # bootstrapConfig = true;  # git-clone the config on first activation if absent
+  };
+}
+```
+
+The module installs only the runtime. With the default `toolsPath = "var"`, add
+the Tier-1 tools to your shell PATH wherever you want them in the ordering:
+
+```sh
+export PATH="$DOTVIM_TOOLS_BIN:$PATH"   # prefix — dotvim tools win
+```
+
+### Tier-1 tools on PATH without nvim
+
+```bash
+nix profile install github:tsaeger/dotvim#tools
+```
+
+## Promoting a tool from mason to Tier-1
+
+1. add the nixpkgs attr to `runtimeDeps` in `nix/package.nix`
+2. flip `source = 'mason' → 'nix'` in `lua/tools.lua`
+3. `rebuild`, then in nvim: `:MasonUninstall <name>` and `:DotvimDoctor`
+
+## NixOS note
+
+mason's prebuilt binaries need a standard dynamic linker; on NixOS hosts set
+`programs.nix-ld.enable = true;` at the system level. macOS and FHS Linux (e.g.
+Oracle Linux) need nothing extra — mason works natively.
+
+## References
+
+- [kickstart.nvim](https://github.com/nvim-lua/kickstart.nvim) — original base, since heavily personalized
 - [neovim-kickstart-config](https://github.com/hendrikmi/neovim-kickstart-config)
-- [![Full Neovim Setup from Scratch in 2025](https://img.youtube.com/vi/KYDG3AHgYEs/0.jpg)](https://youtu.be/KYDG3AHgYEs?si=I71UjuoQg2fHLGyu)
