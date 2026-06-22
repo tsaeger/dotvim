@@ -170,8 +170,7 @@ return {
       -- NOTE: LSP server configs
       bashls = {},
       clangd = {
-        -- prevent auto-install
-        skip_autoinstall = true,
+        -- install/config flags are derived from the registry (source='system')
         -- cmd = {'clangd', '--background-index', '--clang-tidy', '--log=verbose'},
         cmd = { 'clangd', '--background-index' },
         -- init_options = {
@@ -180,10 +179,9 @@ return {
       },
       -- gopls = {},
       basedpyright = { enabled = true },
-      rust_analyzer = {
-        -- prevent auto-config of rust_analyzer which interferes with rustaceanvim
-        skip_autoconfigure = true,
-      },
+      -- rust_analyzer: skip_autoconfigure is derived from the registry
+      -- (no_autoconfigure=true) so rustaceanvim owns the config.
+      rust_analyzer = {},
       -- ts_ls = {},
       ruff = {},
       pylsp = {
@@ -248,17 +246,25 @@ return {
     --  You can press `g?` for help in this menu.
     require('mason').setup()
 
-    -- You can add other tools here that you want Mason to install
-    -- for you, so that they are available from within Neovim.
-    local ensure_installed = vim.tbl_keys(servers or {})
-    vim.list_extend(ensure_installed, {
-      'stylua', -- Used to format Lua code
-    })
-    -- filter-out servers from being auto-installed by mason-tool-installer
-    ensure_installed = vim.tbl_filter(function(server_name)
-      local server = servers[server_name] or {}
-      return server.skip_autoinstall == nil or not server.skip_autoinstall
-    end, ensure_installed)
+    -- Single source of truth for who installs what (see lua/tools.lua).
+    -- skip_autoinstall / skip_autoconfigure are DERIVED from the registry so a
+    -- tool is never half-promoted between nix and mason.
+    local tools = require 'tools'
+    for server_name, server in pairs(servers) do
+      server.skip_autoinstall = tools.lsp_skip_autoinstall(server_name)
+      server.skip_autoconfigure = tools.lsp_skip_autoconfigure(server_name)
+    end
+
+    -- mason-tool-installer installs only the LSP servers the registry marks as
+    -- mason-sourced (nix/system ones are filtered out so mason can't shadow them).
+    -- none-ls tools (stylua, prettier, …) are installed via mason-null-ls in
+    -- none-ls.lua — also derived from the same registry.
+    local ensure_installed = {}
+    for server_name, server in pairs(servers) do
+      if not server.skip_autoinstall then
+        table.insert(ensure_installed, server_name)
+      end
+    end
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
     -- Disable mason-lspconfig auto-enable so we can apply custom settings first.

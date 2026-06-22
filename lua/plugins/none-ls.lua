@@ -14,18 +14,12 @@ return {
     -- local hover = null_ls.builtins.hover
     -- local completion = null_ls.builtins.completion
 
-    -- Formatters & linters for mason to install
+    -- Formatters & linters for mason to install — DERIVED from the registry
+    -- (lua/tools.lua): only none-ls tools whose source is 'mason'. nix-provided
+    -- ones (e.g. ruff) are excluded here so mason can't shadow them on PATH; the
+    -- none-ls *sources* below still run whatever binary is on PATH (= the nix one).
     require('mason-null-ls').setup {
-      ensure_installed = {
-        -- NOTE: mason auto-install tools
-        'checkmake', -- linter for Makefiles
-        'codespell', -- spelling
-        'prettier',  -- ts/js formatter
-        'ruff',      -- Python linter and formatter
-        'shellcheck',
-        'shfmt',     -- Shell formatter
-        'stylua',    -- lua formatter
-      },
+      ensure_installed = require('tools').none_ls_mason_install(),
       automatic_installation = true,
     }
 
