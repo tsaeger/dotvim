@@ -54,13 +54,3 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
 })
 
-local format_sync_grp = vim.api.nvim_create_augroup('RustaceanFormat', {})
-vim.api.nvim_create_autocmd('BufWritePre', {
-  group = format_sync_grp,
-  buffer = bufnr,
-  callback = function()
-    if vim.g.myconfig.format_on_write then
-      vim.lsp.buf.format { async = false }
-    end
-  end,
-})
