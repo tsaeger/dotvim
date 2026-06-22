@@ -30,6 +30,13 @@
         };
         default = self.packages.${system}.nvim;
 
+        # Neovide GUI wired to the wrapped nvim above (terminal `neovide` and,
+        # on macOS, Neovide.app both launch the NVIM_APPNAME=nvim2026 runtime):
+        #   nix run github:tsaeger/dotvim#neovide
+        neovide = pkgs.callPackage ./nix/neovide.nix {
+          nvim = self.packages.${system}.nvim;
+        };
+
         # The Tier-1 tools alone (no nvim), for putting them on the shell PATH:
         #   nix profile install github:tsaeger/dotvim#tools
         # Same derivations the nvim wrapper injects — `tree-sitter`, `rg`, etc.

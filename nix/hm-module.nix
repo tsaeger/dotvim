@@ -60,6 +60,20 @@ in {
       '';
     };
 
+    neovide = {
+      enable = lib.mkEnableOption ''
+        the Neovide GUI, wired to the same wrapped nvim runtime (terminal `nvim`
+        and `neovide` then share NVIM_APPNAME=nvim2026 + Tier-1 tools). On macOS
+        this also installs Neovide.app (home-manager links it into
+        ~/Applications/Home Manager Apps for Spotlight/Dock)'';
+
+      package = lib.mkOption {
+        type = lib.types.package;
+        default = self.packages.${pkgs.system}.neovide;
+        description = "The Neovide package (defaults to the dotvim-wired build).";
+      };
+    };
+
     bootstrapConfig = lib.mkOption {
       type = lib.types.bool;
       default = false;
@@ -86,7 +100,8 @@ in {
 
   config = lib.mkIf cfg.enable {
     home.packages = [ cfg.package ]
-      ++ lib.optional (cfg.toolsPath == "profile") toolsEnv;
+      ++ lib.optional (cfg.toolsPath == "profile") toolsEnv
+      ++ lib.optional cfg.neovide.enable cfg.neovide.package;
 
     # "var" mode: hand you the bin/ dir, let you place it in PATH yourself.
     home.sessionVariables = lib.mkIf (cfg.toolsPath == "var") {

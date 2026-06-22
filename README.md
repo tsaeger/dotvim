@@ -74,6 +74,7 @@ Plugins install on first launch (lazy.nvim); Tier-2 tools install via mason.
     # toolsPath = "var";       # set $DOTVIM_TOOLS_BIN; you place it in PATH (default)
     # toolsPath = "profile";   # prepend Tier-1 tools to the home-manager profile PATH
     # bootstrapConfig = true;  # git-clone the config on first activation if absent
+    # neovide.enable = true;   # also install the Neovide GUI (see below)
   };
 }
 ```
@@ -84,6 +85,17 @@ the Tier-1 tools to your shell PATH wherever you want them in the ordering:
 ```sh
 export PATH="$DOTVIM_TOOLS_BIN:$PATH"   # prefix — dotvim tools win
 ```
+
+### Neovide (GUI) alongside terminal nvim
+
+Set `programs.dotvim.neovide.enable = true`. Both the terminal `nvim` and the
+GUI use the **same** wrapped runtime — Neovide is built with `--neovim-bin`
+baked in, pointing at the dotvim nvim, so it launches with
+`NVIM_APPNAME=nvim2026` and the Tier-1 tools on PATH even when started from
+Spotlight/Dock (which don't inherit your shell `$PATH`). On macOS this installs
+`Neovide.app` (home-manager links it into *~/Applications/Home Manager Apps*).
+
+Or run it ad-hoc without installing: `nix run github:tsaeger/dotvim#neovide`.
 
 ### Tier-1 tools on PATH without nvim
 
