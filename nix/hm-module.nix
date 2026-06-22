@@ -72,6 +72,36 @@ in {
         default = self.packages.${pkgs.system}.neovide;
         description = "The Neovide package (defaults to the dotvim-wired build).";
       };
+
+      fontPackage = lib.mkOption {
+        type = lib.types.package;
+        default = pkgs.nerd-fonts.meslo-lg;
+        description = ''
+          Nerd Font package installed and (on macOS) linked into ~/Library/Fonts
+          so the GUI can find it. Defaults to Meslo LG Nerd Font.
+        '';
+      };
+
+      font = lib.mkOption {
+        type = lib.types.str;
+        default = "MesloLGM Nerd Font";
+        description = "Font family Neovide uses (must be provided by fontPackage).";
+      };
+
+      fontSize = lib.mkOption {
+        type = lib.types.number;
+        default = 14.0;
+        description = "Neovide font size (points).";
+      };
+
+      manageConfig = lib.mkOption {
+        type = lib.types.bool;
+        default = true;
+        description = ''
+          Write ~/.config/neovide/config.toml setting the font above. Disable to
+          manage that file yourself.
+        '';
+      };
     };
 
     bootstrapConfig = lib.mkOption {
@@ -101,22 +131,51 @@ in {
   config = lib.mkIf cfg.enable {
     home.packages = [ cfg.package ]
       ++ lib.optional (cfg.toolsPath == "profile") toolsEnv
-      ++ lib.optional cfg.neovide.enable cfg.neovide.package;
+      ++ lib.optionals cfg.neovide.enable [ cfg.neovide.package cfg.neovide.fontPackage ];
+
+    # Neovide reads ~/.config/neovide/config.toml; point it at the Nerd Font.
+    xdg.configFile."neovide/config.toml" =
+      lib.mkIf (cfg.neovide.enable && cfg.neovide.manageConfig) {
+        text = ''
+          # Managed by the dotvim flake (programs.dotvim.neovide).
+          [font]
+          normal = [ "${cfg.neovide.font}" ]
+          size = ${toString cfg.neovide.fontSize}
+        '';
+      };
+
+    # macOS GUI apps discover fonts from ~/Library/Fonts (not the Nix profile),
+    # so symlink the Nerd Font's files there. Linux relies on fontconfig finding
+    # them via home.packages, so this is darwin-only.
+    home.activation.dotvimFonts =
+      lib.mkIf (cfg.neovide.enable && pkgs.stdenv.hostPlatform.isDarwin)
+        (lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+          fontdir="$HOME/Library/Fonts"
+          $DRY_RUN_CMD mkdir -p "$fontdir"
+          # Clear links from a previous generation (namespaced by prefix), then
+          # link each font file in directly — macOS registers files in ~/Library/
+          # Fonts reliably (subfolder recursion is not guaranteed).
+          $DRY_RUN_CMD find "$fontdir" -maxdepth 1 -name 'dotvim-*' -delete
+          while IFS= read -r -d "" f; do
+            $DRY_RUN_CMD ln -sf "$f" "$fontdir/dotvim-$(basename "$f")"
+          done < <(find -L "${cfg.neovide.fontPackage}/share/fonts" \
+                     \( -iname '*.ttf' -o -iname '*.otf' \) -print0)
+        '');
 
     # "var" mode: hand you the bin/ dir, let you place it in PATH yourself.
     home.sessionVariables = lib.mkIf (cfg.toolsPath == "var") {
       DOTVIM_TOOLS_BIN = "${toolsEnv}/bin";
     };
 
-    home.activation = lib.mkIf cfg.bootstrapConfig {
-      dotvimClone = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    home.activation.dotvimClone = lib.mkIf cfg.bootstrapConfig (
+      lib.hm.dag.entryAfter [ "writeBoundary" ] ''
         cfgdir="${config.xdg.configHome}/nvim2026"
         if [ ! -e "$cfgdir" ]; then
           $DRY_RUN_CMD ${pkgs.git}/bin/git clone \
             --branch ${lib.escapeShellArg cfg.configBranch} \
             ${lib.escapeShellArg cfg.configRepo} "$cfgdir"
         fi
-      '';
-    };
+      ''
+    );
   };
 }

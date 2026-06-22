@@ -14,11 +14,13 @@
 , lib ? pkgs.lib
 , neovide ? pkgs.neovide
 , nvim                       # the dotvim-wrapped neovim (provides bin/nvim)
+, iconLabel ? "2026"        # overlaid on the Neovim mark for Neovide.app (macOS)
 }:
 
 let
   neovimBin = lib.getExe nvim;
   meta = neovide.meta // { mainProgram = "neovide"; };
+  icon = import ./icon.nix { inherit pkgs lib; label = iconLabel; };
 in
 if pkgs.stdenv.hostPlatform.isDarwin then
   pkgs.runCommand "neovide-dotvim-${neovide.version or "0"}"
@@ -29,6 +31,9 @@ if pkgs.stdenv.hostPlatform.isDarwin then
     mkdir -p $out/bin $out/Applications
     # Tiny copy: the bundle's MacOS dir is a symlink, so this is just plist+icons.
     cp -R ${neovide}/Applications/Neovide.app $out/Applications/
+    chmod -R u+w $out/Applications/Neovide.app
+    # Swap in the custom icon (plist's CFBundleIconFile is "Neovide.icns").
+    cp ${icon} $out/Applications/Neovide.app/Contents/Resources/Neovide.icns
     makeBinaryWrapper ${lib.getExe neovide} $out/bin/neovide \
       --add-flags "--neovim-bin ${neovimBin}"
   ''

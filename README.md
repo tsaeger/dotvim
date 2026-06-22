@@ -95,7 +95,29 @@ baked in, pointing at the dotvim nvim, so it launches with
 Spotlight/Dock (which don't inherit your shell `$PATH`). On macOS this installs
 `Neovide.app` (home-manager links it into *~/Applications/Home Manager Apps*).
 
-Or run it ad-hoc without installing: `nix run github:tsaeger/dotvim#neovide`.
+Enabling it also:
+
+- **Installs a Nerd Font** (`nerd-fonts.meslo-lg` by default) and, on macOS,
+  symlinks it into *~/Library/Fonts* so the GUI can find it.
+- **Points Neovide at that font** by writing *~/.config/neovide/config.toml*.
+- **Uses a custom app icon**: the official Neovim mark with a large `2026`
+  overlay, generated in the flake (`nix/icon.nix`).
+
+```nix
+programs.dotvim.neovide = {
+  enable = true;
+  # font = "MesloLGM Nerd Font";   # any family from fontPackage
+  # fontSize = 14.0;
+  # fontPackage = pkgs.nerd-fonts.jetbrains-mono;   # swap the Nerd Font
+  # manageConfig = false;          # stop managing config.toml yourself
+};
+```
+
+The icon label defaults to `2026`; override it where the flake builds the
+package, e.g. `packages.<sys>.neovide = pkgs.callPackage ./nix/neovide.nix {
+inherit nvim; iconLabel = "2027"; }`.
+
+Run it ad-hoc without installing: `nix run github:tsaeger/dotvim#neovide`.
 
 ### Tier-1 tools on PATH without nvim
 
