@@ -3,11 +3,11 @@ local _M = {}
 --- Protected require
 ---@param m (string) library to require
 _M.prequire = function(m)
-  local ok, err = pcall(require, m)
+  local ok, mod = pcall(require, m)
   if not ok then
-    return nil, err
+    return nil, mod
   end
-  return err
+  return mod
 end
 
 local uv = vim.uv
