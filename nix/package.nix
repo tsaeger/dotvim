@@ -65,6 +65,8 @@ let
     # ── snacks.image rendering (in a graphics-capable terminal, e.g. Ghostty) ──
     imagemagick    # `magick` — convert non-PNG images for inline display
     ghostscript    # `gs` — render PDF pages
+    tectonic       # self-contained LaTeX engine — render math (vs heavy texlive)
+    mermaid-cli    # `mmdc` — render Mermaid diagrams
   ];
 
   # IMPORTANT — finish promoting ruff + basedpyright out of mason:

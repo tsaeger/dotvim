@@ -70,6 +70,8 @@ M.tools = {
   ty = { source = 'nix', cli = true, bin = 'ty' },
   imagemagick = { source = 'nix', cli = true, bin = 'magick' }, -- snacks.image
   ghostscript = { source = 'nix', cli = true, bin = 'gs' }, -- snacks.image (PDF)
+  tectonic = { source = 'nix', cli = true, bin = 'tectonic' }, -- snacks.image (LaTeX)
+  ['mermaid-cli'] = { source = 'nix', cli = true, bin = 'mmdc' }, -- snacks.image (Mermaid)
 }
 
 -- Should mason auto-install this lspconfig server? Only when source == 'mason'.

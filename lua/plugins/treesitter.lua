@@ -15,6 +15,7 @@ return {
         'html',
         'javascript',
         'json',
+        'latex', -- snacks.image: render LaTeX math expressions
         'lua',
         'make',
         'markdown_inline',
