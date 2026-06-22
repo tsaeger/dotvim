@@ -164,8 +164,6 @@ return {
     --  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
     --  - settings (table): Override the default settings passed when initializing the server.
     --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
-    --  - skip_autoinstall: Prevent auto-installing with mason
-    --  - skip_autoconfigure: Prevent lspconfig or mason-lspconfig
     local servers = {
       -- NOTE: LSP server configs
       bashls = {},
@@ -246,22 +244,18 @@ return {
     --  You can press `g?` for help in this menu.
     require('mason').setup()
 
-    -- Single source of truth for who installs what (see lua/tools.lua).
+    -- Single source of truth for who installs/configures what (lua/tools.lua):
     -- skip_autoinstall / skip_autoconfigure are DERIVED from the registry so a
     -- tool is never half-promoted between nix and mason.
     local tools = require 'tools'
-    for server_name, server in pairs(servers) do
-      server.skip_autoinstall = tools.lsp_skip_autoinstall(server_name)
-      server.skip_autoconfigure = tools.lsp_skip_autoconfigure(server_name)
-    end
 
     -- mason-tool-installer installs only the LSP servers the registry marks as
     -- mason-sourced (nix/system ones are filtered out so mason can't shadow them).
     -- none-ls tools (stylua, prettier, …) are installed via mason-null-ls in
     -- none-ls.lua — also derived from the same registry.
     local ensure_installed = {}
-    for server_name, server in pairs(servers) do
-      if not server.skip_autoinstall then
+    for server_name in pairs(servers) do
+      if not tools.lsp_skip_autoinstall(server_name) then
         table.insert(ensure_installed, server_name)
       end
     end
@@ -272,9 +266,10 @@ return {
       automatic_enable = false,
     }
 
-    -- Configure and enable servers with local overrides.
+    -- Configure and enable servers with local overrides, skipping any the
+    -- registry flags (e.g. rust_analyzer, owned by rustaceanvim).
     for server_name, server in pairs(servers) do
-      if not server.skip_autoconfigure then
+      if not tools.lsp_skip_autoconfigure(server_name) then
         server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
         vim.lsp.config(server_name, server)
         vim.lsp.enable(server_name)
