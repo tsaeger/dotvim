@@ -1,7 +1,7 @@
 return {
   {
     'shaunsingh/nord.nvim',
-    lazy = false,
+    lazy = true,
     config = function()
       -- Example config in lua
       vim.g.nord_contrast = true
@@ -28,7 +28,7 @@ return {
   },
   {
     'folke/tokyonight.nvim',
-    lazy = false,
+    lazy = true,
     opts = {},
     -- config = function()
     --   vim.cmd.colorscheme 'tokyonight-night'
@@ -40,7 +40,7 @@ return {
   {
     'catppuccin/nvim',
     name = 'catppuccin',
-    lazy = false,
+    lazy = true,
     config = function()
       -- vim.g.catppuccin_flavour = "macchiato"
       -- vim.g.catppuccin_flavour = "latte"
