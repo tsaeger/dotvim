@@ -34,7 +34,7 @@ let
     # Runtime many mason-installed (node-based) LSP servers need on PATH:
     nodejs_22
 
-    # Python 3.13 for mason's python-based tools (pylsp, codespell). Pins the
+    # Python 3.13 for mason's python-based tools. Pins the
     # interpreter mason builds venvs against — otherwise it falls back to system
     # python3 (3.9). Provides python3/python on PATH.
     python313
@@ -77,7 +77,7 @@ let
   # :LspInfo / :checkhealth that they resolve to /nix/store/...
   #
   # Still managed by mason (promotion candidates):
-  #   lsp:     bashls, pylsp, jsonls, yamlls, lua_ls  (lua/plugins/lsp.lua)
+  #   lsp:     bashls, jsonls, yamlls, lua_ls         (lua/plugins/lsp.lua)
   #   none-ls: stylua, checkmake                      (lua/plugins/none-ls.lua)
   # (clangd is system-provided via skip_autoinstall.)
   # nixpkgs attrs when you're ready to promote any of them:

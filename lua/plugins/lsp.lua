@@ -126,21 +126,6 @@ return {
     --  Broadcast the combined capabilities to servers.
     local capabilities = require('blink.cmp').get_lsp_capabilities({}, true)
 
-    -- Keep Ruff as style linter and suppress pycodestyle-style diagnostics from pylsp.
-    do
-      local default_publish_diagnostics = vim.lsp.handlers['textDocument/publishDiagnostics']
-      vim.lsp.handlers['textDocument/publishDiagnostics'] = function(err, result, ctx, config)
-        local client = vim.lsp.get_client_by_id(ctx.client_id)
-        if client and client.name == 'pylsp' and result and result.diagnostics then
-          result.diagnostics = vim.tbl_filter(function(diagnostic)
-            local code = tostring(diagnostic.code or '')
-            return not code:match '^[EW]%d%d%d$'
-          end, result.diagnostics)
-        end
-        return default_publish_diagnostics(err, result, ctx, config)
-      end
-    end
-
     -- Enable the following language servers
     -- :help lspconfig-all
     --  Add any additional override configuration in the following tables. Available keys are:
@@ -166,26 +151,9 @@ return {
       -- (no_autoconfigure=true) so rustaceanvim owns the config.
       rust_analyzer = {},
       -- ts_ls = {},
+      -- Python: basedpyright (types) + ruff (lint/format, also LSP) cover it;
+      -- pylsp was redundant and removed.
       ruff = {},
-      pylsp = {
-        settings = {
-          pylsp = {
-            plugins = {
-              pyflakes = { enabled = false },
-              autopep8 = { enabled = false },
-              yapf = { enabled = false },
-              mccabe = { enabled = false },
-              pylsp_mypy = { enabled = false },
-              pylsp_black = { enabled = false },
-              pylsp_isort = { enabled = false },
-              pycodestyle = {
-                enabled = true,
-                maxLineLength = 132,
-              },
-            },
-          },
-        },
-      },
       -- html = { filetypes = { 'html', 'twig', 'hbs' } },
       -- cssls = {},
       -- tailwindcss = {},

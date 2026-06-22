@@ -38,7 +38,6 @@ M.tools = {
   basedpyright = { source = 'nix', lsp = 'basedpyright', bin = 'basedpyright' },
   rust_analyzer = { source = 'nix', lsp = 'rust_analyzer', bin = 'rust-analyzer', no_autoconfigure = true }, -- rustaceanvim owns config
   ruff = { source = 'nix', lsp = 'ruff', none_ls = true, bin = 'ruff' },
-  pylsp = { source = 'mason', lsp = 'pylsp', mason = 'python-lsp-server', bin = 'pylsp' },
   jsonls = {
     source = 'mason',
     lsp = 'jsonls',
