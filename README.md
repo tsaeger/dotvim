@@ -25,14 +25,17 @@ Three tiers, three independent update cadences:
   cadence as `nix flake update`. (Floating plugins is what bit older configs when
   upstreams dropped nvim 0.12-removed APIs.)
 
-Run `:DotvimDoctor` inside nvim to verify each tool resolves where the registry
-says (nix-store / mason / system) and flag any PATH shadowing.
+Run `:checkhealth dotvim` (or `:DotvimDoctor`) inside nvim to verify each tool
+resolves where the registry says (nix-store / mason / system) and flag any PATH
+shadowing.
 
 ### Eval loop
 
 Two complementary gates keep the config from silently breaking:
 
-- `:DotvimDoctor` — manual, inside nvim: registry (`lua/tools.lua`) vs reality.
+- `:checkhealth dotvim` / `:DotvimDoctor` — manual, inside nvim: registry
+  (`lua/tools.lua`) vs reality. Both render the same audit (`tools.audit()`);
+  checkhealth uses the native health UI, DotvimDoctor a scratch buffer.
 - `test/smoke.sh` — automated: boots the config headless against the committed
   `lazy-lock.json`, loads every plugin, and fails on any Lua error or
   deprecation. Runs in CI (`.github/workflows/ci.yml`) alongside `nix flake

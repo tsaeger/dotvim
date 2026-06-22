@@ -1,27 +1,7 @@
---[[
-Tom Saeger <tom.saeger@gmail.com>
+-- Tom Saeger <tom.saeger@gmail.com>
+-- Debug: :checkhealth dotvim
 
-## Config Debugging/Profiling
-
-- https://tech.serhatteker.com/post/2022-07/dump-command-output-to-buffer-in-neovim/
-
-```
-:enew|put=execute('scriptnames')
-:enew|put=execute(':lua=_G')
-:enew|put=execute(':lua=package.loaded')
-:enew|.!jq -r '.| keys[] |@text' ./lazy-lock.json | sort
-```
-
-## Plugins
-
-- https://dotfyle.com/neovim/plugins/trending
-
---]]
-
---- path_join is needed in isolated-mode to find core.util
---- copy here
----Join input path segments
----@return string
+---Join input path segments; needed in isolated-mode to find core.util
 local path_join = function(...)
   local path_sep = vim.uv.os_uname().version:match 'Windows' and '\\' or '/'
   local result = table.concat({ ... }, path_sep)
@@ -97,6 +77,5 @@ require('lazy').setup({
 })
 
 vim.cmd.colorscheme 'kanagawa-wave'
--- vim.cmd.colorscheme 'tokyonight-night'
 
 -- vim: ts=2 sts=2 sw=2 et

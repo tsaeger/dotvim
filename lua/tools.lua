@@ -100,81 +100,98 @@ function M.none_ls_mason_install()
   return out
 end
 
--- ── :DotvimDoctor — verify reality matches intent ───────────────────────────
--- Walks the registry and reports, for each tool: where the binary actually
--- resolves on nvim's PATH (nix-store / mason / system / MISSING), its version,
--- and whether that contradicts the declared source (shadowing). This is the
--- eval loop: run it after any `rebuild`, promotion, or :MasonInstall.
-function M.doctor()
+-- ── Audit: registry vs reality (single source for doctor + healthcheck) ──────
+-- For each tool, resolve where its binary actually sits on nvim's PATH
+-- (nix-store / mason / system / MISSING), grab its version, and compare against
+-- the declared source. Returns structured rows so both :DotvimDoctor (scratch
+-- buffer) and :checkhealth dotvim (native health UI) render from the same data.
+local function classify(path)
+  if path == '' then
+    return 'MISSING'
+  end
+  if path:match '/nix/store/' then
+    return 'nix'
+  end
+  if path:match '/mason/' then
+    return 'mason'
+  end
+  return 'system'
+end
+
+local function version(bin)
+  local ok, out = pcall(vim.fn.system, { bin, '--version' })
+  if not ok or vim.v.shell_error ~= 0 then
+    return ''
+  end
+  return (vim.split(out or '', '\n')[1] or ''):gsub('^%s*(.-)%s*$', '%1'):sub(1, 24)
+end
+
+-- Returns a sorted list of rows:
+--   { key, intent, bin, where, version, lsp ('attached'|'idle'|nil),
+--     severity ('ok'|'warn'|'error'), status }
+function M.audit()
   local active = {}
   for _, c in ipairs(vim.lsp.get_clients()) do
     active[c.name] = true
   end
 
-  local function classify(path)
-    if path == '' then
-      return 'MISSING'
-    end
-    if path:match '/nix/store/' then
-      return 'nix'
-    end
-    if path:match '/mason/' then
-      return 'mason'
-    end
-    return 'system'
-  end
-
-  local function version(bin)
-    local ok, out = pcall(vim.fn.system, { bin, '--version' })
-    if not ok or vim.v.shell_error ~= 0 then
-      return ''
-    end
-    return (vim.split(out or '', '\n')[1] or ''):gsub('^%s*(.-)%s*$', '%1'):sub(1, 24)
-  end
-
   local keys = vim.tbl_keys(M.tools)
   table.sort(keys)
 
-  local lines = {
-    'DotvimDoctor — registry vs reality   (✓ ok · ✗ problem)',
-    string.rep('─', 92),
-    string.format('%-16s %-7s %-7s %-7s %-26s %s', 'TOOL', 'INTENT', 'WHERE', 'LSP', 'VERSION', 'STATUS'),
-    string.rep('─', 92),
-  }
-
+  local rows = {}
   for _, key in ipairs(keys) do
     local t = M.tools[key]
     local bin = t.bin or key
-    local path = vim.fn.exepath(bin)
-    local where = classify(path)
+    local where = classify(vim.fn.exepath(bin))
 
-    local status
+    local severity, status
     if where == 'MISSING' then
-      status = (t.source == 'system') and '✓ (provide via OS)' or '✗ not found'
+      if t.source == 'system' then
+        severity, status = 'warn', 'not found — expected from OS'
+      else
+        severity, status = 'error', 'NOT FOUND on PATH'
+      end
     elseif t.source == 'nix' and where ~= 'nix' then
-      status = '✗ SHADOWED by ' .. where
+      severity, status = 'error', 'SHADOWED by ' .. where .. ' — :MasonUninstall the stale copy'
     elseif t.source == 'mason' and where == 'nix' then
-      status = '✗ nix shadows mason'
+      severity, status = 'warn', 'nix shadows mason copy'
     else
-      status = '✓'
+      severity, status = 'ok', 'ok'
     end
 
-    local lspcol = '-'
-    if t.lsp then
-      lspcol = active[t.lsp] and 'attached' or 'idle'
-    end
+    rows[#rows + 1] = {
+      key = key,
+      intent = t.source,
+      bin = bin,
+      where = where,
+      version = (where ~= 'MISSING') and version(bin) or '',
+      lsp = t.lsp and (active[t.lsp] and 'attached' or 'idle') or nil,
+      severity = severity,
+      status = status,
+    }
+  end
+  return rows
+end
 
-    table.insert(
-      lines,
-      string.format(
-        '%-16s %-7s %-7s %-7s %-26s %s',
-        key,
-        t.source,
-        where,
-        lspcol,
-        (where ~= 'MISSING') and version(bin) or '',
-        status
-      )
+-- ── :DotvimDoctor — render the audit into a scratch buffer ───────────────────
+function M.doctor()
+  local sev = { ok = '✓', warn = '!', error = '✗' }
+  local lines = {
+    'DotvimDoctor — registry vs reality   (✓ ok · ! warn · ✗ problem)',
+    string.rep('─', 96),
+    string.format('%-2s %-16s %-7s %-7s %-9s %-26s %s', '', 'TOOL', 'INTENT', 'WHERE', 'LSP', 'VERSION', 'STATUS'),
+    string.rep('─', 96),
+  }
+  for _, r in ipairs(M.audit()) do
+    lines[#lines + 1] = string.format(
+      '%-2s %-16s %-7s %-7s %-9s %-26s %s',
+      sev[r.severity],
+      r.key,
+      r.intent,
+      r.where,
+      r.lsp or '-',
+      r.version,
+      r.status
     )
   end
 
