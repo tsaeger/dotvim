@@ -68,6 +68,7 @@ return {
     bigfile = {},
     dashboard = dashboard_opts,
     dim = {},
+    image = {},
     indent = {},
     notifier = {},
     scroll = {},

@@ -61,6 +61,10 @@ let
     prettier       # html/json/yaml/markdown formatter
     shellcheck     # shell linter
     shfmt          # shell formatter
+
+    # ── snacks.image rendering (in a graphics-capable terminal, e.g. Ghostty) ──
+    imagemagick    # `magick` — convert non-PNG images for inline display
+    ghostscript    # `gs` — render PDF pages
   ];
 
   # IMPORTANT — finish promoting ruff + basedpyright out of mason:

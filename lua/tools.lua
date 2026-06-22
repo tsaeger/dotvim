@@ -68,6 +68,8 @@ M.tools = {
   pyrefly = { source = 'nix', cli = true, bin = 'pyrefly' },
   mypy = { source = 'nix', cli = true, bin = 'mypy' },
   ty = { source = 'nix', cli = true, bin = 'ty' },
+  imagemagick = { source = 'nix', cli = true, bin = 'magick' }, -- snacks.image
+  ghostscript = { source = 'nix', cli = true, bin = 'gs' }, -- snacks.image (PDF)
 }
 
 -- Should mason auto-install this lspconfig server? Only when source == 'mason'.

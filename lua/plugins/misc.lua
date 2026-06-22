@@ -70,6 +70,18 @@ return {
   },
   { 'jghauser/mkdir.nvim' },
   { 'gpanders/editorconfig.nvim' },
+  -- icon provider preferred by snacks/which-key; mock devicons so plugins
+  -- expecting nvim-web-devicons get mini.icons too (single provider).
+  {
+    'echasnovski/mini.icons',
+    opts = {},
+    init = function()
+      package.preload['nvim-web-devicons'] = function()
+        require('mini.icons').mock_nvim_web_devicons()
+        return package.loaded['nvim-web-devicons']
+      end
+    end,
+  },
   {
     'danymat/neogen',
     config = true,
