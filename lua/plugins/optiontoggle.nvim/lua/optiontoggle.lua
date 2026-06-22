@@ -207,6 +207,13 @@ _M.OptionToggleFolds = function()
   vim.opt.foldmethod = "manual"
 end
 
+local _ts_context = prequire("treesitter-context")
+_M.OptionToggleTSContext = function()
+  if _ts_context then
+    _ts_context.toggle()
+  end
+end
+
 _M.OptionToggleFormatOnSave = function()
   -- toggle global, which is used by none-ls autocmd 'BufWritePre'
   local myconfig = vim.g.myconfig
@@ -236,6 +243,7 @@ _M.set_default_keymaps = function()
   vim.keymap.set("n", "<leader>oo", "<cmd>OptionToggleColorcolumn<cr>", { desc = "Toggle colorcolumn" })
   vim.keymap.set("n", "<leader>op", "<cmd>OptionTogglePaste<cr>", { desc = "Toggle paste" })
   vim.keymap.set("n", "<leader>os", "<cmd>OptionToggleSpell<cr>", { desc = "Toggle spell" })
+  vim.keymap.set("n", "<leader>ot", "<cmd>OptionToggleTSContext<cr>", { desc = "Toggle TS context" })
   vim.keymap.set("n", "<leader>ow", "<cmd>OptionToggleWrap<cr>", { desc = "Toggle wrap" })
   vim.keymap.set("n", "<leader>oy2", "<cmd>OptionToggleEdit2<cr>", { desc = "sw=2 ts=2 sts=2 et" })
   vim.keymap.set("n", "<leader>oy4", "<cmd>OptionToggleEdit4<cr>", { desc = "sw=4 ts=4 sts=4 et" })

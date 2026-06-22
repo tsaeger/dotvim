@@ -68,7 +68,7 @@ return {
     dashboard = dashboard_opts,
     dim = {},
     image = {},
-    indent = {},
+    indent = { enabled = false },
     notifier = {},
     scroll = {},
     terminal = {},

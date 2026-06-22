@@ -4,9 +4,9 @@ _M.setup = function()
   local opts = { noremap = true, silent = true }
 
   -- Move selected visual block up/down one line at-a-time
-  if vim.fn.has 'mac' == 1 then
+  if vim.fn.has('mac') == 1 then
     -- MacOS "Option-key" equivalent of Alt mappings
-    local mak = require 'macaltkey'
+    local mak = require('macaltkey')
     -- Option-j ∆
     -- vim.keymap.set('v', '∆', ":m '>+1<CR>gv-gv", opts)
     mak.keymap.set('v', '<A-j>', ":m '>+1<CR>gv-gv", opts)
