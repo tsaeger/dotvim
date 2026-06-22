@@ -8,9 +8,7 @@ vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 -- For conciseness
 local opts = { noremap = true, silent = true }
 local desc_opts = function(desc)
-  local o = opts
-  o['desc'] = desc
-  return o
+  return vim.tbl_extend('force', opts, { desc = desc })
 end
 
 -- save file
