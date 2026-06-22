@@ -33,22 +33,22 @@ local M = {}
 -- roles  : lsp=true / none_ls=true / cli=true (a tool may have several)
 M.tools = {
   -- ── LSP servers ──────────────────────────────────────────────────────────
-  bashls = { source = 'mason', lsp = 'bashls', mason = 'bash-language-server', bin = 'bash-language-server' },
+  bashls = { source = 'nix', lsp = 'bashls', mason = 'bash-language-server', bin = 'bash-language-server' },
   clangd = { source = 'system', lsp = 'clangd', bin = 'clangd' },
   basedpyright = { source = 'nix', lsp = 'basedpyright', bin = 'basedpyright' },
   rust_analyzer = { source = 'nix', lsp = 'rust_analyzer', bin = 'rust-analyzer', no_autoconfigure = true }, -- rustaceanvim owns config
   ruff = { source = 'nix', lsp = 'ruff', none_ls = true, bin = 'ruff' },
   jsonls = {
-    source = 'mason',
+    source = 'nix',
     lsp = 'jsonls',
     mason = 'json-lsp',
     bin = 'vscode-json-language-server',
   },
-  yamlls = { source = 'mason', lsp = 'yamlls', mason = 'yaml-language-server', bin = 'yaml-language-server' },
-  lua_ls = { source = 'mason', lsp = 'lua_ls', mason = 'lua-language-server', bin = 'lua-language-server' },
+  yamlls = { source = 'nix', lsp = 'yamlls', mason = 'yaml-language-server', bin = 'yaml-language-server' },
+  lua_ls = { source = 'nix', lsp = 'lua_ls', mason = 'lua-language-server', bin = 'lua-language-server' },
 
   -- ── none-ls (formatters / linters / diagnostics) ──────────────────────────
-  stylua = { source = 'mason', none_ls = true, bin = 'stylua' },
+  stylua = { source = 'nix', none_ls = true, bin = 'stylua' },
   prettier = { source = 'nix', none_ls = true, bin = 'prettier' },
   shfmt = { source = 'nix', none_ls = true, bin = 'shfmt' },
   shellcheck = { source = 'nix', none_ls = true, bin = 'shellcheck' },

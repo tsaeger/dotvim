@@ -54,6 +54,14 @@ let
     # mason copy: `:MasonUninstall rust-analyzer` + drop from ensure_installed.
     rust-analyzer
 
+    # ── LSP servers (promoted out of mason — stable + in nixpkgs) ──────────────
+    # Marked source='nix' in the registry (lua/tools.lua) so mason-tool-installer
+    # won't reinstall them; evict stale mason copies with :MasonUninstall.
+    lua-language-server            # lua_ls
+    yaml-language-server           # yamlls
+    vscode-langservers-extracted   # jsonls (provides vscode-json-language-server)
+    bash-language-server           # bashls
+
     # ── none-ls formatters/linters (promoted out of mason) ─────────────────────
     # Used by lua/plugins/none-ls.lua sources; marked source='nix' in the
     # registry (lua/tools.lua) so mason-null-ls won't reinstall/shadow them.
@@ -61,6 +69,7 @@ let
     prettier       # html/json/yaml/markdown formatter
     shellcheck     # shell linter
     shfmt          # shell formatter
+    stylua         # lua formatter
 
     # ── snacks.image rendering (in a graphics-capable terminal, e.g. Ghostty) ──
     imagemagick    # `magick` — convert non-PNG images for inline display
@@ -69,20 +78,16 @@ let
     mermaid-cli    # `mmdc` — render Mermaid diagrams
   ];
 
-  # IMPORTANT — finish promoting ruff + basedpyright out of mason:
-  # both are now pinned above, but mason.nvim prepends its own bin/ to PATH inside
-  # nvim, so a stale mason copy will SHADOW the nix one. In nvim run:
-  #   :MasonUninstall ruff basedpyright
-  # and drop them from `ensure_installed` in lua/plugins/lsp.lua. Verify with
-  # :LspInfo / :checkhealth that they resolve to /nix/store/...
+  # IMPORTANT — mason.nvim prepends its own bin/ to PATH inside nvim, so a stale
+  # mason copy will SHADOW a freshly-promoted nix one. After a rebuild that
+  # promotes a tool, evict the mason copy in nvim:
+  #   :MasonUninstall <mason-name>      # e.g. lua-language-server stylua
+  # then verify with :DotvimDoctor (or :LspInfo) that it resolves to /nix/store/.
   #
-  # Still managed by mason (promotion candidates):
-  #   lsp:     bashls, jsonls, yamlls, lua_ls         (lua/plugins/lsp.lua)
-  #   none-ls: stylua, checkmake                      (lua/plugins/none-ls.lua)
-  # (clangd is system-provided via skip_autoinstall.)
-  # nixpkgs attrs when you're ready to promote any of them:
-  #   lua_ls -> lua-language-server   stylua -> stylua   checkmake -> checkmake
-  #   bashls -> bash-language-server  jsonls/yamlls -> vscode-langservers-extracted / yaml-language-server
+  # Still managed by mason (intentional):
+  #   none-ls: checkmake   (niche; lua/plugins/none-ls.lua)
+  # (clangd is system-provided via the registry's source='system'.)
+  # To promote checkmake later: add `checkmake` above + flip source in tools.lua.
   #   (editing nix? add `nil` or `nixd` here + a server entry in lsp.lua)
 
 in
