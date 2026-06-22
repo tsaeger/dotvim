@@ -117,6 +117,11 @@ return {
             vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
           end, '[C]ode Toggle Inlay [H]ints')
         end
+
+        -- signature help
+        if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_signatureHelp, event.buf) then
+          map('<C-k>', vim.lsp.buf.signature_help, 'Signature Help')
+        end
       end,
     })
 
