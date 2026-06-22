@@ -1,7 +1,10 @@
 return {
   'nvim-telescope/telescope.nvim',
   event = 'VimEnter',
-  branch = '0.1.x',
+  -- Track the default branch (master), not the stale 0.1.x release: the latter
+  -- calls vim.treesitter.language.ft_to_lang, removed in nvim 0.12, which breaks
+  -- the previewer's treesitter highlighter (e.g. <leader>ss). master uses
+  -- get_lang.
   dependencies = {
     'nvim-lua/plenary.nvim',
     {
