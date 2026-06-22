@@ -20,11 +20,24 @@ Three tiers, three independent update cadences:
   formatters/linters). `lua/tools.lua` is the single source of truth for tool
   ownership.
 - **Tier 2 — mason**: experimental / language-specific / short-lived tools.
-- **Plugins — lazy.nvim**: all plugins (`lazy-lock.json` is untracked so lazy
-  pulls latest).
+- **Plugins — lazy.nvim**: all plugins, pinned in the committed `lazy-lock.json`.
+  Bump deliberately with `:Lazy update`, then commit the lockfile — the same
+  cadence as `nix flake update`. (Floating plugins is what bit older configs when
+  upstreams dropped nvim 0.12-removed APIs.)
 
 Run `:DotvimDoctor` inside nvim to verify each tool resolves where the registry
 says (nix-store / mason / system) and flag any PATH shadowing.
+
+### Eval loop
+
+Two complementary gates keep the config from silently breaking:
+
+- `:DotvimDoctor` — manual, inside nvim: registry (`lua/tools.lua`) vs reality.
+- `test/smoke.sh` — automated: boots the config headless against the committed
+  `lazy-lock.json`, loads every plugin, and fails on any Lua error or
+  deprecation. Runs in CI (`.github/workflows/ci.yml`) alongside `nix flake
+  check`. Run locally with `NVIM=$(nix build .#nvim --print-out-paths)/bin/nvim
+  test/smoke.sh`.
 
 ## Install
 

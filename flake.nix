@@ -40,6 +40,14 @@
         };
       });
 
+      # ── Checks ─────────────────────────────────────────────────────────────
+      # `nix flake check` builds the wrapped runtime — a pure buildability gate
+      # (no network/plugins). The plugin-loading smoke test lives in test/smoke.sh
+      # (run from CI), since lazy.nvim needs network to restore the locked pins.
+      checks = forAllSystems ({ pkgs, system }: {
+        nvim = self.packages.${system}.nvim;
+      });
+
       # ── Home-manager module ────────────────────────────────────────────────
       # In another flake:
       #   inputs.dotvim.url = "github:tsaeger/dotvim/nvim2026";

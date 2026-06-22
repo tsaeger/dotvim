@@ -1,0 +1,33 @@
+name: ci
+
+on:
+  push:
+    branches: [nvim2026]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  flake-check:
+    name: nix flake check (build runtime)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/nix-installer-action@main
+      - uses: DeterminateSystems/magic-nix-cache-action@main
+      - run: nix flake check --no-build --all-systems
+      - run: nix build .#nvim --print-out-paths
+
+  smoke:
+    name: headless smoke test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/nix-installer-action@main
+      - uses: DeterminateSystems/magic-nix-cache-action@main
+      # Build the wrapped nvim (brings Tier-1 tools — tree-sitter, gcc, make,
+      # node — onto PATH so plugin build steps in `Lazy! restore` succeed), then
+      # boot the config against the committed lazy-lock.json.
+      - name: Build runtime
+        run: echo "NVIM=$(nix build .#nvim --print-out-paths)/bin/nvim" >> "$GITHUB_ENV"
+      - name: Smoke test
+        run: nix develop --command test/smoke.sh
