@@ -21,6 +21,7 @@ return {
         'markdown',
         'python',
         'regex',
+        'rust',
         'sql',
         'toml',
         'tsx',

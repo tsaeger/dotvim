@@ -53,7 +53,10 @@ return {
   },
   {
     -- High-performance color highlighter
-    'norcalli/nvim-colorizer.lua',
+    -- maintained fork of norcalli/nvim-colorizer.lua (the original is abandoned
+    -- and calls vim.tbl_flatten, which is removed in nvim 0.13)
+    'catgoose/nvim-colorizer.lua',
+    main = 'colorizer',
     opts = {},
   },
   -- general editor
