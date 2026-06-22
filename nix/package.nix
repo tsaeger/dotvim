@@ -65,9 +65,10 @@ let
     # ── none-ls formatters/linters (promoted out of mason) ─────────────────────
     # Used by lua/plugins/none-ls.lua sources; marked source='nix' in the
     # registry (lua/core/tools.lua) so mason-null-ls won't reinstall/shadow them.
-    codespell      # spelling
-    prettier       # html/json/yaml/markdown formatter
-    shellcheck     # shell linter
+    codespell            # spelling
+    markdownlint-cli2    # markdown linter
+    prettier             # html/json/yaml/markdown formatter
+    shellcheck           # shell linter
     shfmt          # shell formatter
     stylua         # lua formatter
 
