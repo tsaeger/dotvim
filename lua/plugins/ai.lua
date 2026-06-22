@@ -5,7 +5,9 @@ return {
   -- so defer loading until first use — saves ~6ms at startup.
   cmd = { 'CodeCompanion', 'CodeCompanionChat', 'CodeCompanionActions', 'CodeCompanionCmd' },
   opts = {
-    interactions = {
+    -- NOTE: the key is `strategies`, not `interactions` (which CodeCompanion
+    -- silently ignores → chat/inline fell back to the default copilot adapter).
+    strategies = {
       chat = {
         adapter = 'opencode',
       },
