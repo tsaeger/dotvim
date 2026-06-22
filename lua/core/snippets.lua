@@ -2,7 +2,7 @@
 
 -- Prevent LSP from overwriting treesitter color settings
 -- https://github.com/NvChad/NvChad/issues/1907
-(vim.hl or vim.highlight).priorities.semantic_tokens = 95 -- Or any number lower than 100, treesitter's priority level
+vim.hl.priorities.semantic_tokens = 95 -- Or any number lower than 100, treesitter's priority level
 
 local virtual_text = {
   prefix = '●',
@@ -13,9 +13,7 @@ local virtual_text = {
   end,
 }
 -- only show current line's diagnostic
-if vim.version.ge(vim.version.parse(tostring(vim.version())), { 0, 11, 0 }) then
-  virtual_text.current_line = true
-end
+virtual_text.current_line = true
 
 -- Appearance of diagnostics
 vim.diagnostic.config {
@@ -50,7 +48,7 @@ end, { desc = '[D]iagnostic [v]irtual_text toggle' })
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
 vim.api.nvim_create_autocmd('TextYankPost', {
   callback = function()
-    (vim.hl or vim.highlight).on_yank()
+    vim.hl.on_yank()
   end,
   group = highlight_group,
   pattern = '*',

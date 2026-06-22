@@ -10,7 +10,7 @@ _M.prequire = function(m)
   return err
 end
 
-local uv = (vim.uv or vim.loop)
+local uv = vim.uv
 
 _M.path_sep = uv.os_uname().version:match 'Windows' and '\\' or '/'
 ---Join input path segments

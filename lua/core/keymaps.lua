@@ -88,18 +88,10 @@ vim.keymap.set('n', ']l', ':lnext<CR>', desc_opts 'Loclist next')
 vim.keymap.set('n', ']L', ':llast<CR>', desc_opts 'Loclist last')
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', function()
-  if vim.diagnostic.jump then
-    vim.diagnostic.jump { count = -1, float = true }
-  else
-    vim.diagnostic.goto_prev() -- needed in 0.10.x, deprecated >=0.11
-  end
+  vim.diagnostic.jump { count = -1, float = true }
 end, { desc = 'Go to previous diagnostic message' })
 vim.keymap.set('n', ']d', function()
-  if vim.diagnostic.jump then
-    vim.diagnostic.jump { count = 1, float = true }
-  else
-    vim.diagnostic.goto_next() -- needed in 0.10.x, deprecated >=0.11
-  end
+  vim.diagnostic.jump { count = 1, float = true }
 end, { desc = 'Go to next diagnostic message' })
 vim.keymap.set(
   'n',

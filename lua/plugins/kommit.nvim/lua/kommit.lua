@@ -24,7 +24,7 @@ local function open_diff_split()
       vim.api.nvim_create_autocmd("VimLeave", {
         once = true,
         callback = function()
-          pcall(vim.loop.fs_unlink, tmp)
+          pcall(vim.uv.fs_unlink, tmp)
         end,
       })
     end,

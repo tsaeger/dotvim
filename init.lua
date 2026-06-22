@@ -23,7 +23,7 @@ Tom Saeger <tom.saeger@gmail.com>
 ---Join input path segments
 ---@return string
 local path_join = function(...)
-  local path_sep = (vim.uv or vim.loop).os_uname().version:match 'Windows' and '\\' or '/'
+  local path_sep = vim.uv.os_uname().version:match 'Windows' and '\\' or '/'
   local result = table.concat({ ... }, path_sep)
   return result
 end
@@ -61,7 +61,7 @@ require 'core.commands' -- User commands
 -- Set up Lazy plugin manager
 ---@diagnostic disable-next-line: undefined-field
 local lazypath = vim.g.myconfig.util.path_join(vim.fn.stdpath 'data', 'lazy', 'lazy.nvim')
-if not (vim.uv or vim.loop).fs_stat(lazypath) then
+if not vim.uv.fs_stat(lazypath) then
   local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
   local out = vim.fn.system { 'git', 'clone', '--filter=blob:none', '--branch=stable', lazyrepo, lazypath }
   if vim.v.shell_error ~= 0 then
