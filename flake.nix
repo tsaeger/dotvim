@@ -3,9 +3,17 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+
+    # rust-analyzer must match the Rust toolchain version; fenix provides a
+    # toolchain-matched (nightly) rust-analyzer rather than nixpkgs' standalone
+    # copy. Used in nix/package.nix's runtimeDeps.
+    fenix = {
+      url = "github:nix-community/fenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs }:
+  outputs = { self, nixpkgs, fenix }:
     let
       systems = [ "aarch64-darwin" "x86_64-darwin" "x86_64-linux" "aarch64-linux" ];
 
@@ -17,7 +25,9 @@
       # ── Packages ───────────────────────────────────────────────────────────
       # `nix run github:tsaeger/dotvim#nvim` or `nix build .#nvim`
       packages = forAllSystems ({ pkgs, system }: {
-        nvim = pkgs.callPackage ./nix/package.nix { };
+        nvim = pkgs.callPackage ./nix/package.nix {
+          rust-analyzer = fenix.packages.${system}.rust-analyzer;
+        };
         default = self.packages.${system}.nvim;
       });
 

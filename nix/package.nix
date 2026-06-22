@@ -9,6 +9,9 @@
 # nvim + tools, and your config is whatever you've cloned to ~/.config/nvim2026.
 { pkgs
 , lib ? pkgs.lib
+  # rust-analyzer, injected by the flake from fenix (toolchain-matched nightly).
+  # Falls back to nixpkgs' copy for standalone `callPackage` callers.
+, rust-analyzer ? pkgs.rust-analyzer
 }:
 
 let
@@ -31,19 +34,40 @@ let
     # Runtime many mason-installed (node-based) LSP servers need on PATH:
     nodejs_22
 
-    # Python 3.13 for mason's python-based tools (basedpyright, pylsp, ruff,
-    # codespell). Pins the interpreter mason builds venvs against — otherwise it
-    # falls back to system python3 (3.9). Provides python3/python on PATH.
+    # Python 3.13 for mason's python-based tools (pylsp, codespell). Pins the
+    # interpreter mason builds venvs against — otherwise it falls back to system
+    # python3 (3.9). Provides python3/python on PATH.
     python313
+
+    # ── Python dev toolchain (promoted out of mason; see PATH note below) ──────
+    uv             # package/venv manager + python installer
+    ruff           # linter + formatter (also an LSP)
+    poethepoet     # `poe` task runner
+    pyrefly        # type checker (Meta)
+    # Type-check report tools — run on demand, but pinned so reports are stable:
+    mypy
+    basedpyright   # also an LSP; mason copy must be evicted (see note)
+    ty             # Astral's type checker (early/0.0.x)
+
+    # Rust: toolchain-matched rust-analyzer from fenix (see flake input). Pairs
+    # with rustaceanvim (skip_autoconfigure) in lua/plugins/lsp.lua. Evict the
+    # mason copy: `:MasonUninstall rust-analyzer` + drop from ensure_installed.
+    rust-analyzer
   ];
 
-  # Promotion candidates — currently managed by mason in lua/plugins/lsp.lua:
-  #   bashls, basedpyright, ruff, pylsp, jsonls, yamlls, lua_ls, rust_analyzer, stylua
+  # IMPORTANT — finish promoting ruff + basedpyright out of mason:
+  # both are now pinned above, but mason.nvim prepends its own bin/ to PATH inside
+  # nvim, so a stale mason copy will SHADOW the nix one. In nvim run:
+  #   :MasonUninstall ruff basedpyright
+  # and drop them from `ensure_installed` in lua/plugins/lsp.lua. Verify with
+  # :LspInfo / :checkhealth that they resolve to /nix/store/...
+  #
+  # Still managed by mason in lua/plugins/lsp.lua (promotion candidates):
+  #   bashls, pylsp, jsonls, yamlls, lua_ls, stylua
   # (clangd is system-provided via skip_autoinstall.)
   # nixpkgs attrs when you're ready to promote any of them:
-  #   lua_ls -> lua-language-server   stylua -> stylua   ruff -> ruff
-  #   bashls -> nodePackages.bash-language-server        jsonls/yamlls -> nodePackages.vscode-langservers-extracted / yaml-language-server
-  #   basedpyright -> basedpyright    rust_analyzer -> rust-analyzer
+  #   lua_ls -> lua-language-server   stylua -> stylua
+  #   bashls -> bash-language-server  jsonls/yamlls -> vscode-langservers-extracted / yaml-language-server
   #   (editing nix? add `nil` or `nixd` here + a server entry in lsp.lua)
 
 in
