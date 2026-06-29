@@ -2,7 +2,8 @@
   description = "Neovim configuration — standalone flake";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
     # rust-analyzer must match the Rust toolchain version; fenix provides a
     # toolchain-matched (nightly) rust-analyzer rather than nixpkgs' standalone
@@ -13,7 +14,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, fenix }:
+  outputs = { self, nixpkgs, nixpkgs-unstable, fenix }:
     let
       systems = [ "aarch64-darwin" "x86_64-darwin" "x86_64-linux" "aarch64-linux" ];
 
