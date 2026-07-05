@@ -10,7 +10,9 @@ return {
     if vim.g.myconfig.util.is_directory(local_snippets) then
       paths[#paths + 1] = local_snippets
     end
-    require('luasnip.loaders.from_lua').lazy_load()
+    require('luasnip.loaders.from_lua').lazy_load {
+      paths = { local_snippets },
+    }
     require('luasnip.loaders.from_vscode').lazy_load {
       paths = paths,
     }
