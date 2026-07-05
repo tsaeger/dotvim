@@ -34,6 +34,7 @@ return {
         { '<leader>t', group = '[T]abs' },
         { '<leader>u', group = '[U]tils' },
         { '<leader>ug', group = '[G]it' },
+        { '<leader>w', group = '[W]iki' },
       }
     end,
   },

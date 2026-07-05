@@ -222,6 +222,16 @@ _M.OptionToggleFormatOnSave = function()
   vim.notify("format_on_write set to " .. tostring(vim.g.myconfig.format_on_write))
 end
 
+_M.OptionToggleRenderMarkdown = function()
+  local ok, render = pcall(require, "render-markdown")
+  if not ok then
+    vim.notify("render-markdown.nvim not installed", vim.log.levels.WARN)
+    return
+  end
+  render.toggle()
+  vim.notify("render-markdown " .. (render.get() and "enabled" or "disabled"))
+end
+
 _M.set_default_keymaps = function()
   vim.keymap.set("n", "<leader>oc", "<cmd>OptionToggleCursorline<cr>", { desc = "Toggle cursorline" })
   vim.keymap.set("n", "<leader>oC", "<cmd>OptionToggleCursorcolumn<cr>", { desc = "Toggle cursorcolumn" })
@@ -245,6 +255,7 @@ _M.set_default_keymaps = function()
   vim.keymap.set("n", "<leader>os", "<cmd>OptionToggleSpell<cr>", { desc = "Toggle spell" })
   vim.keymap.set("n", "<leader>ot", "<cmd>OptionToggleTSContext<cr>", { desc = "Toggle TS context" })
   vim.keymap.set("n", "<leader>ow", "<cmd>OptionToggleWrap<cr>", { desc = "Toggle wrap" })
+  vim.keymap.set("n", "<leader>om", "<cmd>OptionToggleRenderMarkdown<cr>", { desc = "Toggle markdown render" })
   vim.keymap.set("n", "<leader>oy2", "<cmd>OptionToggleEdit2<cr>", { desc = "sw=2 ts=2 sts=2 et" })
   vim.keymap.set("n", "<leader>oy4", "<cmd>OptionToggleEdit4<cr>", { desc = "sw=4 ts=4 sts=4 et" })
   vim.keymap.set("n", "<leader>oy8", "<cmd>OptionToggleEdit8<cr>", { desc = "sw=8 ts=8 sts=8 noet" })

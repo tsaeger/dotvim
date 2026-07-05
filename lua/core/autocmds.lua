@@ -54,3 +54,15 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
 })
 
+-- Markdown: enable conceal for obsidian.nvim UI features (wikilinks, checkboxes)
+-- Global conceallevel stays 0; markdown buffers get 2.
+local markdown_conceal = vim.api.nvim_create_augroup('MarkdownConceal', { clear = true })
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = { 'markdown', 'rmd', 'norg', 'org' },
+  callback = function()
+    vim.opt_local.conceallevel = 2
+    vim.opt_local.concealcursor = 'n'
+  end,
+  group = markdown_conceal,
+})
+

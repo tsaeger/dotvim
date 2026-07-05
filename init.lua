@@ -69,6 +69,8 @@ require('lazy').setup({
   require 'plugins.snacks',
   require 'plugins.ai',
   require 'plugins.trouble',
+  require 'plugins.render-markdown',
+  require 'plugins.obsidian',
 }, {
   rocks = {
     enabled = false,
