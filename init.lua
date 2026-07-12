@@ -79,5 +79,3 @@ require('lazy').setup({
 })
 
 vim.cmd.colorscheme 'kanagawa-wave'
-
--- vim: ts=2 sts=2 sw=2 et
