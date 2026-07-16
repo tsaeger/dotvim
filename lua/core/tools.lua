@@ -1,14 +1,14 @@
 -- ╭───────────────────────────────────────────────────────────────────────────╮
--- │ Tool registry — the ONE place tool ownership/role is declared.            │
+-- │ Tool registry — the ONE place executable ownership/adapter role is declared. │
 -- │                                                                           │
 -- │ lua/plugins/lsp.lua and lua/plugins/none-ls.lua DERIVE their behavior from│
--- │ this table (mason ensure_installed, skip_autoinstall, skip_autoconfigure),│
--- │ so a tool can never be half-promoted. nix/package.nix's runtimeDeps is the│
+-- │ these tables (mason ensure_installed, skip_autoinstall, skip_autoconfigure),│
+-- │ so an executable can never be half-promoted. nix/package.nix's runtimeDeps is the│
 -- │ matching half on the Nix side — keep the two in sync (see name map below).│
 -- │                                                                           │
 -- │ Promote a tool mason → nix:                                               │
 -- │   1. add the nixpkgs attr to runtimeDeps in nix/package.nix               │
--- │   2. flip source = 'mason' → 'nix' here                                   │
+-- │   2. flip source = 'mason' → 'nix' in M.executables here                  │
 -- │   3. rebuild, then in nvim: :MasonUninstall <mason-name> and :DotvimDoctor│
 -- │ Demote nix → mason: reverse (drop from runtimeDeps, flip to 'mason').     │
 -- │                                                                           │
@@ -30,14 +30,14 @@
 local M = {}
 
 -- source : 'nix' (Tier-1, on PATH already) | 'mason' (Tier-2) | 'system' (OS-provided)
--- roles  : lsp=true / none_ls=true / cli=true (a tool may have several)
-M.tools = {
+-- roles  : lsp=true / cli=true (an executable may have several)
+M.executables = {
   -- ── LSP servers ──────────────────────────────────────────────────────────
   bashls = { source = 'nix', lsp = 'bashls', mason = 'bash-language-server', bin = 'bash-language-server' },
   clangd = { source = 'system', lsp = 'clangd', bin = 'clangd' },
   basedpyright = { source = 'nix', lsp = 'basedpyright', bin = 'basedpyright' },
   rust_analyzer = { source = 'nix', lsp = 'rust_analyzer', bin = 'rust-analyzer', no_autoconfigure = true }, -- rustaceanvim owns config
-  ruff = { source = 'nix', lsp = 'ruff', none_ls = true, bin = 'ruff' },
+  ruff = { source = 'nix', lsp = 'ruff', bin = 'ruff' },
   jsonls = {
     source = 'nix',
     lsp = 'jsonls',
@@ -47,13 +47,13 @@ M.tools = {
   yamlls = { source = 'nix', lsp = 'yamlls', mason = 'yaml-language-server', bin = 'yaml-language-server' },
   lua_ls = { source = 'nix', lsp = 'lua_ls', mason = 'lua-language-server', bin = 'lua-language-server' },
 
-  -- ── none-ls (formatters / linters / diagnostics) ──────────────────────────
-  stylua = { source = 'nix', none_ls = true, bin = 'stylua' },
-  prettier = { source = 'nix', none_ls = true, bin = 'prettier' },
-  shfmt = { source = 'nix', none_ls = true, bin = 'shfmt' },
-  shellcheck = { source = 'nix', none_ls = true, bin = 'shellcheck' },
-  checkmake = { source = 'mason', none_ls = true, bin = 'checkmake' },
-  codespell = { source = 'nix', none_ls = true, bin = 'codespell' },
+  -- ── Executables used by none-ls adapters ───────────────────────────────────
+  stylua = { source = 'nix', bin = 'stylua' },
+  prettier = { source = 'nix', bin = 'prettier' },
+  shfmt = { source = 'nix', bin = 'shfmt' },
+  shellcheck = { source = 'nix', cli = true, bin = 'shellcheck' }, -- used by bashls; no none-ls builtin is shipped anymore
+  codespell = { source = 'nix', bin = 'codespell' },
+  checkmake = { source = 'mason', bin = 'checkmake' },
 
   -- ── Pure CLI tools from Nix Tier-1 (no LSP/none-ls role; verified by doctor) ─
   ripgrep = { source = 'nix', cli = true, bin = 'rg' },
@@ -73,31 +73,91 @@ M.tools = {
   ['mermaid-cli'] = { source = 'nix', cli = true, bin = 'mmdc' }, -- snacks.image (Mermaid)
 }
 
+-- none-ls adapters are integration records, not installable tools. An adapter
+-- that invokes a command references the owning executable above.
+M.none_ls_adapters = {
+  ruff_fix = {
+    executable = 'ruff',
+    kind = 'formatting',
+    require = 'none-ls.formatting.ruff',
+    opts = { extra_args = { '--extend-select', 'I' } },
+  },
+  ruff_format = {
+    executable = 'ruff',
+    kind = 'formatting',
+    require = 'none-ls.formatting.ruff_format',
+  },
+  stylua = { executable = 'stylua', kind = 'formatting', opts = { filetypes = { 'lua' } } },
+  prettier = {
+    executable = 'prettier',
+    kind = 'formatting',
+    opts = { filetypes = { 'html', 'json', 'yaml', 'markdown' } },
+  },
+  shfmt = { executable = 'shfmt', kind = 'formatting', opts = { args = { '-i', '4' } } },
+  codespell = { executable = 'codespell', kind = 'diagnostics' },
+  checkmake = { executable = 'checkmake', kind = 'diagnostics' },
+  gitrebase = { kind = 'code_actions' },
+  gitsigns = { kind = 'code_actions' },
+}
+
 -- Should mason auto-install this lspconfig server? Only when source == 'mason'.
 -- Unknown servers default to mason-installed (backward-safe).
 function M.lsp_skip_autoinstall(server)
-  local t = M.tools[server]
-  return t ~= nil and t.source ~= 'mason'
+  local executable = M.executables[server]
+  return executable ~= nil and executable.source ~= 'mason'
 end
 
 -- rustaceanvim et al.: prevent lspconfig/mason-lspconfig from configuring it.
 function M.lsp_skip_autoconfigure(server)
-  local t = M.tools[server]
-  return t ~= nil and t.no_autoconfigure == true
+  local executable = M.executables[server]
+  return executable ~= nil and executable.no_autoconfigure == true
 end
 
--- mason package names of none-ls tools that mason should install
--- (i.e. none-ls role AND source == 'mason' — nix-provided ones are excluded
--- so mason can't shadow them on PATH).
+-- Mason packages for executable records only. none-ls adapters cannot cause an
+-- installation because they are deliberately absent from this derivation.
 function M.none_ls_mason_install()
-  local out = {}
-  for key, t in pairs(M.tools) do
-    if t.none_ls and t.source == 'mason' then
-      table.insert(out, t.mason or key)
+  local out, seen = {}, {}
+  for key, executable in pairs(M.executables) do
+    if executable.source == 'mason' and executable.bin then
+      local mason = executable.mason or key
+      if not seen[mason] then
+        table.insert(out, mason)
+        seen[mason] = true
+      end
     end
   end
   table.sort(out)
   return out
+end
+
+function M.none_ls_sources(null_ls, is_available)
+  is_available = is_available
+    or function(key)
+      local executable = M.executables[key]
+      return executable ~= nil and executable.bin ~= nil and vim.fn.exepath(executable.bin) ~= ''
+    end
+
+  local sources = {}
+  local keys = vim.tbl_keys(M.none_ls_adapters)
+  table.sort(keys)
+
+  for _, key in ipairs(keys) do
+    local adapter = M.none_ls_adapters[key]
+    if not adapter.executable or is_available(adapter.executable) then
+      local source = adapter.require and require(adapter.require) or null_ls.builtins[adapter.kind][key]
+      if adapter.opts then
+        source = source.with(adapter.opts)
+      end
+      table.insert(sources, source)
+    else
+      vim.notify(
+        ('none-ls adapter %s skipped: executable %s is unavailable'):format(key, adapter.executable),
+        vim.log.levels.DEBUG
+      )
+    end
+  end
+
+  return sources
 end
 
 -- ── Audit: registry vs reality (single source for doctor + healthcheck) ──────
@@ -135,12 +195,12 @@ function M.audit()
     active[c.name] = true
   end
 
-  local keys = vim.tbl_keys(M.tools)
+  local keys = vim.tbl_keys(M.executables)
   table.sort(keys)
 
   local rows = {}
   for _, key in ipairs(keys) do
-    local t = M.tools[key]
+    local t = M.executables[key]
     local bin = t.bin or key
     local where = classify(vim.fn.exepath(bin))
 

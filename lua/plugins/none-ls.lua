@@ -8,33 +8,14 @@ return {
   },
   config = function()
     local null_ls = require 'null-ls'
-    local formatting = null_ls.builtins.formatting -- to setup formatters
-    local diagnostics = null_ls.builtins.diagnostics -- to setup linters
-    local code_actions = null_ls.builtins.code_actions
-    -- local hover = null_ls.builtins.hover
-    -- local completion = null_ls.builtins.completion
+    local tools = require 'core.tools'
 
     -- Formatters & linters for mason to install — DERIVED from the registry
-    -- (lua/core/tools.lua): only none-ls tools whose source is 'mason'. nix-provided
-    -- ones (e.g. ruff) are excluded here so mason can't shadow them on PATH; the
-    -- none-ls *sources* below still run whatever binary is on PATH (= the nix one).
+    -- (lua/core/tools.lua): derived only from executable records. none-ls
+    -- adapters never declare packages, so they cannot trigger an installation.
     require('mason-null-ls').setup {
-      ensure_installed = require('core.tools').none_ls_mason_install(),
+      ensure_installed = tools.none_ls_mason_install(),
       automatic_installation = true,
-    }
-
-    -- NOTE: none-ls sources
-    local sources = {
-      code_actions.gitrebase,
-      code_actions.gitsigns,
-      diagnostics.checkmake,
-      diagnostics.codespell,
-      formatting.prettier.with { filetypes = { 'html', 'json', 'yaml', 'markdown' } },
-      formatting.stylua.with { filetypes = { 'lua' } },
-      formatting.shfmt.with { args = { '-i', '4' } },
-      -- formatting.codespell,
-      require('none-ls.formatting.ruff').with { extra_args = { '--extend-select', 'I' } },
-      require 'none-ls.formatting.ruff_format',
     }
 
     vim.keymap.set('n', '<leader>cF', function()
@@ -47,7 +28,7 @@ return {
     local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
     null_ls.setup {
       -- debug = true, -- Enable debug mode. Inspect logs with :NullLsLog.
-      sources = sources,
+      sources = tools.none_ls_sources(null_ls),
       -- you can reuse a shared lspconfig on_attach callback here
       on_attach = function(client, bufnr)
         if client and client:supports_method 'textDocument/formatting' then
