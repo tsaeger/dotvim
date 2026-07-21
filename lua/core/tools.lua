@@ -1,38 +1,39 @@
--- ╭───────────────────────────────────────────────────────────────────────────╮
--- │ Tool registry — the ONE place executable ownership/adapter role is declared. │
--- │                                                                           │
--- │ lua/plugins/lsp.lua and lua/plugins/none-ls.lua DERIVE their behavior from│
--- │ these tables (mason ensure_installed, skip_autoinstall, skip_autoconfigure),│
--- │ so an executable can never be half-promoted. nix/package.nix's runtimeDeps is the│
--- │ matching half on the Nix side — keep the two in sync (see name map below).│
--- │                                                                           │
--- │ Promote a tool mason → nix:                                               │
--- │   1. add the nixpkgs attr to runtimeDeps in nix/package.nix               │
--- │   2. flip source = 'mason' → 'nix' in M.executables here                  │
--- │   3. rebuild, then in nvim: :MasonUninstall <mason-name> and :DotvimDoctor│
--- │ Demote nix → mason: reverse (drop from runtimeDeps, flip to 'mason').     │
--- │                                                                           │
--- │ Verify reality matches intent any time with :DotvimDoctor.                │
--- ╰───────────────────────────────────────────────────────────────────────────╯
+-- -----------------------------------------------------------------------------
+-- Tool registry: the ONE place executable ownership/adapter role is declared.
 --
--- Name spaces differ across subsystems — this table bridges them:
+-- lua/plugins/lsp.lua and lua/plugins/none-ls.lua DERIVE their behavior from
+-- these tables: mason ensure_installed, skip_autoinstall, and
+-- skip_autoconfigure. That keeps an executable from ever being half-promoted.
+-- nix/package.nix's runtimeDeps is the matching half on the Nix side; keep the
+-- two in sync (see name map below).
+--
+-- Promote a tool mason -> nix:
+--   1. add the nixpkgs attr to runtimeDeps in nix/package.nix
+--   2. flip source = 'mason' -> 'nix' in M.executables here
+--   3. rebuild, then in nvim: :MasonUninstall <mason-name> and :DotvimDoctor
+-- Demote nix -> mason: reverse (drop from runtimeDeps, flip to 'mason').
+--
+-- Verify reality matches intent any time with :DotvimDoctor.
+-- -----------------------------------------------------------------------------
+--
+-- Name spaces differ across subsystems; this table bridges them:
 --   registry key  = lspconfig server name where it's an LSP, else the tool name
 --   lsp           = lspconfig server name (nil if not an LSP)
 --   mason         = mason package name    (defaults to key; only set when different)
 --   bin           = executable probed on PATH by :DotvimDoctor
 --
---   nixpkgs attr (package.nix) ↔ this table:
---     rust-analyzer→rust_analyzer  basedpyright→basedpyright  ruff→ruff
---     vscode-langservers-extracted→jsonls  yaml-language-server→yamlls
---     lua-language-server→lua_ls   bash-language-server→bashls
---     python313→(python3 cli)      uv/poethepoet/pyrefly/mypy/ty→cli entries
+--   nixpkgs attr (package.nix) <-> this table:
+--     rust-analyzer -> rust_analyzer  basedpyright -> basedpyright  ruff -> ruff
+--     vscode-langservers-extracted -> jsonls  yaml-language-server -> yamlls
+--     lua-language-server -> lua_ls   bash-language-server -> bashls
+--     python313 -> (python3 cli)      uv/poethepoet/pyrefly/mypy/ty -> cli entries
 
 local M = {}
 
 -- source : 'nix' (Tier-1, on PATH already) | 'mason' (Tier-2) | 'system' (OS-provided)
 -- roles  : lsp=true / cli=true (an executable may have several)
 M.executables = {
-  -- ── LSP servers ──────────────────────────────────────────────────────────
+  -- -- LSP servers -----------------------------------------------------------
   bashls = { source = 'nix', lsp = 'bashls', mason = 'bash-language-server', bin = 'bash-language-server' },
   clangd = { source = 'system', lsp = 'clangd', bin = 'clangd' },
   basedpyright = { source = 'nix', lsp = 'basedpyright', bin = 'basedpyright' },
@@ -47,7 +48,7 @@ M.executables = {
   yamlls = { source = 'nix', lsp = 'yamlls', mason = 'yaml-language-server', bin = 'yaml-language-server' },
   lua_ls = { source = 'nix', lsp = 'lua_ls', mason = 'lua-language-server', bin = 'lua-language-server' },
 
-  -- ── Executables used by none-ls adapters ───────────────────────────────────
+  -- -- Executables used by none-ls adapters ----------------------------------
   stylua = { source = 'nix', bin = 'stylua' },
   prettier = { source = 'nix', bin = 'prettier' },
   shfmt = { source = 'nix', bin = 'shfmt' },
@@ -55,7 +56,7 @@ M.executables = {
   codespell = { source = 'nix', bin = 'codespell' },
   checkmake = { source = 'mason', bin = 'checkmake' },
 
-  -- ── Pure CLI tools from Nix Tier-1 (no LSP/none-ls role; verified by doctor) ─
+  -- -- Pure CLI tools from Nix Tier-1 (no LSP/none-ls role; verified by doctor)
   ripgrep = { source = 'nix', cli = true, bin = 'rg' },
   fd = { source = 'nix', cli = true, bin = 'fd' },
   git = { source = 'nix', cli = true, bin = 'git' },
@@ -160,7 +161,7 @@ function M.none_ls_sources(null_ls, is_available)
   return sources
 end
 
--- ── Audit: registry vs reality (single source for doctor + healthcheck) ──────
+-- -- Audit: registry vs reality (single source for doctor + healthcheck) -------
 -- For each tool, resolve where its binary actually sits on nvim's PATH
 -- (nix-store / mason / system / MISSING), grab its version, and compare against
 -- the declared source. Returns structured rows so both :DotvimDoctor (scratch
@@ -207,12 +208,12 @@ function M.audit()
     local severity, status
     if where == 'MISSING' then
       if t.source == 'system' then
-        severity, status = 'warn', 'not found — expected from OS'
+        severity, status = 'warn', 'not found - expected from OS'
       else
         severity, status = 'error', 'NOT FOUND on PATH'
       end
     elseif t.source == 'nix' and where ~= 'nix' then
-      severity, status = 'error', 'SHADOWED by ' .. where .. ' — :MasonUninstall the stale copy'
+      severity, status = 'error', 'SHADOWED by ' .. where .. ' - :MasonUninstall the stale copy'
     elseif t.source == 'mason' and where == 'nix' then
       severity, status = 'warn', 'nix shadows mason copy'
     else
@@ -233,7 +234,7 @@ function M.audit()
   return rows
 end
 
--- ── :DotvimDoctor — render the audit into a scratch buffer ───────────────────
+-- -- :DotvimDoctor - render the audit into a scratch buffer --------------------
 function M.doctor()
   local sev = { ok = '✓', warn = '!', error = '✗' }
   local lines = {
