@@ -13,8 +13,8 @@ return {
     latex = { enabled = true },
     -- Window options to set on render buffers
     win_options = {
-      conceallevel = { rendered = 3 },
-      concealcursor = { rendered = 'n' },
+      conceallevel = { default = 0, rendered = 3 },
+      concealcursor = { default = '', rendered = 'n' },
     },
   },
 }

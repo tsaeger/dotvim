@@ -229,7 +229,8 @@ _M.OptionToggleRenderMarkdown = function()
     return
   end
   render.toggle()
-  vim.notify("render-markdown " .. (render.get() and "enabled" or "disabled"))
+  local enabled = render.get()
+  vim.notify("render-markdown " .. (enabled and "enabled" or "disabled"))
 end
 
 _M.set_default_keymaps = function()
