@@ -195,6 +195,18 @@ function M.doctor()
     )
   end
 
+  lines[#lines + 1] = ''
+  lines[#lines + 1] = 'Obsidian vaults'
+  for _, vault in ipairs(vim.g.myconfig.get_obsidian_vaults()) do
+    local path = vim.fn.expand(vault.path)
+    lines[#lines + 1] = string.format(
+      '%s %s: %s',
+      vim.fn.isdirectory(path) == 1 and '✓' or '!',
+      vault.name,
+      path
+    )
+  end
+
   vim.cmd 'botright new'
   vim.api.nvim_buf_set_lines(0, 0, -1, false, lines)
   local bo = vim.bo
