@@ -20,6 +20,7 @@ _M.setup = function()
     vim.keymap.set('i', '<D-v>', '<ESC>l"+Pli') -- Paste insert mode
 
     -- Allow clipboard copy paste in neovim
+    local opts = { noremap = true, silent = true }
     vim.api.nvim_set_keymap('', '<D-v>', '+p<CR>', opts)
     vim.api.nvim_set_keymap('!', '<D-v>', '<C-R>+', opts)
     vim.api.nvim_set_keymap('t', '<D-v>', '<C-R>+', opts)
