@@ -6,8 +6,17 @@ return {
       ['opencode-acp'] = {
         command = 'opencode',
       },
-      ['claude-agent-acp'] = {},
       ['codex-acp'] = {},
+      ['pi-acp'] = {},
+      ['claude-agent-acp'] = {
+        command = '__disabled__',
+      },
+      ['claude-acp'] = {
+        command = '__disabled__',
+      },
+    },
+    provider_switcher = {
+      hide_unhealthy_providers = true,
     },
   },
   keys = {
