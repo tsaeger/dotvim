@@ -40,7 +40,7 @@ function M.check()
   local clients = vim.lsp.get_clients()
   health.info(string.format('active LSP clients: %d', #clients))
   for _, c in ipairs(clients) do
-    health.info(string.format('  %s (%d buffer(s))', c.name, #vim.lsp.get_buffers_by_client_id(c.id)))
+    health.info(string.format('  %s (%d buffer(s))', c.name, #c.attached_buffers))
   end
 
   health.info 'debug: :DotvimDoctor — same tool audit in a scratch buffer'
