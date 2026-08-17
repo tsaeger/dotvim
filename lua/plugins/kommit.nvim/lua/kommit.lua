@@ -1,34 +1,179 @@
 local M = {}
 
+M.config = {
+  diff = {
+    max_bytes = 512 * 1024,
+    max_lines = 5000,
+    timeout_ms = 5000,
+  },
+}
+
+function M.setup(opts)
+  M.config = vim.tbl_deep_extend("force", M.config, opts or {})
+end
+
+local function positive_integer(value, fallback)
+  value = tonumber(value)
+  if value and value > 0 then
+    return math.floor(value)
+  end
+  return fallback
+end
+
+local function diff_limits()
+  local defaults = {
+    max_bytes = 512 * 1024,
+    max_lines = 5000,
+    timeout_ms = 5000,
+  }
+  local configured = M.config.diff or {}
+  return {
+    max_bytes = positive_integer(configured.max_bytes, defaults.max_bytes),
+    max_lines = positive_integer(configured.max_lines, defaults.max_lines),
+    timeout_ms = positive_integer(configured.timeout_ms, defaults.timeout_ms),
+  }
+end
+
+local function nth_newline(text, count)
+  local pos = 0
+  for _ = 1, count do
+    pos = text:find("\n", pos + 1, true)
+    if not pos then
+      return nil
+    end
+  end
+  return pos
+end
+
+local function show_diff(commit_win, text, notice)
+  local lines = vim.split(text, "\n", { plain = true })
+  if lines[#lines] == "" then
+    table.remove(lines)
+  end
+  if #lines == 0 then
+    lines = { "No staged changes." }
+  end
+  if notice then
+    vim.list_extend(lines, { "", ("[Kommit: %s]"):format(notice) })
+  end
+
+  local target_win = vim.api.nvim_win_is_valid(commit_win) and commit_win or vim.api.nvim_get_current_win()
+  vim.api.nvim_win_call(target_win, function()
+    vim.cmd("vnew")
+    local bufnr = vim.api.nvim_get_current_buf()
+    vim.bo[bufnr].buftype = "nofile"
+    vim.bo[bufnr].bufhidden = "wipe"
+    vim.bo[bufnr].swapfile = false
+    vim.api.nvim_buf_set_name(bufnr, ("kommit://staged-diff/%d"):format(bufnr))
+    vim.bo[bufnr].filetype = "diff"
+    vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, lines)
+    vim.bo[bufnr].readonly = true
+    vim.bo[bufnr].modifiable = false
+  end)
+end
+
 -- Auto-open right-hand vsplit with staged diff when editing COMMIT_EDITMSG.
 local function open_diff_split()
   if vim.fn.expand("%:t") ~= "COMMIT_EDITMSG" then
     return
   end
-  local tmp = vim.fn.tempname()
-  local cmd = "git diff --staged > " .. vim.fn.shellescape(tmp)
-  vim.fn.jobstart({ "sh", "-lc", cmd }, {
-    on_exit = function(_, _, _)
+  local commit_win = vim.api.nvim_get_current_win()
+  local limits = diff_limits()
+  local chunks = {}
+  local byte_count = 0
+  local newline_count = 0
+  local stderr = {}
+  local finished = false
+  local stopped = false
+  local truncated_by
+  local job_id
+
+  local function stop(reason)
+    if stopped or finished then
+      return
+    end
+    stopped = true
+    truncated_by = reason
+    if job_id and job_id > 0 then
+      vim.fn.jobstop(job_id)
+    end
+  end
+
+  job_id = vim.fn.jobstart({ "git", "--no-pager", "diff", "--staged", "--no-ext-diff", "--no-textconv" }, {
+    stdout_buffered = false,
+    stderr_buffered = true,
+    on_stdout = function(_, data)
+      if stopped or not data then
+        return
+      end
+      local chunk = table.concat(data, "\n")
+      if chunk == "" then
+        return
+      end
+
+      local byte_remaining = limits.max_bytes - byte_count
+      if #chunk > byte_remaining then
+        chunk = chunk:sub(1, byte_remaining)
+        truncated_by = "size"
+      end
+
+      local line_remaining = limits.max_lines - newline_count
+      local newline_pos = nth_newline(chunk, line_remaining)
+      if newline_pos and (line_remaining == 0 or newline_pos < #chunk) then
+        chunk = chunk:sub(1, newline_pos)
+        truncated_by = truncated_by or "line count"
+      end
+
+      table.insert(chunks, chunk)
+      byte_count = byte_count + #chunk
+      local _, added_newlines = chunk:gsub("\n", "")
+      newline_count = newline_count + added_newlines
+
+      if truncated_by then
+        stop(truncated_by)
+      end
+    end,
+    on_stderr = function(_, data)
+      if data then
+        local message = table.concat(data, "\n")
+        table.insert(stderr, message:sub(1, 8192))
+      end
+    end,
+    on_exit = function(_, exit_code)
+      finished = true
       vim.schedule(function()
-        local commit_win = vim.api.nvim_get_current_win()
-        vim.cmd("vsplit " .. vim.fn.fnameescape(tmp))
-        local bufnr = vim.api.nvim_get_current_buf()
-        vim.bo[bufnr].readonly = true
-        vim.bo[bufnr].modifiable = false
-        vim.bo[bufnr].buftype = "nofile"
-        vim.bo[bufnr].bufhidden = "wipe"
-        if vim.api.nvim_win_is_valid(commit_win) then
-          vim.api.nvim_set_current_win(commit_win)
+        local notice
+        if truncated_by == "size" then
+          notice = ("diff truncated at %d bytes; configure require('kommit').setup({ diff = { max_bytes = ... } })"):format(
+            limits.max_bytes
+          )
+        elseif truncated_by == "line count" then
+          notice = ("diff truncated at %d lines; configure require('kommit').setup({ diff = { max_lines = ... } })"):format(
+            limits.max_lines
+          )
+        elseif truncated_by == "timeout" then
+          notice = ("diff command stopped after %d ms; configure require('kommit').setup({ diff = { timeout_ms = ... } })"):format(
+            limits.timeout_ms
+          )
+        elseif exit_code ~= 0 then
+          local message = table.concat(stderr, "\n"):gsub("%s+$", "")
+          notice = message ~= "" and ("git diff failed: " .. message) or ("git diff exited with status " .. exit_code)
         end
+        show_diff(commit_win, table.concat(chunks), notice)
       end)
-      vim.api.nvim_create_autocmd("VimLeave", {
-        once = true,
-        callback = function()
-          pcall(vim.uv.fs_unlink, tmp)
-        end,
-      })
     end,
   })
+
+  if job_id <= 0 then
+    show_diff(commit_win, "", "could not start git diff")
+    return
+  end
+
+  vim.defer_fn(function()
+    if not finished then
+      stop("timeout")
+    end
+  end, limits.timeout_ms)
 end
 
 vim.api.nvim_create_autocmd({ "BufReadPost", "BufNewFile" }, {
