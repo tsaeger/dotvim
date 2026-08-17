@@ -1,4 +1,7 @@
 .mgit
+CLAUDE.md
+AGENTS.md
+.agents/
 
 # nix build outputs
 result
