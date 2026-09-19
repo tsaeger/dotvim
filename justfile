@@ -4,42 +4,32 @@ set shell := ["bash", "-euo", "pipefail", "-c"]
 set quiet
 
 # Choose a recipe interactively.
+[private]
 default:
   @just --choose
 
-# Evaluate and build the flake checks.
-check:
-  nix flake check
-
-# Build the standalone Neovim runtime.
-build:
-  nix build .#nvim
-
-# Run the headless plugin smoke test against the Nix-built Neovim.
-smoke:
-  NVIM=$(nix build .#nvim --print-out-paths)/bin/nvim test/smoke.sh
-
 # Run the terminal Neovim runtime.
+[group('Workflow')]
 run *args:
   nix run .#nvim -- {{args}}
 
 # Run the Neovide runtime.
+[group('Workflow')]
 neovide *args:
   nix run .#neovide -- {{args}}
 
-# Build the Tier-1 tools environment.
-tools:
-  nix build .#tools
-
-# Remove local build result symlinks.
-clean:
-  rm -f result result-*
+# Enter the development shell.
+[group('Workflow')]
+shell:
+  nix develop
 
 # Show locked revisions for direct flake inputs.
+[group('Inputs')]
 versions:
   @jq -r '. as $lock | $lock.nodes.root.inputs | to_entries[] | .key as $name | .value as $node | [$name, ($lock.nodes[$node].locked.rev // "-")] | @tsv' flake.lock | column -t -s $'\t'
 
 # Compare locked revisions with freshly resolved upstream revisions.
+[group('Inputs')]
 outdated:
   #!/usr/bin/env bash
   set -euo pipefail
@@ -80,9 +70,31 @@ outdated:
   fi
 
 # Update this flake's inputs.
+[group('Inputs')]
 update:
   nix flake update
 
-# Enter the development shell.
-shell:
-  nix develop
+# Evaluate and build the flake checks.
+[group('Packages')]
+check:
+  nix flake check
+
+# Build the standalone Neovim runtime.
+[group('Packages')]
+build:
+  nix build .#nvim
+
+# Run the headless plugin smoke test against the Nix-built Neovim.
+[group('Packages')]
+smoke:
+  NVIM=$(nix build .#nvim --print-out-paths)/bin/nvim test/smoke.sh
+
+# Build the Tier-1 tools environment.
+[group('Packages')]
+tools:
+  nix build .#tools
+
+# Remove local build result symlinks.
+[group('Maintenance')]
+clean:
+  rm -f result result-*
