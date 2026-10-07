@@ -64,6 +64,7 @@ require('lazy').setup({
   require 'plugins.lsp',
   require 'plugins.none-ls',
   require 'plugins.gitsigns',
+  require 'plugins.codediff',
   require 'plugins.misc',
   require 'plugins.comment',
   require 'plugins.snacks',
