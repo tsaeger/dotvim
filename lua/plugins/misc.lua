@@ -17,6 +17,14 @@ return {
     'tpope/vim-rhubarb',
   },
   {
+    'NeogitOrg/neogit',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    cmd = 'Neogit',
+    keys = {
+      { '<leader>gn', '<cmd>Neogit<cr>', desc = 'Neogit' },
+    },
+  },
+  {
     -- Hints keybinds
     'folke/which-key.nvim',
     config = function()
@@ -33,6 +41,7 @@ return {
         { '<leader>s', group = '[S]earch' },
         { '<leader>t', group = '[T]abs' },
         { '<leader>u', group = '[U]tils' },
+        { '<leader>g', group = '[G]it' },
         { '<leader>ug', group = '[G]it' },
         { '<leader>w', group = '[W]iki' },
       }
