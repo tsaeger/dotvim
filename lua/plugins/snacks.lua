@@ -70,6 +70,13 @@ return {
       end,
       desc = 'Open Lazygit',
     },
+    {
+      '<leader>gt',
+      function()
+        Snacks.terminal('tig', { win = { style = 'float' } })
+      end,
+      desc = 'Open Tig',
+    },
   },
   opts = {
     animate = {},
