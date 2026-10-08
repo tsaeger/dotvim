@@ -62,6 +62,15 @@ return {
   'folke/snacks.nvim',
   priority = 1000,
   lazy = false,
+  keys = {
+    {
+      '<leader>gg',
+      function()
+        Snacks.lazygit()
+      end,
+      desc = 'Open Lazygit',
+    },
+  },
   opts = {
     animate = {},
     bigfile = {},
@@ -72,6 +81,7 @@ return {
     notifier = {},
     scroll = {},
     terminal = {},
+    lazygit = {},
 
     -- animate snacks.animate
     -- bigfile snacks.bigfile

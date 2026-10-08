@@ -26,6 +26,7 @@ let
     ripgrep        # telescope/snacks live_grep
     fd             # telescope find_files
     git            # lazy.nvim bootstrap + plugin fetch
+    lazygit        # snacks.lazygit
 
     # nvim-treesitter `main` branch compiles parsers at runtime:
     tree-sitter    # the CLI invoked by ts.install()
