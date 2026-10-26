@@ -65,7 +65,7 @@
       # ── Dev shell ─────────────────────────────────────────────────────────
       devShells = forAllSystems ({ pkgs, ... }: {
         default = pkgs.mkShell {
-          buildInputs = [ self.packages.${pkgs.system}.nvim ];
+          buildInputs = [ self.packages.${pkgs.stdenv.hostPlatform.system}.nvim ];
           shellHook = "echo 'nvim is ready'";
         };
       });

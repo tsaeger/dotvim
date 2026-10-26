@@ -37,7 +37,7 @@ in {
 
     package = lib.mkOption {
       type = lib.types.package;
-      default = self.packages.${pkgs.system}.nvim;
+      default = self.packages.${pkgs.stdenv.hostPlatform.system}.nvim;
       description = "The wrapped neovim runtime package to install.";
     };
 
@@ -69,7 +69,7 @@ in {
 
       package = lib.mkOption {
         type = lib.types.package;
-        default = self.packages.${pkgs.system}.neovide;
+        default = self.packages.${pkgs.stdenv.hostPlatform.system}.neovide;
         description = "The Neovide package (defaults to the dotvim-wired build).";
       };
 
