@@ -2,6 +2,7 @@
 # Run `just` to list recipes.
 set shell := ["bash", "-euo", "pipefail", "-c"]
 set quiet
+nix_command := "nix --extra-experimental-features 'nix-command flakes'"
 
 # Choose a recipe interactively.
 [private]
@@ -11,17 +12,17 @@ default:
 # Run the terminal Neovim runtime.
 [group('Workflow')]
 run *args:
-  nix run .#nvim -- {{args}}
+  {{nix_command}} run .#nvim -- {{args}}
 
 # Run the Neovide runtime.
 [group('Workflow')]
 neovide *args:
-  nix run .#neovide -- {{args}}
+  {{nix_command}} run .#neovide -- {{args}}
 
 # Enter the development shell.
 [group('Workflow')]
 shell:
-  nix develop
+  {{nix_command}} develop
 
 # Show locked revisions for direct flake inputs.
 [group('Inputs')]
@@ -36,7 +37,7 @@ outdated:
   latest=$(mktemp)
   urls=$(mktemp)
   trap 'rm -f "$latest" "$urls"' EXIT
-  nix flake update --output-lock-file "$latest" >/dev/null
+  {{nix_command}} flake update --output-lock-file "$latest" >/dev/null
   printf '%-24s %-12s %-12s %8s  %s\n' INPUT CURRENT LATEST COMMITS SUMMARY
   while IFS= read -r input; do
     current_node=$(jq -r --arg i "$input" '.nodes.root.inputs[$i]' flake.lock)
@@ -72,27 +73,27 @@ outdated:
 # Update this flake's inputs.
 [group('Inputs')]
 update:
-  nix flake update
+  {{nix_command}} flake update
 
 # Evaluate and build the flake checks.
 [group('Packages')]
 check:
-  nix flake check
+  {{nix_command}} flake check
 
 # Build the standalone Neovim runtime.
 [group('Packages')]
 build:
-  nix build .#nvim
+  {{nix_command}} build .#nvim
 
 # Run the headless plugin smoke test against the Nix-built Neovim.
 [group('Packages')]
 smoke:
-  NVIM=$(nix build .#nvim --print-out-paths)/bin/nvim test/smoke.sh
+  NVIM=$({{nix_command}} build .#nvim --print-out-paths)/bin/nvim test/smoke.sh
 
 # Build the Tier-1 tools environment.
 [group('Packages')]
 tools:
-  nix build .#tools
+  {{nix_command}} build .#tools
 
 # Remove local build result symlinks.
 [group('Maintenance')]
